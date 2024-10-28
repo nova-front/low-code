@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "@repo/ui/button";
+import { Button } from "@repo/mui/button";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -46,9 +46,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+        <Button appName="web">Mui Button</Button>
       </main>
       <footer className={styles.footer}>
         <a
