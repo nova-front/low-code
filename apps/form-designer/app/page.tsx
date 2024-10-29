@@ -1,97 +1,95 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 import { Button } from "@repo/mui/button";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import styles from "./page.module.css";
 
 export default function Home() {
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <section className={styles.field_box}>
+        <header className={styles.title}>Components</header>
+        <Accordion
+          expanded={expanded === "basic"}
+          onChange={handleChange("basic")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="basic-content"
+            id="basic-header"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+            Basic
+          </AccordionSummary>
+          <AccordionDetails>
+            <Button variant="outlined" size="small">
+              Text Field
+            </Button>
+            <Button variant="outlined" size="small" disabled>
+              Text Area
+            </Button>
+            <Button variant="outlined" size="small" disabled>
+              Checkbox
+            </Button>
+            <Button variant="outlined" size="small" disabled>
+              Radio
+            </Button>
+            <Button variant="outlined" size="small" disabled>
+              Switch
+            </Button>
+            <Button variant="outlined" size="small" disabled>
+              Select
+            </Button>
+            <Button variant="outlined" size="small" disabled>
+              Autocomplete
+            </Button>
+            <Button variant="outlined" size="small">
+              Button
+            </Button>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "advanced"}
+          onChange={handleChange("advanced")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="advanced-content"
+            id="advanced-header"
           >
-            Read our docs
-          </a>
-        </div>
-        <Button appName="web">Mui Button</Button>
+            Advanced
+          </AccordionSummary>
+          <AccordionDetails>
+            <Button variant="outlined" size="small" disabled>
+              More
+            </Button>
+          </AccordionDetails>
+        </Accordion>
+      </section>
+      <main className={styles.mian_box}>
+        <header className={styles.title}>You can build a form</header>
+        <section className="container">
+          <p className={styles.tip}>Drag here</p>
+        </section>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file-text.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <main className={styles.json_box}>
+        <header className={styles.title}>
+          JSON Schema
+          <Button variant="text">Copy Data</Button>
+        </header>
+        <pre className="container">{`{"components": []}`}</pre>
+      </main>
     </div>
   );
 }
