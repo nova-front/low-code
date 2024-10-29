@@ -23,7 +23,7 @@ export const Button = ({
   disabled = false,
   onClick = () => {},
   ...rest
-}: ButtonProps) => {
+}: ButtonProps): JSX.Element => {
   return (
     <ThemeProvider theme={customTheme}>
       <ButtonBox
