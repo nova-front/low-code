@@ -2,23 +2,40 @@
 
 import { ReactNode } from "react";
 import ButtonBox from "@mui/material/Button";
+import { ThemeProvider } from "@mui/material/styles";
+import { customTheme } from "./theme";
 
 interface ButtonProps {
   children: ReactNode;
   className?: string;
-  appName: string;
+  variant?: "text" | "contained" | "outlined";
+  size?: "small" | "medium" | "large";
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  [key: string]: any;
 }
 
-export const Button = ({ children, className, appName }: ButtonProps) => {
+export const Button = ({
+  children,
+  className,
+  variant = "contained",
+  size = "medium",
+  disabled = false,
+  onClick = () => {},
+  ...rest
+}: ButtonProps) => {
   return (
-    <div>
+    <ThemeProvider theme={customTheme}>
       <ButtonBox
         className={className}
-        variant="contained"
-        onClick={() => alert(`Hello from your ${appName} app!`)}
+        variant={variant}
+        size={size}
+        disabled={disabled}
+        onClick={onClick}
+        {...rest}
       >
         {children}
       </ButtonBox>
-    </div>
+    </ThemeProvider>
   );
 };
