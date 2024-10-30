@@ -1,0 +1,18 @@
+.mian_box {
+  flex: 1;
+  padding:  0 12px;
+  :global(.container) {
+    display: block;
+    min-height: calc(100% - 60px);
+    padding: 12px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+  }
+}
+.tip {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}

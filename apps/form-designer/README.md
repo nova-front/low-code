@@ -10,3 +10,9 @@
 
 - 目的：具体页面使用 适配器 + 数据源，即可设计页面
 - 页面排版布局交给使用者实现，但也支持默认布局？
+
+## 技术栈
+
+- [next.js]()
+- [react-dnd](https://react-dnd.github.io/react-dnd/docs/overview)
+- [immutability-helper](https://www.npmjs.com/package/immutability-helper)

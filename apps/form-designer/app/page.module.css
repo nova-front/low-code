@@ -29,28 +29,8 @@ body {
   }
 }
 
-.field_box {
-  width: 200px;
-  padding-left: 12px;
-
-  button {
-    width: 100%;
-    margin-bottom: 8px;
-  }
-}
-.mian_box {
-  flex: 1;
-  padding:  0 12px;
-  :global(.container) {
-    display: block;
-    min-height: calc(100% - 60px);
-    padding: 12px;
-    border: 1px dashed #ccc;
-    border-radius: 4px;
-  }
-}
 .json_box {
-  width: 400px;
+  width: 460px;
   padding-right: 12px;
   :global(.container) {
     display: block;
@@ -58,6 +38,7 @@ body {
     padding: 12px;
     background-color: #eee;
     border-radius: 4px;
+    white-space: pre-wrap;
   }
 }
 .title {
@@ -66,11 +47,4 @@ body {
   text-align: center;
   font-size: 24px;
   font-weight: bold;
-}
-.tip {
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 16px;
-  color: #999;
 }
