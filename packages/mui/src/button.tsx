@@ -15,7 +15,7 @@ interface ButtonProps {
   [key: string]: any;
 }
 
-export const Button = ({
+const Button = ({
   children,
   className,
   variant = "contained",
@@ -39,3 +39,5 @@ export const Button = ({
     </ThemeProvider>
   );
 };
+
+export default Button;
