@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button } from "@repo/mui/button";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FieldBox from "./Box";
+import { Button } from "../../components/mui";
 import { basicComponents, advancedComponents } from "./config";
 
 import type { FC } from "react";
@@ -40,12 +40,13 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
         <AccordionDetails>
           {basicComponents?.map((item: any) => {
             return (
-              <FieldBox key={item.name} name={item.name} onAdd={onAdd}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  disabled={item.disabled}
-                >
+              <FieldBox
+                key={item.name}
+                name={item.type}
+                data={item}
+                onAdd={onAdd}
+              >
+                <Button variant="outlined" size="small">
                   {item.name}
                 </Button>
               </FieldBox>
@@ -67,12 +68,13 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
         <AccordionDetails>
           {advancedComponents?.map((item: any) => {
             return (
-              <FieldBox key={item.name} name={item.name} onAdd={onAdd}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  disabled={item.disabled}
-                >
+              <FieldBox
+                key={item.name}
+                name={item.name}
+                data={item}
+                onAdd={onAdd}
+              >
+                <Button variant="outlined" size="small">
                   {item.name}
                 </Button>
               </FieldBox>

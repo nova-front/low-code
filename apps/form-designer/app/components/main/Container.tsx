@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
 import { Card } from "./Card";
+import { Button } from "../../components/mui";
 
 import type { FC } from "react";
 import globalStyle from "../../page.module.css";
@@ -14,7 +15,8 @@ const style = {
 
 export interface Item {
   id: string;
-  text: string;
+  name: string;
+  type: string;
 }
 
 export interface ContainerProps {
@@ -36,13 +38,14 @@ const Container: FC<ContainerProps> = ({ cards, setCards }) => {
     }, []);
 
     const renderCard = useCallback(
-      (card: { id: string; text: string }, index: number) => {
+      (card: { id: string; name: string; type: string }, index: number) => {
         return (
           <Card
             key={card.id}
             index={index}
             id={card.id}
-            text={card.text}
+            name={card.name}
+            type={card.type}
             moveCard={moveCard}
           />
         );
@@ -69,9 +72,12 @@ const Container: FC<ContainerProps> = ({ cards, setCards }) => {
 
     return (
       <main className={styles.mian_box}>
-        <header className={globalStyle.title}>You can build a form</header>
+        <header className={globalStyle.title}>
+          You can build a form<Button variant="text">Import Data</Button>
+        </header>
         <section ref={drop} className="container" style={{ backgroundColor }}>
           {cards.length === 0 && <p className={styles.tip}>Drag here</p>}
+
           <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
         </section>
       </main>

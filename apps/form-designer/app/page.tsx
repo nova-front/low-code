@@ -5,18 +5,18 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
 
-import { Button } from "@repo/mui/button";
 import FieldContainer from "./components/field/Container";
 import MainContainer, { type Item } from "./components/main/Container";
+import { Button } from "./components/mui";
 
 import styles from "./page.module.css";
 
 export default function Home() {
   const [cards, setCards] = useState<Item[]>([]);
 
-  const onAdd = (name: string) => {
+  const onAdd = (item: Item) => {
     const newCards = update(cards, {
-      $push: [{ id: crypto.randomUUID(), text: name }],
+      $push: [{ ...item, id: crypto.randomUUID() }],
     });
     setCards(newCards);
   };
@@ -26,9 +26,9 @@ export default function Home() {
       components: [],
     };
     cards.forEach((card: Item) => {
+      const { id, ...other } = card;
       param.components.push({
-        id: card.id,
-        name: card.text,
+        ...other,
       });
     });
     return JSON.stringify(param, null, 2);

@@ -1,41 +1,40 @@
 export const basicComponents = [
   {
     name: "Text Field",
-    disabled: false,
+    type: "textfield",
   },
   {
     name: "Text Area",
-    disabled: false,
+    type: "textarea",
   },
   {
     name: "Checkbox",
-    disabled: true,
+    type: "checkbox",
   },
   {
     name: "Radio",
-    disabled: true,
+    type: "radio",
   },
   {
     name: "Switch",
-    disabled: true,
+    type: "switch",
   },
   {
     name: "Select",
-    disabled: true,
+    type: "select",
   },
   {
     name: "Autocomplete",
-    disabled: true,
+    type: "autocomplete",
   },
   {
     name: "Button",
-    disabled: false,
+    type: "button",
   },
 ];
 
 export const advancedComponents = [
   {
     name: "More",
-    disabled: true,
   },
 ];

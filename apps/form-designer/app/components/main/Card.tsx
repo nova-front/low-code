@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import { Button, TextField } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
 import type { Identifier, XYCoord } from "dnd-core";
@@ -15,7 +16,8 @@ const style = {
 
 export interface CardProps {
   id: any;
-  text: string;
+  name: string;
+  type: string | "texefield" | "button";
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
 }
@@ -26,7 +28,7 @@ interface DragItem {
   type: string;
 }
 
-export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
+export const Card: FC<CardProps> = ({ id, name, type, index, moveCard }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -101,9 +103,34 @@ export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
 
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
+  const renderCard = (type: string) => {
+    let resultNode: React.ReactNode = "";
+    switch (type) {
+      case "textfield":
+        resultNode = (
+          <TextField label="TextField" variant="outlined" fullWidth />
+        );
+        break;
+
+      case "button":
+        resultNode = (
+          <Button variant="outlined" size="small">
+            {name}
+          </Button>
+        );
+        break;
+
+      default:
+        resultNode = `【${name}】正在开发...`;
+        break;
+    }
+    return resultNode;
+  };
+
   return (
     <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      {text}
+      {renderCard(type)}
     </div>
   );
 };

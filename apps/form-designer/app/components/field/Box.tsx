@@ -6,8 +6,9 @@ import type { FC } from "react";
 import type { DragSourceMonitor } from "react-dnd";
 
 export interface BoxProps {
-  name: string;
   children: React.ReactNode;
+  name: string;
+  data: any;
   onAdd: Function;
 }
 
@@ -17,15 +18,15 @@ interface DropResult {
   name: string;
 }
 
-const Box: FC<BoxProps> = memo(({ name, children, onAdd }) => {
+const Box: FC<BoxProps> = memo(({ name, data, children, onAdd }) => {
   const [{ opacity }, drag] = useDrag(
     () => ({
       type: ItemTypes.BOX,
-      item: { name },
+      item: { ...data },
       end(item, monitor) {
         const dropResult = monitor.getDropResult() as DropResult;
         if (item && dropResult) {
-          onAdd(item.name);
+          onAdd(item);
         }
       },
       collect: (monitor: DragSourceMonitor) => ({
