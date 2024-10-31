@@ -9,6 +9,7 @@ module.exports = {
     "prettier",
     require.resolve("@vercel/style-guide/eslint/next"),
     "turbo",
+    "plugin:react-hooks/recommended",
   ],
   globals: {
     React: true,
