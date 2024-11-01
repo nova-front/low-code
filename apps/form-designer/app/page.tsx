@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
@@ -21,6 +21,16 @@ export default function Home() {
     setCards(newCards);
   };
 
+  const onDelete = useCallback(
+    (index: number) => {
+      const newCards = update(cards, {
+        $splice: [[index, 1]],
+      });
+      setCards(newCards);
+    },
+    [cards]
+  );
+
   const cardsStr = useMemo(() => {
     const param: any = {
       components: [],
@@ -38,7 +48,7 @@ export default function Home() {
     <DndProvider backend={HTML5Backend}>
       <div className={styles.page}>
         <FieldContainer onAdd={onAdd} />
-        <MainContainer cards={cards} setCards={setCards} />
+        <MainContainer cards={cards} setCards={setCards} onDelete={onDelete} />
         <main className={styles.json_box}>
           <header className={styles.title}>
             JSON Schema

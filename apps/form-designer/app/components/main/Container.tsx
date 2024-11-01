@@ -22,20 +22,24 @@ export interface Item {
 export interface ContainerProps {
   cards: Item[];
   setCards: any;
+  onDelete: (index: number) => void;
 }
 
-const Container: FC<ContainerProps> = ({ cards, setCards }) => {
+const Container: FC<ContainerProps> = ({ cards, setCards, onDelete }) => {
   {
-    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-      setCards((prevCards: Item[]) =>
-        update(prevCards, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, prevCards[dragIndex] as Item],
-          ],
-        })
-      );
-    }, []);
+    const moveCard = useCallback(
+      (dragIndex: number, hoverIndex: number) => {
+        setCards((prevCards: Item[]) =>
+          update(prevCards, {
+            $splice: [
+              [dragIndex, 1],
+              [hoverIndex, 0, prevCards[dragIndex] as Item],
+            ],
+          })
+        );
+      },
+      [setCards]
+    );
 
     const renderCard = useCallback(
       (card: { id: string; name: string; type: string }, index: number) => {
@@ -47,10 +51,11 @@ const Container: FC<ContainerProps> = ({ cards, setCards }) => {
             name={card.name}
             type={card.type}
             moveCard={moveCard}
+            onDelete={() => onDelete(index)}
           />
         );
       },
-      []
+      [moveCard, onDelete]
     );
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -77,7 +82,6 @@ const Container: FC<ContainerProps> = ({ cards, setCards }) => {
         </header>
         <section ref={drop} className="container" style={{ backgroundColor }}>
           {cards.length === 0 && <p className={styles.tip}>Drag here</p>}
-
           <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
         </section>
       </main>

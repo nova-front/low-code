@@ -1,12 +1,18 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Button, TextField } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
+import styles from "./styles.module.css";
 
 const style = {
+  display: "flex",
+  justifyContent: "space-between",
   border: "1px dashed #ddd",
   padding: "0.5rem 1rem",
   marginBottom: ".5rem",
@@ -20,6 +26,7 @@ export interface CardProps {
   type: string | "texefield" | "button";
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
+  onDelete: () => void;
 }
 
 interface DragItem {
@@ -28,7 +35,14 @@ interface DragItem {
   type: string;
 }
 
-export const Card: FC<CardProps> = ({ id, name, type, index, moveCard }) => {
+export const Card: FC<CardProps> = ({
+  id,
+  name,
+  type,
+  index,
+  moveCard,
+  onDelete,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -129,8 +143,21 @@ export const Card: FC<CardProps> = ({ id, name, type, index, moveCard }) => {
   };
 
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      {renderCard(type)}
+    <div
+      ref={ref}
+      style={{ opacity }}
+      className={styles.card}
+      data-handler-id={handlerId}
+    >
+      <div className={styles.card_left}>{renderCard(type)}</div>
+      <div className={styles.card_right}>
+        <div className={styles.icon_box}>
+          <BorderColorIcon color="primary" />
+        </div>
+        <div className={styles.icon_box} onClick={onDelete}>
+          <DeleteForeverIcon color="error" />
+        </div>
+      </div>
     </div>
   );
 };
