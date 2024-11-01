@@ -16,3 +16,4 @@
 - [next.js]()
 - [react-dnd](https://react-dnd.github.io/react-dnd/docs/overview)
 - [immutability-helper](https://www.npmjs.com/package/immutability-helper)
+- [react-hook-form](https://www.npmjs.com/package/react-hook-form) + [yup](https://www.npmjs.com/package/yup) + [@hookform/resolvers/yup](https://www.npmjs.com/package/@hookform/resolvers#yup)
