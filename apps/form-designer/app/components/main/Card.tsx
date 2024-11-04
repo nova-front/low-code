@@ -2,7 +2,12 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Button, TextField, TextArea } from "../../components/mui";
+import {
+  Button,
+  TextField,
+  TextArea,
+  CheckBoxGroup,
+} from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
 import type { Identifier, XYCoord } from "dnd-core";
@@ -127,6 +132,15 @@ export const Card: FC<CardProps> = ({
         break;
       case "textarea":
         resultNode = <TextArea label="TextArea" variant="outlined" fullWidth />;
+        break;
+      case "checkbox":
+        resultNode = (
+          <CheckBoxGroup
+            defaultValue={["A"]}
+            options={["A", "B"]}
+            // onChange={(w) => console.log(w)}
+          />
+        );
         break;
 
       case "button":
