@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Button, TextField } from "../../components/mui";
+import { Button, TextField, TextArea } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
 import type { Identifier, XYCoord } from "dnd-core";
@@ -125,6 +124,9 @@ export const Card: FC<CardProps> = ({
         resultNode = (
           <TextField label="TextField" variant="outlined" fullWidth />
         );
+        break;
+      case "textarea":
+        resultNode = <TextArea label="TextArea" variant="outlined" fullWidth />;
         break;
 
       case "button":
