@@ -17,6 +17,7 @@ interface TextFieldProps {
   multiline?: boolean;
   rows?: string | number;
   maxRows?: string | number;
+  placeholder?: string;
   value?: unknown;
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   [key: string]: unknown;
@@ -39,6 +40,7 @@ const TextField = ({
   multiline,
   rows,
   maxRows,
+  placeholder,
   value,
   onChange,
 }: TextFieldProps): JSX.Element => {
@@ -60,6 +62,7 @@ const TextField = ({
       multiline={multiline}
       rows={rows}
       maxRows={maxRows}
+      placeholder={placeholder}
       value={value}
       onChange={onChange}
     />
