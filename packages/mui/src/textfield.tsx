@@ -1,6 +1,6 @@
 import TextFieldBox from "@mui/material/TextField";
 
-interface TextFieldProps {
+export interface TextFieldProps {
   className?: string;
   label?: React.ReactNode;
   variant?: "outlined" | "standard" | "filled";

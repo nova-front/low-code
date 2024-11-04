@@ -5,7 +5,8 @@
   "exports": {
     "./demo": "./src/demo.tsx",
     "./button": "./src/button.tsx",
-    "./textfield": "./src/textfield.tsx"
+    "./textfield": "./src/textfield.tsx",
+    "./textarea": "./src/textarea.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
