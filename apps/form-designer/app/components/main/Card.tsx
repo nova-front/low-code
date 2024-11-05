@@ -14,16 +14,6 @@ import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
 import styles from "./styles.module.css";
 
-const style = {
-  display: "flex",
-  justifyContent: "space-between",
-  border: "1px dashed #ddd",
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
-  cursor: "move",
-};
-
 export interface CardProps {
   id: any;
   name: string;
@@ -127,18 +117,33 @@ export const Card: FC<CardProps> = ({
     switch (type) {
       case "textfield":
         resultNode = (
-          <TextField label="TextField" variant="outlined" fullWidth />
+          <TextField
+            label="TextField"
+            variant="outlined"
+            fullWidth
+            helperText="please input..."
+          />
         );
         break;
       case "textarea":
-        resultNode = <TextArea label="TextArea" variant="outlined" fullWidth />;
+        resultNode = (
+          <TextArea
+            label="TextArea"
+            variant="outlined"
+            fullWidth
+            helperText="please input..."
+          />
+        );
         break;
       case "checkbox":
         resultNode = (
           <CheckBoxGroup
+            label="CheckBox Group"
+            row
             defaultValue={["A"]}
-            options={["A", "B"]}
+            options={["A", "B", "C"]}
             // onChange={(w) => console.log(w)}
+            helperText="please select..."
           />
         );
         break;

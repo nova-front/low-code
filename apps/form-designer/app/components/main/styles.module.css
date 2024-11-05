@@ -3,10 +3,11 @@
   padding:  0 12px;
   :global(.container) {
     display: block;
-    min-height: calc(100% - 60px);
+    height: calc(100vh - 60px);
     padding: 12px;
     border: 1px dashed #ccc;
     border-radius: 4px;
+    overflow-y: auto;
   }
 }
 .tip {
@@ -21,8 +22,8 @@
   justify-content: space-between;
   align-items: center;
   border: 1px dashed #ddd;
-  padding: 12px 0 12px 12px;
-  margin-bottom: 12px;
+  padding: 10px 0 10px 10px;
+  margin-bottom: 10px;
   background-color: white;
   cursor: move;
 }
