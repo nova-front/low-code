@@ -46,6 +46,7 @@ const TextField = ({
 }: TextFieldProps): JSX.Element => {
   return (
     <TextFieldBox
+      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
       className={className}
       label={label}
       variant={variant}
