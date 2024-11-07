@@ -1,4 +1,4 @@
-import RadioBox from "@mui/material/Radio";
+import RadioBasic from "@mui/material/Radio";
 
 interface RadioProps {
   name?: string;
@@ -20,6 +20,7 @@ interface RadioProps {
     | "default";
   defaultChecked?: boolean;
   defaultValue?: string | number | readonly string[];
+  disabled?: boolean;
 }
 
 const Radio = ({
@@ -32,9 +33,10 @@ const Radio = ({
   color,
   defaultChecked,
   defaultValue,
+  disabled,
 }: RadioProps): JSX.Element => {
   return (
-    <RadioBox
+    <RadioBasic
       name={name}
       checked={checked}
       value={value}
@@ -44,6 +46,7 @@ const Radio = ({
       color={color}
       defaultChecked={defaultChecked}
       defaultValue={defaultValue}
+      disabled={disabled}
     />
   );
 };
