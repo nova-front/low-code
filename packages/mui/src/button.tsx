@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import ButtonBox from "@mui/material/Button";
+import ButtonBasic from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material/styles";
 import { customTheme } from "./theme";
 
@@ -26,7 +26,7 @@ const Button = ({
 }: ButtonProps): JSX.Element => {
   return (
     <ThemeProvider theme={customTheme}>
-      <ButtonBox
+      <ButtonBasic
         className={className}
         variant={variant}
         size={size}
@@ -35,7 +35,7 @@ const Button = ({
         {...rest}
       >
         {children}
-      </ButtonBox>
+      </ButtonBasic>
     </ThemeProvider>
   );
 };
