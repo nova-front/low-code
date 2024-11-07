@@ -4,7 +4,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
-import CheckboxBox from "./checkbox";
+import Checkbox from "./checkbox";
 
 interface OptionProps {
   label: string;
@@ -80,7 +80,7 @@ const CheckboxGroup = ({
               <FormControlLabel
                 key={i}
                 control={
-                  <CheckboxBox
+                  <Checkbox
                     defaultChecked={checks?.includes(option)}
                     checked={value ? checks?.includes(option) : undefined}
                     disabled={disabled}
@@ -95,7 +95,7 @@ const CheckboxGroup = ({
               <FormControlLabel
                 key={i}
                 control={
-                  <CheckboxBox
+                  <Checkbox
                     defaultChecked={checks?.includes(option.value)}
                     checked={value ? checks?.includes(option.value) : undefined}
                     disabled={disabled || option.disabled}
