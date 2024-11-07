@@ -18,6 +18,8 @@ interface RadioProps {
     | "success"
     | "warning"
     | "default";
+  defaultChecked?: boolean;
+  defaultValue?: string | number | readonly string[];
 }
 
 const Radio = ({
@@ -28,6 +30,8 @@ const Radio = ({
   inputProps,
   size,
   color,
+  defaultChecked,
+  defaultValue,
 }: RadioProps): JSX.Element => {
   return (
     <RadioBox
@@ -38,6 +42,8 @@ const Radio = ({
       inputProps={inputProps}
       size={size}
       color={color}
+      defaultChecked={defaultChecked}
+      defaultValue={defaultValue}
     />
   );
 };
