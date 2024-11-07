@@ -7,6 +7,7 @@ import {
   TextField,
   TextArea,
   CheckBoxGroup,
+  RadioGroup,
 } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
@@ -140,14 +141,41 @@ export const Card: FC<CardProps> = ({
           <CheckBoxGroup
             label="CheckBox Group"
             row
+            required
+            // error
             defaultValue={["A"]}
-            options={["A", "B", "C"]}
+            // options={["A", "B", "C"]}
+            // disabled
+            options={[
+              { value: "A", label: "AA" },
+              { value: "B", label: "BB" },
+              { value: "C", label: "CC", disabled: true },
+            ]}
             // onChange={(w) => console.log(w)}
             helperText="please select..."
           />
         );
         break;
-
+      case "radio":
+        resultNode = (
+          <RadioGroup
+            label="RadioGroup"
+            row
+            required
+            // error
+            defaultValue={"A"}
+            // options={["A", "B", "C"]}】
+            // disabled
+            options={[
+              { value: "A", label: "AA" },
+              { value: "B", label: "BB" },
+              { value: "C", label: "CC", disabled: true },
+            ]}
+            onChange={(e, w) => console.log(e, w)}
+            helperText="please click one"
+          />
+        );
+        break;
       case "button":
         resultNode = (
           <Button variant="outlined" size="small">
