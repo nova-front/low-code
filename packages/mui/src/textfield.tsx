@@ -1,4 +1,4 @@
-import TextFieldBox from "@mui/material/TextField";
+import TextFieldBasic from "@mui/material/TextField";
 
 export interface TextFieldProps {
   className?: string;
@@ -45,7 +45,7 @@ const TextField = ({
   onChange,
 }: TextFieldProps): JSX.Element => {
   return (
-    <TextFieldBox
+    <TextFieldBasic
       sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
       className={className}
       label={label}
