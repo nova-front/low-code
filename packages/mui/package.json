@@ -10,7 +10,9 @@
     "./checkbox": "./src/checkbox.tsx",
     "./checkbox.group": "./src/checkbox.group.tsx",
     "./radio": "./src/radio.tsx",
-    "./radio.group": "./src/radio.group.tsx"
+    "./radio.group": "./src/radio.group.tsx",
+    "./switch": "./src/switch/switch.tsx",
+    "./switches.group": "./src/switch/switches.group.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
