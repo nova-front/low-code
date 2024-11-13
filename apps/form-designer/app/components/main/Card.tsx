@@ -8,6 +8,7 @@ import {
   TextArea,
   CheckBoxGroup,
   RadioGroup,
+  SwitchesGroup,
 } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
@@ -173,6 +174,35 @@ export const Card: FC<CardProps> = ({
             ]}
             onChange={(e, w) => console.log(e, w)}
             helperText="please click one"
+          />
+        );
+        break;
+      case "switch":
+        resultNode = (
+          <SwitchesGroup
+            label="Assign responsibility"
+            row
+            required
+            error
+            options={[
+              {
+                name: "gilad",
+                value: false,
+                label: "gilad",
+              },
+              {
+                name: "jason",
+                value: false,
+                label: "jason",
+              },
+              {
+                name: "antoine",
+                value: false,
+                label: "antoine",
+              },
+            ]}
+            onChange={(e, w) => console.log(e, w)}
+            helperText="please select..."
           />
         );
         break;
