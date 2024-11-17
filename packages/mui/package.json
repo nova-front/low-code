@@ -12,7 +12,8 @@
     "./radio": "./src/radio.tsx",
     "./radio.group": "./src/radio.group.tsx",
     "./switch": "./src/switch/switch.tsx",
-    "./switches.group": "./src/switch/switches.group.tsx"
+    "./switches.group": "./src/switch/switches.group.tsx",
+    "./select": "./src/select/select.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
