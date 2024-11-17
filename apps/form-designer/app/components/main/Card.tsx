@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import TextFieldMui from "@mui/material/TextField";
 import {
   Button,
   TextField,
@@ -10,8 +11,10 @@ import {
   RadioGroup,
   SwitchesGroup,
   Select,
+  Autocomplete,
 } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
+import top100Films from "./top100Films";
 
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
@@ -217,6 +220,11 @@ export const Card: FC<CardProps> = ({
             options={["None", "12", "13", "14"]}
             helperText="please select..."
           />
+        );
+        break;
+      case "autocomplete":
+        resultNode = (
+          <Autocomplete disablePortal label="Movie" options={top100Films} />
         );
         break;
       case "button":

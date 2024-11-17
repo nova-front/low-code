@@ -35,6 +35,6 @@ export const basicComponents = [
 
 export const advancedComponents = [
   {
-    name: "More",
+    name: "Todo",
   },
 ];
