@@ -4,6 +4,7 @@ import Button from "@repo/mui/button";
 import CheckBoxGroup from "@repo/mui/checkbox.group";
 import RadioGroup from "@repo/mui/radio.group";
 import SwitchesGroup from "@repo/mui/switches.group";
+import Select from "@repo/mui/select";
 
 export {
   TextField,
@@ -12,4 +13,5 @@ export {
   CheckBoxGroup,
   RadioGroup,
   SwitchesGroup,
+  Select,
 };

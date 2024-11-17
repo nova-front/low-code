@@ -9,6 +9,7 @@ import {
   CheckBoxGroup,
   RadioGroup,
   SwitchesGroup,
+  Select,
 } from "../../components/mui";
 import { ItemTypes } from "../ItemTypes";
 
@@ -202,6 +203,18 @@ export const Card: FC<CardProps> = ({
               },
             ]}
             onChange={(e, w) => console.log(e, w)}
+            helperText="please select..."
+          />
+        );
+        break;
+      case "select":
+        resultNode = (
+          <Select
+            fullWidth
+            autoWidth
+            label="Age"
+            defaultValue={"12"}
+            options={["None", "12", "13", "14"]}
             helperText="please select..."
           />
         );
