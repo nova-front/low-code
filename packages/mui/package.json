@@ -13,7 +13,8 @@
     "./radio.group": "./src/radio.group.tsx",
     "./switch": "./src/switch/switch.tsx",
     "./switches.group": "./src/switch/switches.group.tsx",
-    "./select": "./src/select/select.tsx"
+    "./select": "./src/select/select.tsx",
+    "./autocomplete": "./src/combo-box/combo.box.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
