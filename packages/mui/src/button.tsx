@@ -12,6 +12,14 @@ interface ButtonProps {
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  color?:
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "error"
+    | "info"
+    | "warning";
   [key: string]: any;
 }
 
@@ -22,6 +30,7 @@ const Button = ({
   size = "medium",
   disabled = false,
   onClick = () => {},
+  color,
   ...rest
 }: ButtonProps): JSX.Element => {
   return (
@@ -31,6 +40,7 @@ const Button = ({
         variant={variant}
         size={size}
         disabled={disabled}
+        color={color}
         onClick={onClick}
         {...rest}
       >
