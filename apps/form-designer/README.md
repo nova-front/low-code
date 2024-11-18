@@ -11,6 +11,23 @@
 - 生成数据保存到管理系统, 反之，根据数据复现表单生成器
 - 希望换个UI库，整个系统可以不变，只是把UI数据源换即可，或者数据源可配置
 
+### Component dialog
+
+#### display
+
+- name 【没必要】
+- type
+- label
+- description
+
+#### data
+
+- key
+  与后端约定的字段
+- options
+
+#### conditional
+
 ## 表单适配器(adapter)
 
 - 目的：具体页面使用 适配器 + 数据源，即可设计页面
