@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -14,6 +13,8 @@ import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+
+import { TextField, Button } from "../mui";
 
 function a11yProps(index: number) {
   return {
@@ -83,6 +84,9 @@ const SettingDialog = () => {
       >
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Text Field Component
+            </Typography>
             <IconButton
               edge="start"
               color="inherit"
@@ -91,12 +95,6 @@ const SettingDialog = () => {
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Text Field Component
-            </Typography>
-            <Button autoFocus color="inherit" onClick={closeFn}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <DialogContent>
@@ -127,7 +125,17 @@ const SettingDialog = () => {
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tab label="Preview" {...a11yProps(0)} />
               </Box>
-              <Box>test</Box>
+              <Box sx={{ mt: "12px", mb: "12px" }}>
+                <TextField
+                  label="TextField"
+                  variant="outlined"
+                  fullWidth
+                  helperText="please input..."
+                />
+              </Box>
+              <Button variant="contained" color="primary" onClick={closeFn}>
+                Save
+              </Button>
             </Grid>
           </Grid>
         </DialogContent>
