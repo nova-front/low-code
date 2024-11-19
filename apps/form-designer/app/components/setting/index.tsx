@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -13,8 +14,11 @@ import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import DisplayTabPanel from "./DisplayTabPanel";
 
 import { TextField, Button } from "../mui";
+
+import { TabPanelProps } from "./type";
 
 function a11yProps(index: number) {
   return {
@@ -22,12 +26,6 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
     sx: { textTransform: "none" },
   };
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -56,8 +54,20 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const SettingDialog = () => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(0);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
+
+  const [fieldData, setFieldData] = useState<any>({
+    label: "TextField",
+    description: "Please enter a value",
+  });
+
+  const updatefieldData = (key: string, value: string) => {
+    setFieldData({
+      ...fieldData,
+      [key]: value,
+    });
+  };
 
   const onChangeFn = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -97,7 +107,7 @@ const SettingDialog = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogContent>
+        <DialogContent sx={{ padding: "0 12px" }}>
           <Grid container spacing={2}>
             <Grid size={8}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -111,9 +121,12 @@ const SettingDialog = () => {
                   <Tab label="Conditional" {...a11yProps(2)} />
                 </Tabs>
               </Box>
-              <CustomTabPanel value={value} index={0}>
-                Display
-              </CustomTabPanel>
+              <DisplayTabPanel
+                value={value}
+                index={0}
+                data={fieldData}
+                onUpdate={updatefieldData}
+              />
               <CustomTabPanel value={value} index={1}>
                 Data
               </CustomTabPanel>
@@ -125,12 +138,12 @@ const SettingDialog = () => {
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tab label="Preview" {...a11yProps(0)} />
               </Box>
-              <Box sx={{ mt: "12px", mb: "12px" }}>
+              <Box sx={{ mt: 4, mb: "12px" }}>
                 <TextField
-                  label="TextField"
+                  label={fieldData.label}
                   variant="outlined"
                   fullWidth
-                  helperText="please input..."
+                  helperText={fieldData.description}
                 />
               </Box>
               <Button variant="contained" color="primary" onClick={closeFn}>
