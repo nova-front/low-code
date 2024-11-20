@@ -3,9 +3,7 @@ import { TextField, Grid2 as Grid } from "@mui/material";
 import { TabPanelProps } from "./type";
 
 const DisplayTabPanel = (props: TabPanelProps) => {
-  const { value, index, data, onUpdate, ...other } = props;
-  // const [label, setLabel] = useState("TextField");
-  // const [description, setDescription] = useState("Please enter your name");
+  const { value, index, data = {}, onUpdate, ...other } = props;
 
   return (
     <div
@@ -31,8 +29,17 @@ const DisplayTabPanel = (props: TabPanelProps) => {
               fullWidth
               label="Description"
               variant="outlined"
-              value={data.description}
-              onChange={(e: any) => onUpdate?.("description", e.target.value)}
+              value={data.helperText}
+              onChange={(e: any) => onUpdate?.("helperText", e.target.value)}
+            />
+          </Grid>
+          <Grid size={6}>
+            <TextField
+              fullWidth
+              label="Placeholder"
+              variant="outlined"
+              value={data.placeholder}
+              onChange={(e: any) => onUpdate?.("placeholder", e.target.value)}
             />
           </Grid>
         </Grid>

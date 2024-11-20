@@ -11,38 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid2";
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import DisplayTabPanel from "./DisplayTabPanel";
-
-import { TextField, Button } from "../mui";
-
-import { TabPanelProps } from "./type";
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-    sx: { textTransform: "none" },
-  };
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box>{children}</Box>}
-    </div>
-  );
-}
+import LeftPanel from "./LeftPanel";
+import RightPanel from "./RightPanel";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -55,11 +25,11 @@ const Transition = React.forwardRef(function Transition(
 
 const SettingDialog = () => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(0);
 
   const [fieldData, setFieldData] = useState<any>({
     label: "TextField",
-    description: "Please enter a value",
+    helperText: "this is a description",
+    placeholder: "Please enter a number value",
   });
 
   const updatefieldData = (key: string, value: string) => {
@@ -67,10 +37,6 @@ const SettingDialog = () => {
       ...fieldData,
       [key]: value,
     });
-  };
-
-  const onChangeFn = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
   };
 
   const openFn = () => {
@@ -107,48 +73,22 @@ const SettingDialog = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogContent sx={{ padding: "0 12px" }}>
-          <Grid container spacing={2}>
-            <Grid size={8}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                  value={value}
-                  onChange={onChangeFn}
-                  aria-label="basic tabs example"
-                >
-                  <Tab label="Display" {...a11yProps(0)} />
-                  <Tab label="Data" {...a11yProps(1)} />
-                  <Tab label="Conditional" {...a11yProps(2)} />
-                </Tabs>
-              </Box>
-              <DisplayTabPanel
-                value={value}
-                index={0}
-                data={fieldData}
-                onUpdate={updatefieldData}
+        <DialogContent sx={{ padding: "0px" }}>
+          <Grid container spacing={0} sx={{ minHeight: "100%" }}>
+            <Grid
+              size={8}
+              sx={{
+                padding: "0 12px",
+                borderRight: "1px dashed #e5e5e5",
+              }}
+            >
+              <LeftPanel
+                fieldData={fieldData}
+                updatefieldData={updatefieldData}
               />
-              <CustomTabPanel value={value} index={1}>
-                Data
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                Conditional
-              </CustomTabPanel>
             </Grid>
-            <Grid size={4}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tab label="Preview" {...a11yProps(0)} />
-              </Box>
-              <Box sx={{ mt: 4, mb: "12px" }}>
-                <TextField
-                  label={fieldData.label}
-                  variant="outlined"
-                  fullWidth
-                  helperText={fieldData.description}
-                />
-              </Box>
-              <Button variant="contained" color="primary" onClick={closeFn}>
-                Save
-              </Button>
+            <Grid size={4} sx={{ padding: "0 12px" }}>
+              <RightPanel fieldData={fieldData} />
             </Grid>
           </Grid>
         </DialogContent>
