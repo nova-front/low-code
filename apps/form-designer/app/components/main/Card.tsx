@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SettingDialog from "../setting";
 
@@ -254,7 +253,6 @@ export const Card: FC<CardProps> = ({
       <div className={styles.card_right}>
         <div className={styles.icon_box}>
           <SettingDialog />
-          {/* <BorderColorIcon color="primary" /> */}
         </div>
         <div className={styles.icon_box} onClick={onDelete}>
           <DeleteForeverIcon color="error" />
