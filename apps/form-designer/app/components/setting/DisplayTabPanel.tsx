@@ -1,7 +1,7 @@
 import { TextField, Grid2 as Grid } from "@mui/material";
-import { TabPanelProps } from "./type";
+import { DisPlayTabPanelProps } from "./type";
 
-const DisplayTabPanel = (props: TabPanelProps) => {
+const DisplayTabPanel = (props: DisPlayTabPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
 
   return (

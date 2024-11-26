@@ -9,6 +9,9 @@ export interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-  data?: FormItemProps;
-  onUpdate?: (key: string, value: string) => void;
+}
+
+export interface DisPlayTabPanelProps extends TabPanelProps {
+  data: FormItemProps;
+  onUpdate: (key: string, value: string) => void;
 }

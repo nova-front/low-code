@@ -57,7 +57,7 @@ const Container: FC<ContainerProps> = ({
           />
         );
       },
-      [moveCard, onDelete]
+      [moveCard, onDelete, onUpdate]
     );
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
