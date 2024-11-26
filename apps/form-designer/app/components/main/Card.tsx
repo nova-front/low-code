@@ -124,20 +124,14 @@ export const Card: FC<CardProps> = ({
   const renderCard = (type: FieldType, data: FormItemProps) => {
     let resultNode: React.ReactNode = "";
     const { id, name, ...otherProps } = data;
-    console.log("otherProps", otherProps);
+
+    // TODO: 待完善
     switch (type) {
       case "textfield":
         resultNode = <TextField fullWidth {...otherProps} />;
         break;
       case "textarea":
-        resultNode = (
-          <TextArea
-            label="TextArea"
-            variant="outlined"
-            fullWidth
-            helperText="please input..."
-          />
-        );
+        resultNode = <TextArea fullWidth {...otherProps} />;
         break;
       case "checkbox":
         resultNode = (
