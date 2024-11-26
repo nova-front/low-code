@@ -6,15 +6,17 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
 
 import FieldContainer from "./components/field/Container";
-import MainContainer, { type Item } from "./components/main/Container";
+import MainContainer from "./components/main/Container";
 import { Button } from "./components/mui";
+
+import { FormItemProps } from "./type";
 
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [cards, setCards] = useState<Item[]>([]);
+  const [cards, setCards] = useState<FormItemProps[]>([]);
 
-  const onAdd = (item: Item) => {
+  const onAdd = (item: FormItemProps) => {
     const newCards = update(cards, {
       $push: [{ ...item, id: crypto.randomUUID() }],
     });
@@ -31,12 +33,29 @@ export default function Home() {
     [cards]
   );
 
+  const onUpdate = useCallback(
+    (id: string, data: FormItemProps) => {
+      const newCards = update(cards, {
+        $apply: (arr: FormItemProps[]) => {
+          return arr.map((item: FormItemProps) => {
+            if (item.id === id) {
+              return data;
+            }
+            return item;
+          });
+        },
+      });
+      setCards(newCards);
+    },
+    [cards]
+  );
+
   const cardsStr = useMemo(() => {
     const param: any = {
       components: [],
     };
-    cards.forEach((card: Item) => {
-      const { id, ...other } = card;
+    cards.forEach((card: FormItemProps) => {
+      const { id, name, ...other } = card;
       param.components.push({
         ...other,
       });
@@ -48,7 +67,12 @@ export default function Home() {
     <DndProvider backend={HTML5Backend}>
       <div className={styles.page}>
         <FieldContainer onAdd={onAdd} />
-        <MainContainer cards={cards} setCards={setCards} onDelete={onDelete} />
+        <MainContainer
+          cards={cards}
+          setCards={setCards}
+          onDelete={onDelete}
+          onUpdate={onUpdate}
+        />
         <main className={styles.json_box}>
           <header className={styles.title}>
             JSON Schema

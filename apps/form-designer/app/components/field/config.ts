@@ -1,4 +1,6 @@
-export const basicComponents = [
+import { type FormItemProps } from "../../type.d";
+
+export const basicComponents: FormItemProps[] = [
   {
     name: "Text Field",
     type: "textfield",
@@ -33,8 +35,9 @@ export const basicComponents = [
   },
 ];
 
-export const advancedComponents = [
+export const advancedComponents: FormItemProps[] = [
   {
     name: "Todo",
+    type: "unknown",
   },
 ];

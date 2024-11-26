@@ -5,8 +5,15 @@ import CustomTabPanel from "./CustomTabPanel";
 import { TextField, Button } from "../mui";
 
 import { a11yProps } from "./util";
+import { FormItemProps } from "../../type";
 
-const RightPanel = ({ fieldData }: any) => {
+interface RightPanelProps {
+  fieldData: FormItemProps;
+  onSave: any;
+  onReset: any;
+}
+
+const RightPanel = ({ fieldData, onSave, onReset }: RightPanelProps) => {
   const [value, setValue] = useState(0);
 
   const onChangeFn = (event: React.SyntheticEvent, newValue: number) => {
@@ -29,10 +36,10 @@ const RightPanel = ({ fieldData }: any) => {
           <TextField variant="outlined" fullWidth {...fieldData} />
         </Box>
         <Stack spacing={2} direction="row">
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={onSave}>
             Save
           </Button>
-          <Button variant="outlined" color="primary">
+          <Button variant="outlined" color="primary" onClick={onReset}>
             Reset
           </Button>
         </Stack>

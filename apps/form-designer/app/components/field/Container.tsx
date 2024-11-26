@@ -8,6 +8,7 @@ import { Button } from "../../components/mui";
 import { basicComponents, advancedComponents } from "./config";
 
 import type { FC } from "react";
+import { FormItemProps } from "../../type.d";
 import globalStyle from "../../page.module.css";
 import styles from "./styles.module.css";
 
@@ -38,14 +39,9 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
           Basic
         </AccordionSummary>
         <AccordionDetails>
-          {basicComponents?.map((item: any) => {
+          {basicComponents?.map((item: FormItemProps) => {
             return (
-              <FieldBox
-                key={item.name}
-                name={item.type}
-                data={item}
-                onAdd={onAdd}
-              >
+              <FieldBox key={item.name} data={item} onAdd={onAdd}>
                 <Button variant="outlined" size="small">
                   {item.name}
                 </Button>
@@ -68,12 +64,7 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
         <AccordionDetails>
           {advancedComponents?.map((item: any) => {
             return (
-              <FieldBox
-                key={item.name}
-                name={item.name}
-                data={item}
-                onAdd={onAdd}
-              >
+              <FieldBox key={item.name} data={item} onAdd={onAdd}>
                 <Button variant="outlined" size="small">
                   {item.name}
                 </Button>

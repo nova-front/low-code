@@ -5,6 +5,7 @@ import { ItemTypes } from "../ItemTypes";
 import { Card } from "./Card";
 import { Button } from "../../components/mui";
 
+import type { FormItemProps } from "../../type";
 import type { FC } from "react";
 import globalStyle from "../../page.module.css";
 import styles from "./styles.module.css";
@@ -13,27 +14,27 @@ const style = {
   width: "100%",
 };
 
-export interface Item {
-  id: string;
-  name: string;
-  type: string;
-}
-
 export interface ContainerProps {
-  cards: Item[];
+  cards: FormItemProps[];
   setCards: any;
   onDelete: (index: number) => void;
+  onUpdate: any;
 }
 
-const Container: FC<ContainerProps> = ({ cards, setCards, onDelete }) => {
+const Container: FC<ContainerProps> = ({
+  cards,
+  setCards,
+  onDelete,
+  onUpdate,
+}) => {
   {
     const moveCard = useCallback(
       (dragIndex: number, hoverIndex: number) => {
-        setCards((prevCards: Item[]) =>
+        setCards((prevCards: FormItemProps[]) =>
           update(prevCards, {
             $splice: [
               [dragIndex, 1],
-              [hoverIndex, 0, prevCards[dragIndex] as Item],
+              [hoverIndex, 0, prevCards[dragIndex] as FormItemProps],
             ],
           })
         );
@@ -42,16 +43,17 @@ const Container: FC<ContainerProps> = ({ cards, setCards, onDelete }) => {
     );
 
     const renderCard = useCallback(
-      (card: { id: string; name: string; type: string }, index: number) => {
+      (card: FormItemProps, index: number) => {
         return (
           <Card
             key={card.id}
             index={index}
             id={card.id}
-            name={card.name}
+            data={card}
             type={card.type}
             moveCard={moveCard}
             onDelete={() => onDelete(index)}
+            onUpdate={onUpdate}
           />
         );
       },

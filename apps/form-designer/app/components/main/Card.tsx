@@ -13,20 +13,22 @@ import {
   Select,
   Autocomplete,
 } from "../../components/mui";
-import { ItemTypes } from "../ItemTypes";
 import top100Films from "./top100Films";
 
+import { ItemTypes } from "../ItemTypes";
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
+import { FieldType, FormItemProps } from "../../type";
 import styles from "./styles.module.css";
 
 export interface CardProps {
   id: any;
-  name: string;
-  type: string | "texefield" | "button";
   index: number;
+  type: FieldType;
+  data: any;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
   onDelete: () => void;
+  onUpdate: any;
 }
 
 interface DragItem {
@@ -37,11 +39,12 @@ interface DragItem {
 
 export const Card: FC<CardProps> = ({
   id,
-  name,
-  type,
   index,
+  type,
+  data,
   moveCard,
   onDelete,
+  onUpdate,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<
@@ -118,18 +121,13 @@ export const Card: FC<CardProps> = ({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
-  const renderCard = (type: string) => {
+  const renderCard = (type: FieldType, data: FormItemProps) => {
     let resultNode: React.ReactNode = "";
+    const { id, name, ...otherProps } = data;
+    console.log("otherProps", otherProps);
     switch (type) {
       case "textfield":
-        resultNode = (
-          <TextField
-            label="TextField"
-            variant="outlined"
-            fullWidth
-            helperText="please input..."
-          />
-        );
+        resultNode = <TextField fullWidth {...otherProps} />;
         break;
       case "textarea":
         resultNode = (
@@ -230,13 +228,13 @@ export const Card: FC<CardProps> = ({
       case "button":
         resultNode = (
           <Button variant="outlined" size="small">
-            {name}
+            {data.name}
           </Button>
         );
         break;
 
       default:
-        resultNode = `【${name}】正在开发...`;
+        resultNode = `【${data.name}】正在开发...`;
         break;
     }
     return resultNode;
@@ -249,10 +247,10 @@ export const Card: FC<CardProps> = ({
       className={styles.card}
       data-handler-id={handlerId}
     >
-      <div className={styles.card_left}>{renderCard(type)}</div>
+      <div className={styles.card_left}>{renderCard(type, data)}</div>
       <div className={styles.card_right}>
         <div className={styles.icon_box}>
-          <SettingDialog />
+          <SettingDialog initData={data} onUpdate={onUpdate} />
         </div>
         <div className={styles.icon_box} onClick={onDelete}>
           <DeleteForeverIcon color="error" />

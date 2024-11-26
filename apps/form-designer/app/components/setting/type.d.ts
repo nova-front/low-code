@@ -1,7 +1,8 @@
-interface FormItemProps {
-  label?: React.ReactNode;
-  helperText?: React.ReactNode;
-  placeholder?: string;
+import { FormItemProps } from "../../type.d";
+
+export interface SettingDialogProps {
+  initData: FormItemProps;
+  onUpdate: any;
 }
 
 export interface TabPanelProps {

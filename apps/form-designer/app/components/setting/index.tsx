@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback, forwardRef, Fragment } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -14,7 +13,9 @@ import Grid from "@mui/material/Grid2";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 
-const Transition = React.forwardRef(function Transition(
+import { SettingDialogProps } from "./type";
+
+const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<unknown>;
   },
@@ -23,7 +24,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SettingDialog = () => {
+const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
   const [open, setOpen] = useState(false);
 
   const [fieldData, setFieldData] = useState<any>({
@@ -33,6 +34,7 @@ const SettingDialog = () => {
   });
 
   const updatefieldData = (key: string, value: string) => {
+    // onUpdate(fieldData.id, key, value);
     setFieldData({
       ...fieldData,
       [key]: value,
@@ -40,6 +42,7 @@ const SettingDialog = () => {
   };
 
   const openFn = () => {
+    setFieldData(initData);
     setOpen(true);
   };
 
@@ -47,8 +50,17 @@ const SettingDialog = () => {
     setOpen(false);
   };
 
+  const onSave = useCallback(() => {
+    onUpdate(fieldData.id, fieldData);
+    closeFn();
+  }, [fieldData, onUpdate]);
+
+  const onReset = useCallback(() => {
+    setFieldData(initData);
+  }, [initData]);
+
   return (
-    <React.Fragment>
+    <Fragment>
       <BorderColorIcon color="primary" onClick={openFn} />
       <Dialog
         fullScreen
@@ -88,12 +100,16 @@ const SettingDialog = () => {
               />
             </Grid>
             <Grid size={4} sx={{ padding: "0 12px" }}>
-              <RightPanel fieldData={fieldData} />
+              <RightPanel
+                fieldData={fieldData}
+                onSave={onSave}
+                onReset={onReset}
+              />
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

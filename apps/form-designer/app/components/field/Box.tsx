@@ -1,14 +1,14 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
+import type { FormItemProps } from "../../type";
 
 import type { FC } from "react";
 import type { DragSourceMonitor } from "react-dnd";
 
 export interface BoxProps {
   children: React.ReactNode;
-  name: string;
-  data: any;
+  data: FormItemProps;
   onAdd: Function;
 }
 
@@ -18,7 +18,18 @@ interface DropResult {
   name: string;
 }
 
-const Box: FC<BoxProps> = memo(({ name, data, children, onAdd }) => {
+const Box: FC<BoxProps> = memo(({ data, children, onAdd }) => {
+  // TODO: 待完善
+  const getInitData = useCallback((data: any) => {
+    const initData = {
+      ...data,
+      label: data.name,
+      helperText: "this is a description",
+      placeholder: "Please enter a value",
+    };
+    return initData;
+  }, []);
+
   const [{ opacity }, drag] = useDrag(
     () => ({
       type: ItemTypes.BOX,
@@ -26,14 +37,15 @@ const Box: FC<BoxProps> = memo(({ name, data, children, onAdd }) => {
       end(item, monitor) {
         const dropResult = monitor.getDropResult() as DropResult;
         if (item && dropResult) {
-          onAdd(item);
+          const initData = getInitData(data);
+          onAdd(initData);
         }
       },
       collect: (monitor: DragSourceMonitor) => ({
         opacity: monitor.isDragging() ? 0.4 : 1,
       }),
     }),
-    [name, onAdd]
+    [onAdd]
   );
 
   return (

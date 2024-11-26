@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { TextField, Grid2 as Grid } from "@mui/material";
 import { TabPanelProps } from "./type";
 
 const DisplayTabPanel = (props: TabPanelProps) => {
-  const { value, index, data = {}, onUpdate, ...other } = props;
+  const { value, index, data, onUpdate, ...other } = props;
 
   return (
     <div
