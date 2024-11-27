@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
-
+import { copy } from "./utils/common";
 import FieldContainer from "./components/field/Container";
 import MainContainer from "./components/main/Container";
 import { Button } from "./components/mui";
@@ -50,7 +50,7 @@ export default function Home() {
     [cards]
   );
 
-  const cardsStr = useMemo(() => {
+  const getParamData = useCallback(() => {
     const param: any = {
       components: [],
     };
@@ -60,25 +60,41 @@ export default function Home() {
         ...other,
       });
     });
-    return JSON.stringify(param, null, 2);
+    return param;
   }, [cards]);
+
+  const dataStr = useMemo(() => {
+    const param = getParamData();
+    return JSON.stringify(param, null, 2);
+  }, [getParamData]);
+
+  const copyFn = useCallback(() => {
+    const param = getParamData();
+    const text = JSON.stringify(param);
+    copy(text);
+  }, [getParamData]);
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={styles.page}>
+        {/* 左 */}
         <FieldContainer onAdd={onAdd} />
+        {/* 中 */}
         <MainContainer
           cards={cards}
           setCards={setCards}
           onDelete={onDelete}
           onUpdate={onUpdate}
         />
+        {/* 右 */}
         <main className={styles.json_box}>
           <header className={styles.title}>
             JSON Schema
-            <Button variant="text">Copy Data</Button>
+            <Button variant="text" onClick={copyFn}>
+              Copy Data
+            </Button>
           </header>
-          <pre className="container">{cardsStr}</pre>
+          <pre className="container">{dataStr}</pre>
         </main>
       </div>
     </DndProvider>
