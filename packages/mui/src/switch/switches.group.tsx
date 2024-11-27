@@ -13,7 +13,7 @@ interface ValueItem {
 }
 
 interface SwitchesGroupProps {
-  label?: string;
+  label?: React.ReactNode;
   options: ValueItem[];
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,

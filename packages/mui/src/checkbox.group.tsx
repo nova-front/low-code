@@ -15,7 +15,7 @@ interface OptionProps {
 interface CheckboxGroupProps {
   defaultValue?: (string | number)[];
   disabled?: boolean;
-  label?: string;
+  label?: React.ReactNode;
   options: string[] | number[] | OptionProps[];
   value?: (string | number | boolean)[];
   onChange?: (checkedValue: T[]) => void;

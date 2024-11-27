@@ -2,7 +2,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
 interface ComboBoxProps {
-  label: string;
+  label?: React.ReactNode;
   disablePortal?: boolean;
   options: readonly unknown[];
   freeSolo?: true;

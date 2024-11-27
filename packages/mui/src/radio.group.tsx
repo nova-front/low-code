@@ -13,7 +13,7 @@ interface OptionProps {
 
 interface RadioGroupProps {
   name?: string;
-  label?: string;
+  label?: React.ReactNode;
   row?: boolean;
   defaultValue?: any;
   value?: any;
@@ -25,7 +25,7 @@ interface RadioGroupProps {
   disabled?: boolean;
   required?: boolean;
   error?: boolean;
-  helperText?: string;
+  helperText?: React.ReactNode;
 }
 
 const RadioGroup = ({

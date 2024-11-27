@@ -15,7 +15,7 @@ interface SelectProps {
   defaultValue?: any; // The default value. Use when the component is not controlled.
   value?: any;
   onChange?: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
-  label?: string;
+  label?: React.ReactNode;
   options: string[] | OptionProps[];
   size?: "small" | "medium";
   fullWidth?: boolean;
@@ -23,7 +23,7 @@ interface SelectProps {
   disabled?: boolean;
   required?: boolean;
   error?: boolean;
-  helperText?: string;
+  helperText?: React.ReactNode;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   multiple?: boolean;
 }
