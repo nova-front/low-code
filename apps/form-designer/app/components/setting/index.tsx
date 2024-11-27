@@ -73,7 +73,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Text Field Component
+              {fieldData.name} Component
             </Typography>
             <IconButton
               edge="start"
@@ -104,6 +104,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
                 fieldData={fieldData}
                 onSave={onSave}
                 onReset={onReset}
+                onClose={closeFn}
               />
             </Grid>
           </Grid>

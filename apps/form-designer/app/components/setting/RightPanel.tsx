@@ -11,9 +11,15 @@ interface RightPanelProps {
   fieldData: FormItemProps;
   onSave: any;
   onReset: any;
+  onClose: any;
 }
 
-const RightPanel = ({ fieldData, onSave, onReset }: RightPanelProps) => {
+const RightPanel = ({
+  fieldData,
+  onSave,
+  onReset,
+  onClose,
+}: RightPanelProps) => {
   const [value, setValue] = useState(0);
 
   const onChangeFn = (event: React.SyntheticEvent, newValue: number) => {
@@ -41,6 +47,9 @@ const RightPanel = ({ fieldData, onSave, onReset }: RightPanelProps) => {
           </Button>
           <Button variant="outlined" color="primary" onClick={onReset}>
             Reset
+          </Button>
+          <Button variant="outlined" color="secondary" onClick={onClose}>
+            Close
           </Button>
         </Stack>
       </CustomTabPanel>
