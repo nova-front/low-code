@@ -16,4 +16,6 @@ export interface FormItemProps {
   label?: React.ReactNode;
   helperText?: React.ReactNode;
   placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
 }

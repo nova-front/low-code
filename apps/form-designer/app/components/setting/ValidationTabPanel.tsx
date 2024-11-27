@@ -1,0 +1,47 @@
+import { Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import { ValidationTabPanelProps } from "./type";
+
+const ValidationTabPanel = (props: ValidationTabPanelProps) => {
+  const { value, index, data, onUpdate, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ mt: 2 }}>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={data.required}
+                  onChange={(e: any) => {
+                    onUpdate?.("required", e.target.checked);
+                  }}
+                />
+              }
+              label="Required"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={data.disabled}
+                  onChange={(e: any) => {
+                    onUpdate?.("disabled", e.target.checked);
+                  }}
+                />
+              }
+              label="Disabled"
+            />
+          </FormGroup>
+        </Box>
+      )}
+    </div>
+  );
+};
+
+export default ValidationTabPanel;

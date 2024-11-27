@@ -26,6 +26,8 @@ const Box: FC<BoxProps> = memo(({ data, children, onAdd }) => {
       label: data.name,
       helperText: "this is a description",
       placeholder: "Please enter a value",
+      required: false,
+      disabled: false,
     };
     return initData;
   }, []);

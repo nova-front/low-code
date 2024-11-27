@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import DisplayTabPanel from "./DisplayTabPanel";
+import ValidationTabPanel from "./ValidationTabPanel";
 import CustomTabPanel from "./CustomTabPanel";
 import { a11yProps } from "./util";
 
@@ -23,8 +24,9 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
           aria-label="basic tabs example"
         >
           <Tab label="Display" {...a11yProps(0)} />
-          <Tab label="Data" {...a11yProps(1)} />
-          <Tab label="Conditional" {...a11yProps(2)} />
+          <Tab label="Validation" {...a11yProps(1)} />
+          <Tab label="Data" {...a11yProps(2)} />
+          <Tab label="Conditional" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <DisplayTabPanel
@@ -33,10 +35,18 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
         data={fieldData}
         onUpdate={updatefieldData}
       />
-      <CustomTabPanel value={value} index={1}>
+      <ValidationTabPanel
+        value={value}
+        index={1}
+        data={fieldData}
+        onUpdate={updatefieldData}
+      >
+        Validation
+      </ValidationTabPanel>
+      <CustomTabPanel value={value} index={2}>
         Data
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={value} index={3}>
         Conditional
       </CustomTabPanel>
     </React.Fragment>
