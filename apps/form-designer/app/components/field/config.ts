@@ -29,10 +29,10 @@ export const basicComponents: FormItemProps[] = [
     name: "Autocomplete",
     type: "autocomplete",
   },
-  {
-    name: "Button",
-    type: "button",
-  },
+  // {
+  //   name: "Button",
+  //   type: "button",
+  // },
 ];
 
 export const advancedComponents: FormItemProps[] = [
