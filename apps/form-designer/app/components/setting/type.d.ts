@@ -9,6 +9,7 @@ export interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  style?: any;
 }
 
 export interface DisPlayTabPanelProps extends TabPanelProps {

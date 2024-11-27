@@ -1,24 +1,13 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import useRenderField from "../../hooks/useRenderField";
 import SettingDialog from "../setting";
-
-import {
-  Button,
-  TextField,
-  TextArea,
-  CheckBoxGroup,
-  RadioGroup,
-  SwitchesGroup,
-  Select,
-  Autocomplete,
-} from "../../components/mui";
-import top100Films from "./top100Films";
 
 import { ItemTypes } from "../ItemTypes";
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
-import { FieldType, FormItemProps } from "../../type";
+import { FieldType } from "../../type";
 import styles from "./styles.module.css";
 
 export interface CardProps {
@@ -46,6 +35,7 @@ export const Card: FC<CardProps> = ({
   onDelete,
   onUpdate,
 }) => {
+  const { renderField } = useRenderField();
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -121,112 +111,6 @@ export const Card: FC<CardProps> = ({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
-  const renderCard = (type: FieldType, data: FormItemProps) => {
-    let resultNode: React.ReactNode = "";
-    const { id, name, ...otherProps } = data;
-
-    // TODO: 待完善
-    switch (type) {
-      case "textfield":
-        resultNode = <TextField fullWidth {...otherProps} />;
-        break;
-      case "textarea":
-        resultNode = <TextArea fullWidth {...otherProps} />;
-        break;
-      case "checkbox":
-        resultNode = (
-          <CheckBoxGroup
-            {...otherProps}
-            row
-            // error
-            defaultValue={["A"]}
-            // options={["A", "B", "C"]}
-            // disabled
-            options={[
-              { value: "A", label: "AA" },
-              { value: "B", label: "BB" },
-              { value: "C", label: "CC", disabled: true },
-            ]}
-            // onChange={(w) => console.log(w)}
-          />
-        );
-        break;
-      case "radio":
-        resultNode = (
-          <RadioGroup
-            {...otherProps}
-            row
-            // error
-            defaultValue={"A"}
-            // options={["A", "B", "C"]}】
-            // disabled
-            options={[
-              { value: "A", label: "AA" },
-              { value: "B", label: "BB" },
-              { value: "C", label: "CC", disabled: true },
-            ]}
-            onChange={(e, w) => console.log(e, w)}
-          />
-        );
-        break;
-      case "switch":
-        resultNode = (
-          <SwitchesGroup
-            {...otherProps}
-            row
-            error
-            options={[
-              {
-                name: "gilad",
-                value: false,
-                label: "gilad",
-              },
-              {
-                name: "jason",
-                value: false,
-                label: "jason",
-              },
-              {
-                name: "antoine",
-                value: false,
-                label: "antoine",
-              },
-            ]}
-            onChange={(e, w) => console.log(e, w)}
-          />
-        );
-        break;
-      case "select":
-        resultNode = (
-          <Select
-            fullWidth
-            {...otherProps}
-            autoWidth
-            defaultValue={"12"}
-            options={["None", "12", "13", "14"]}
-          />
-        );
-        break;
-      case "autocomplete":
-        resultNode = (
-          <Autocomplete disablePortal {...otherProps} options={top100Films} />
-        );
-        break;
-      case "button":
-        resultNode = (
-          <Button variant="outlined" size="small">
-            {data.name}
-          </Button>
-        );
-        break;
-
-      default:
-        resultNode = `【${data.name}】正在开发...`;
-        break;
-    }
-    return resultNode;
-  };
-
   return (
     <div
       ref={ref}
@@ -234,7 +118,7 @@ export const Card: FC<CardProps> = ({
       className={styles.card}
       data-handler-id={handlerId}
     >
-      <div className={styles.card_left}>{renderCard(type, data)}</div>
+      <div className={styles.card_left}>{renderField(data)}</div>
       <div className={styles.card_right}>
         <div className={styles.icon_box}>
           <SettingDialog initData={data} onUpdate={onUpdate} />

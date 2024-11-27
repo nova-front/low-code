@@ -4,9 +4,11 @@ import { useState, useMemo, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
+import { NotificationsProvider } from "@toolpad/core/useNotifications";
 import { copy } from "./utils/common";
 import FieldContainer from "./components/field/Container";
 import MainContainer from "./components/main/Container";
+import CopyBtn from "./components/copy-btn";
 import { Button } from "./components/mui";
 
 import { FormItemProps } from "./type";
@@ -90,9 +92,12 @@ export default function Home() {
         <main className={styles.json_box}>
           <header className={styles.title}>
             JSON Schema
-            <Button variant="text" onClick={copyFn}>
-              Copy Data
-            </Button>
+            <NotificationsProvider>
+              <Button variant="text" onClick={copyFn}>
+                Copy Data
+              </Button>
+            </NotificationsProvider>
+            {/* <CopyBtn /> */}
           </header>
           <pre className="container">{dataStr}</pre>
         </main>

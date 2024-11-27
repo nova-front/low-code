@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { Stack, Box, Tabs, Tab } from "@mui/material";
+import useRenderField from "../../hooks/useRenderField";
 import CustomTabPanel from "./CustomTabPanel";
-import { TextField, Button } from "../mui";
+import { Button } from "../mui";
 
 import { a11yProps } from "./util";
 import { FormItemProps } from "../../type";
@@ -20,6 +21,7 @@ const RightPanel = ({
   onReset,
   onClose,
 }: RightPanelProps) => {
+  const { renderField } = useRenderField();
   const [value, setValue] = useState(0);
 
   const onChangeFn = (event: React.SyntheticEvent, newValue: number) => {
@@ -37,11 +39,19 @@ const RightPanel = ({
           <Tab label="Preview" {...a11yProps(0)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Box sx={{ mt: 4, mb: "12px" }}>
-          <TextField variant="outlined" fullWidth {...fieldData} />
-        </Box>
-        <Stack spacing={2} direction="row">
+      <CustomTabPanel
+        value={value}
+        index={0}
+        style={{
+          height: "calc(100vh - 114px)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          paddingBottom: "12px",
+        }}
+      >
+        <Box sx={{ mt: 4, mb: "48px" }}>{renderField(fieldData)}</Box>
+        <Stack spacing={2} direction="row" style={{ justifyContent: "end" }}>
           <Button variant="contained" color="primary" onClick={onSave}>
             Save
           </Button>
