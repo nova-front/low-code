@@ -136,9 +136,8 @@ export const Card: FC<CardProps> = ({
       case "checkbox":
         resultNode = (
           <CheckBoxGroup
-            label="CheckBox Group"
+            {...otherProps}
             row
-            required
             // error
             defaultValue={["A"]}
             // options={["A", "B", "C"]}
@@ -149,16 +148,14 @@ export const Card: FC<CardProps> = ({
               { value: "C", label: "CC", disabled: true },
             ]}
             // onChange={(w) => console.log(w)}
-            helperText="please select..."
           />
         );
         break;
       case "radio":
         resultNode = (
           <RadioGroup
-            label="RadioGroup"
+            {...otherProps}
             row
-            required
             // error
             defaultValue={"A"}
             // options={["A", "B", "C"]}】
@@ -169,16 +166,14 @@ export const Card: FC<CardProps> = ({
               { value: "C", label: "CC", disabled: true },
             ]}
             onChange={(e, w) => console.log(e, w)}
-            helperText="please click one"
           />
         );
         break;
       case "switch":
         resultNode = (
           <SwitchesGroup
-            label="Assign responsibility"
+            {...otherProps}
             row
-            required
             error
             options={[
               {
@@ -198,7 +193,6 @@ export const Card: FC<CardProps> = ({
               },
             ]}
             onChange={(e, w) => console.log(e, w)}
-            helperText="please select..."
           />
         );
         break;
@@ -206,17 +200,16 @@ export const Card: FC<CardProps> = ({
         resultNode = (
           <Select
             fullWidth
+            {...otherProps}
             autoWidth
-            label="Age"
             defaultValue={"12"}
             options={["None", "12", "13", "14"]}
-            helperText="please select..."
           />
         );
         break;
       case "autocomplete":
         resultNode = (
-          <Autocomplete disablePortal label="Movie" options={top100Films} />
+          <Autocomplete disablePortal {...otherProps} options={top100Films} />
         );
         break;
       case "button":
