@@ -1,6 +1,7 @@
-import React, { memo, useCallback } from "react";
+import { memo } from "react";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
+import { getInitData } from "../../utils/common";
 import type { FormItemProps } from "../../type";
 
 import type { FC } from "react";
@@ -19,19 +20,6 @@ interface DropResult {
 }
 
 const Box: FC<BoxProps> = memo(({ data, children, onAdd }) => {
-  // TODO: 待完善
-  const getInitData = useCallback((data: any) => {
-    const initData = {
-      ...data,
-      label: data.name,
-      helperText: "this is a description",
-      placeholder: "Please enter a value",
-      required: false,
-      disabled: false,
-    };
-    return initData;
-  }, []);
-
   const [{ opacity }, drag] = useDrag(
     () => ({
       type: ItemTypes.BOX,

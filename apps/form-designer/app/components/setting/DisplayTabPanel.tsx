@@ -32,15 +32,17 @@ const DisplayTabPanel = (props: DisPlayTabPanelProps) => {
               onChange={(e: any) => onUpdate?.("helperText", e.target.value)}
             />
           </Grid>
-          <Grid size={6}>
-            <TextField
-              fullWidth
-              label="Placeholder"
-              variant="outlined"
-              value={data.placeholder}
-              onChange={(e: any) => onUpdate?.("placeholder", e.target.value)}
-            />
-          </Grid>
+          {["textfield", "textarea"].includes(data.type) && (
+            <Grid size={6}>
+              <TextField
+                fullWidth
+                label="Placeholder"
+                variant="outlined"
+                value={data.placeholder}
+                onChange={(e: any) => onUpdate?.("placeholder", e.target.value)}
+              />
+            </Grid>
+          )}
         </Grid>
       )}
     </div>

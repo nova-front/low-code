@@ -121,7 +121,9 @@ export const Card: FC<CardProps> = ({
       <div className={styles.card_left}>{renderField(data)}</div>
       <div className={styles.card_right}>
         <div className={styles.icon_box}>
-          <SettingDialog initData={data} onUpdate={onUpdate} />
+          {data.type !== "unknown" && (
+            <SettingDialog initData={data} onUpdate={onUpdate} />
+          )}
         </div>
         <div className={styles.icon_box} onClick={onDelete}>
           <DeleteForeverIcon color="error" />
