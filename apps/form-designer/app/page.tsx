@@ -4,11 +4,9 @@ import { useState, useMemo, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
-import { NotificationsProvider } from "@toolpad/core/useNotifications";
-import { copy } from "./utils/common";
+import useCopy from "./hooks/useCopy";
 import FieldContainer from "./components/field/Container";
 import MainContainer from "./components/main/Container";
-import CopyBtn from "./components/copy-btn";
 import { Button } from "./components/mui";
 
 import { FormItemProps } from "./type";
@@ -16,6 +14,7 @@ import { FormItemProps } from "./type";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const { copy } = useCopy();
   const [cards, setCards] = useState<FormItemProps[]>([]);
 
   const onAdd = (item: FormItemProps) => {
@@ -74,7 +73,7 @@ export default function Home() {
     const param = getParamData();
     const text = JSON.stringify(param);
     copy(text);
-  }, [getParamData]);
+  }, [copy, getParamData]);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -92,12 +91,9 @@ export default function Home() {
         <main className={styles.json_box}>
           <header className={styles.title}>
             JSON Schema
-            <NotificationsProvider>
-              <Button variant="text" onClick={copyFn}>
-                Copy Data
-              </Button>
-            </NotificationsProvider>
-            {/* <CopyBtn /> */}
+            <Button variant="text" onClick={copyFn}>
+              Copy Data
+            </Button>
           </header>
           <pre className="container">{dataStr}</pre>
         </main>
