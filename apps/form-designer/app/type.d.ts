@@ -18,4 +18,5 @@ export interface FormItemProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
+  multiple?: boolean;
 }
