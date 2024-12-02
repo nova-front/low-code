@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   FormGroup,
@@ -8,8 +9,8 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import DataSourceValues from "./DataSourceValues";
 import { DataTabPanelProps } from "./type";
-import { useState } from "react";
 
 const DataTabPanel = (props: DataTabPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
@@ -57,9 +58,9 @@ const DataTabPanel = (props: DataTabPanelProps) => {
                 })}
               </Select>
             </FormControl>
-            <FormControl fullWidth sx={{ mt: 2 }}>
-              <div>Data Source Values 【string or array】</div>
-            </FormControl>
+            {["checkbox", "radio", "select", "autocomplete"].includes(
+              data.type
+            ) && <DataSourceValues />}
           </FormGroup>
         </Box>
       )}
