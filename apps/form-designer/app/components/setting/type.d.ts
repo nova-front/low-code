@@ -21,3 +21,8 @@ export interface ValidationTabPanelProps extends TabPanelProps {
   data: FormItemProps;
   onUpdate: (key: string, value: string) => void;
 }
+
+export interface DataTabPanelProps extends TabPanelProps {
+  data: FormItemProps;
+  onUpdate: (key: string, value: string) => void;
+}

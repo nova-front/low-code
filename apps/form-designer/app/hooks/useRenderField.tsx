@@ -15,7 +15,8 @@ import { top100Films } from "../mock";
 const useRenderField = () => {
   const renderField = useCallback((fieldData: FormItemProps) => {
     let resultNode: React.ReactNode = "";
-    const { id, name, type, ...otherProps } = fieldData;
+    const { id, name, multiple, type, ...otherProps } = fieldData;
+    const defaultValue = multiple ? ["12"] : "12";
 
     // TODO: 待完善
     switch (type) {
@@ -94,7 +95,7 @@ const useRenderField = () => {
             fullWidth
             {...otherProps}
             autoWidth
-            defaultValue={"12"}
+            defaultValue={defaultValue}
             options={["None", "12", "13", "14"]}
           />
         );

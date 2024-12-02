@@ -27,14 +27,9 @@ const Transition = forwardRef(function Transition(
 const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
   const [open, setOpen] = useState(false);
 
-  const [fieldData, setFieldData] = useState<any>({
-    label: "TextField",
-    helperText: "this is a description",
-    placeholder: "Please enter a number value",
-  });
+  const [fieldData, setFieldData] = useState<any>({});
 
   const updatefieldData = (key: string, value: string) => {
-    // onUpdate(fieldData.id, key, value);
     setFieldData({
       ...fieldData,
       [key]: value,

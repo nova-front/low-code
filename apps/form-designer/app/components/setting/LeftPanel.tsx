@@ -6,6 +6,7 @@ import Tab from "@mui/material/Tab";
 import DisplayTabPanel from "./DisplayTabPanel";
 import ValidationTabPanel from "./ValidationTabPanel";
 import CustomTabPanel from "./CustomTabPanel";
+import DataTabPanel from "./DataTabPanel";
 import { a11yProps } from "./util";
 
 const LeftPanel = ({ fieldData, updatefieldData }: any) => {
@@ -43,9 +44,12 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
       >
         Validation
       </ValidationTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Data
-      </CustomTabPanel>
+      <DataTabPanel
+        value={value}
+        index={2}
+        data={fieldData}
+        onUpdate={updatefieldData}
+      />
       <CustomTabPanel value={value} index={3}>
         Conditional
       </CustomTabPanel>
