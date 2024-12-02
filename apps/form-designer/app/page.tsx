@@ -4,14 +4,15 @@ import { useState, useMemo, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
-import useCopy from "./hooks/useCopy";
+import useCopy from "@/hooks/useCopy";
+
 import FieldContainer from "./components/field/Container";
 import MainContainer from "./components/main/Container";
 import { Button } from "./components/mui";
 
-import { FormItemProps } from "./type";
+import { FormItemProps } from "@/type";
 
-import styles from "./page.module.css";
+import styles from "@/page.module.css";
 
 export default function Home() {
   const { copy } = useCopy();
