@@ -12,17 +12,17 @@ export interface TabPanelProps {
   style?: any;
 }
 
-export interface DisPlayTabPanelProps extends TabPanelProps {
+export interface DisplayPanelProps extends TabPanelProps {
   data: FormItemProps;
   onUpdate: (key: string, value: string) => void;
 }
 
-export interface ValidationTabPanelProps extends TabPanelProps {
+export interface ValidationPanelProps extends TabPanelProps {
   data: FormItemProps;
   onUpdate: (key: string, value: string) => void;
 }
 
-export interface DataTabPanelProps extends TabPanelProps {
+export interface DataPanelProps extends TabPanelProps {
   data: FormItemProps;
   onUpdate: (key: string, value: string) => void;
 }

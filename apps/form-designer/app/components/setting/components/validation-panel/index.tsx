@@ -1,7 +1,7 @@
 import { Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
-import { ValidationTabPanelProps } from "./type";
+import { ValidationPanelProps } from "../../type";
 
-const ValidationTabPanel = (props: ValidationTabPanelProps) => {
+const ValidationPanel = (props: ValidationPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
 
   return (
@@ -44,4 +44,4 @@ const ValidationTabPanel = (props: ValidationTabPanelProps) => {
   );
 };
 
-export default ValidationTabPanel;
+export default ValidationPanel;

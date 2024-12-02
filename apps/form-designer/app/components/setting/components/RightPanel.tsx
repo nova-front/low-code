@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
 import { Stack, Box, Tabs, Tab } from "@mui/material";
-import useRenderField from "../../hooks/useRenderField";
-import CustomTabPanel from "./CustomTabPanel";
-import { Button } from "../mui";
+import useRenderField from "../../../hooks/useRenderField";
+import CustomTabPanel from "./CustomPanel";
+import { Button } from "../../mui";
 
-import { a11yProps } from "./util";
-import { FormItemProps } from "../../type";
+import { tabProps } from "../util";
+import { FormItemProps } from "../../../type";
 
 interface RightPanelProps {
   fieldData: FormItemProps;
@@ -36,7 +36,7 @@ const RightPanel = ({
           onChange={onChangeFn}
           aria-label="basic tabs example"
         >
-          <Tab label="Preview" {...a11yProps(0)} />
+          <Tab label="Preview" {...tabProps(0)} />
         </Tabs>
       </Box>
       <CustomTabPanel

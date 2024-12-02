@@ -1,7 +1,7 @@
 import update from "immutability-helper";
 import { useCallback } from "react";
 import { useDrop } from "react-dnd";
-import { ItemTypes } from "../ItemTypes";
+import { ItemTypes } from "../config";
 import { Card } from "./Card";
 import { Button } from "../../components/mui";
 

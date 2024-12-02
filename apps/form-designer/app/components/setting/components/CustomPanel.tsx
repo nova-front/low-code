@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { TabPanelProps } from "./type";
+import { TabPanelProps } from "../type";
 
-const CustomTabPanel = (props: TabPanelProps) => {
+const CustomPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -17,4 +17,4 @@ const CustomTabPanel = (props: TabPanelProps) => {
   );
 };
 
-export default CustomTabPanel;
+export default CustomPanel;

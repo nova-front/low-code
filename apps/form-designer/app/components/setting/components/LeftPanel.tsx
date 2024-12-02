@@ -3,11 +3,11 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import DisplayTabPanel from "./DisplayTabPanel";
-import ValidationTabPanel from "./ValidationTabPanel";
-import CustomTabPanel from "./CustomTabPanel";
-import DataTabPanel from "./DataTabPanel";
-import { a11yProps } from "./util";
+import DisplayPanel from "./display-panel";
+import ValidationPanel from "./validation-panel";
+import CustomPanel from "./CustomPanel";
+import DataPanel from "./data-panel";
+import { tabProps } from "../util";
 
 const LeftPanel = ({ fieldData, updatefieldData }: any) => {
   const [value, setValue] = useState(0);
@@ -24,35 +24,35 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
           onChange={onChangeFn}
           aria-label="basic tabs example"
         >
-          <Tab label="Display" {...a11yProps(0)} />
-          <Tab label="Validation" {...a11yProps(1)} />
-          <Tab label="Data" {...a11yProps(2)} />
-          <Tab label="Conditional" {...a11yProps(3)} />
+          <Tab label="Display" {...tabProps(0)} />
+          <Tab label="Validation" {...tabProps(1)} />
+          <Tab label="Data" {...tabProps(2)} />
+          <Tab label="Conditional" {...tabProps(3)} />
         </Tabs>
       </Box>
-      <DisplayTabPanel
+      <DisplayPanel
         value={value}
         index={0}
         data={fieldData}
         onUpdate={updatefieldData}
       />
-      <ValidationTabPanel
+      <ValidationPanel
         value={value}
         index={1}
         data={fieldData}
         onUpdate={updatefieldData}
       >
         Validation
-      </ValidationTabPanel>
-      <DataTabPanel
+      </ValidationPanel>
+      <DataPanel
         value={value}
         index={2}
         data={fieldData}
         onUpdate={updatefieldData}
       />
-      <CustomTabPanel value={value} index={3}>
+      <CustomPanel value={value} index={3}>
         Conditional
-      </CustomTabPanel>
+      </CustomPanel>
     </React.Fragment>
   );
 };

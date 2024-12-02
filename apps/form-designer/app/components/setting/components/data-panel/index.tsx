@@ -10,9 +10,9 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import DataSourceValues from "./DataSourceValues";
-import { DataTabPanelProps } from "./type";
+import { DataPanelProps } from "../../type";
 
-const DataTabPanel = (props: DataTabPanelProps) => {
+const DataPanel = (props: DataPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
 
   const [defaultValue, setDefaultValue] = useState<any>("");
@@ -68,4 +68,4 @@ const DataTabPanel = (props: DataTabPanelProps) => {
   );
 };
 
-export default DataTabPanel;
+export default DataPanel;

@@ -10,8 +10,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid2";
-import LeftPanel from "./LeftPanel";
-import RightPanel from "./RightPanel";
+import LeftPanel from "./components/LeftPanel";
+import RightPanel from "./components/RightPanel";
 
 import { SettingDialogProps } from "./type";
 

@@ -1,7 +1,7 @@
-export const a11yProps = (index: number) => {
+export const tabProps = (index: number) => {
   return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    id: `setting-tab-${index}`,
+    "aria-controls": `setting-tabpanel-${index}`,
     sx: { textTransform: "none" },
   };
 };

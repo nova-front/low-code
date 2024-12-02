@@ -1,7 +1,7 @@
 import { TextField, Grid2 as Grid } from "@mui/material";
-import { DisPlayTabPanelProps } from "./type";
+import { DisplayPanelProps } from "../../type";
 
-const DisplayTabPanel = (props: DisPlayTabPanelProps) => {
+const DisplayPanel = (props: DisplayPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
 
   return (
@@ -49,4 +49,4 @@ const DisplayTabPanel = (props: DisPlayTabPanelProps) => {
   );
 };
 
-export default DisplayTabPanel;
+export default DisplayPanel;

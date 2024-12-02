@@ -1,9 +1,9 @@
 import { memo } from "react";
 import { useDrag } from "react-dnd";
-import { ItemTypes } from "../ItemTypes";
+import { ItemTypes } from "../config";
 import { getInitData } from "../../utils/common";
-import type { FormItemProps } from "../../type";
 
+import type { FormItemProps } from "../../type";
 import type { FC } from "react";
 import type { DragSourceMonitor } from "react-dnd";
 

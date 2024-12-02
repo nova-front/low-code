@@ -4,7 +4,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useRenderField from "../../hooks/useRenderField";
 import SettingDialog from "../setting";
 
-import { ItemTypes } from "../ItemTypes";
+import { ItemTypes } from "../config";
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
 import { FieldType } from "../../type";
