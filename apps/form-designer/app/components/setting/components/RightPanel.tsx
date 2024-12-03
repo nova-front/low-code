@@ -1,12 +1,11 @@
-import * as React from "react";
-import { useState } from "react";
+import { useState, useMemo, Fragment } from "react";
 import { Stack, Box, Tabs, Tab } from "@mui/material";
-import useRenderField from "../../../hooks/useRenderField";
+import useRenderField from "@/hooks/useRenderField";
 import CustomTabPanel from "./CustomPanel";
-import { Button } from "../../mui";
-
+import { Button } from "@/components/mui";
 import { tabProps } from "../util";
-import { FormItemProps } from "../../../type";
+
+import { FormItemProps } from "@/type";
 
 interface RightPanelProps {
   fieldData: FormItemProps;
@@ -28,8 +27,13 @@ const RightPanel = ({
     setValue(newValue);
   };
 
+  const fieldDataStr = useMemo(() => {
+    const { id, name, ...params } = fieldData;
+    return JSON.stringify(params, null, 2);
+  }, [fieldData]);
+
   return (
-    <React.Fragment>
+    <Fragment>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -50,7 +54,13 @@ const RightPanel = ({
           paddingBottom: "12px",
         }}
       >
-        <Box sx={{ mt: 4, mb: "48px" }}>{renderField(fieldData)}</Box>
+        <Box sx={{ mt: 4 }}>
+          {renderField(fieldData)}
+          <Box sx={{ mt: 4 }}>
+            <pre>{fieldDataStr}</pre>
+          </Box>
+        </Box>
+
         <Stack spacing={2} direction="row" style={{ justifyContent: "end" }}>
           <Button variant="contained" color="primary" onClick={onSave}>
             Save
@@ -63,7 +73,7 @@ const RightPanel = ({
           </Button>
         </Stack>
       </CustomTabPanel>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
