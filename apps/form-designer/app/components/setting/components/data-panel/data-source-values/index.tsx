@@ -1,9 +1,12 @@
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import update from "immutability-helper";
 import {
   Box,
   FormControl,
+  FormControlLabel,
   Paper,
+  Radio,
+  RadioGroup,
   Table,
   TableBody,
   TableCell,
@@ -14,15 +17,6 @@ import {
 import { Button } from "@/components/mui";
 
 import { TableRowCard } from "./TableRowCard";
-
-export interface Item {
-  id: number;
-  text: string;
-}
-
-export interface ContainerState {
-  cards: Item[];
-}
 
 const DataSourceValues = () => {
   const [rows, setRows] = useState<any[]>([
@@ -39,13 +33,14 @@ const DataSourceValues = () => {
       value: "c",
     },
   ]);
+  const [itemType, setItemType] = useState<"string" | "object">("string");
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-    setRows((prevCards: Item[]) =>
+    setRows((prevCards: any[]) =>
       update(prevCards, {
         $splice: [
           [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex] as Item],
+          [hoverIndex, 0, prevCards[dragIndex] as any],
         ],
       })
     );
@@ -69,13 +64,17 @@ const DataSourceValues = () => {
   );
 
   const renderCard = useCallback(
-    (card: { id: number; text: string }, index: number) => {
+    (
+      card: { id: number; text: string },
+      index: number,
+      itemType: "string" | "object"
+    ) => {
       return (
         <TableRowCard
           key={card.id}
           index={index}
           id={card.id}
-          text={card.text}
+          itemType={itemType}
           row={card}
           moveCard={moveCard}
           onDelete={onDelete}
@@ -85,19 +84,51 @@ const DataSourceValues = () => {
     [moveCard, onDelete]
   );
 
+  const itemTypeOnChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>, value: any) => {
+      setItemType(value);
+    },
+    []
+  );
+
   return (
     <FormControl fullWidth sx={{ mt: 2 }}>
-      <div>Data Source Values 【string or array】</div>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>Data Source Values</Box>
+        <RadioGroup
+          row
+          aria-labelledby="item type label"
+          name="item type"
+          value={itemType}
+          onChange={itemTypeOnChange}
+        >
+          <FormControlLabel value="string" control={<Radio />} label="String" />
+          <FormControlLabel value="object" control={<Radio />} label="Object" />
+        </RadioGroup>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 1 }}>
-        <Table aria-label="simple table">
-          <TableHead>
+        <Table aria-label="data source values table">
+          <TableHead
+            sx={{
+              bgcolor: "#1976d2",
+              "& .MuiTableCell-root": { color: "#fff" },
+            }}
+          >
             <TableRow>
-              <TableCell>Label</TableCell>
+              {itemType === "object" && <TableCell>Label</TableCell>}
               <TableCell>Value</TableCell>
               <TableCell align="right">&nbsp;</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{rows.map((row, i) => renderCard(row, i))}</TableBody>
+          <TableBody>
+            {rows.map((row, i) => renderCard(row, i, itemType))}
+          </TableBody>
         </Table>
       </TableContainer>
       <Box sx={{ mt: 1 }}>

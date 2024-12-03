@@ -17,7 +17,7 @@ const style = {
 
 export interface CardProps {
   id: any;
-  text: string;
+  itemType: "string" | "object";
   row: any;
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
@@ -32,7 +32,7 @@ interface DragItem {
 
 export const TableRowCard: FC<CardProps> = ({
   id,
-  text,
+  itemType,
   row,
   index,
   moveCard,
@@ -120,9 +120,11 @@ export const TableRowCard: FC<CardProps> = ({
       key={row.name}
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
-      <TableCell component="th" scope="row">
-        <TextField fullWidth size="small" value={row.label} />
-      </TableCell>
+      {itemType === "object" && (
+        <TableCell component="th" scope="row">
+          <TextField fullWidth size="small" value={row.label} />
+        </TableCell>
+      )}
       <TableCell>
         <TextField fullWidth size="small" value={row.value} />
       </TableCell>
