@@ -9,7 +9,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import DataSourceValues from "./DataSourceValues";
+import DataSourceValues from "./data-source-values";
 import { DataPanelProps } from "../../type";
 
 const DataPanel = (props: DataPanelProps) => {
