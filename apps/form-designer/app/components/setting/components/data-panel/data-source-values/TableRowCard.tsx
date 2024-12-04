@@ -1,6 +1,6 @@
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
 import { ItemTypes } from "@/components/config";
@@ -22,6 +22,7 @@ export interface CardProps {
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
   onDelete: (index: number) => void;
+  onChange: any;
 }
 
 interface DragItem {
@@ -37,6 +38,7 @@ export const TableRowCard: FC<CardProps> = ({
   index,
   moveCard,
   onDelete,
+  onChange,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<
@@ -112,6 +114,7 @@ export const TableRowCard: FC<CardProps> = ({
 
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
   return (
     <TableRow
       ref={ref}
@@ -122,11 +125,21 @@ export const TableRowCard: FC<CardProps> = ({
     >
       {itemType === "object" && (
         <TableCell component="th" scope="row">
-          <TextField fullWidth size="small" value={row.label} />
+          <TextField
+            fullWidth
+            size="small"
+            value={row.label}
+            onChange={(e: any) => onChange(index, "label", e.target.value)}
+          />
         </TableCell>
       )}
       <TableCell>
-        <TextField fullWidth size="small" value={row.value} />
+        <TextField
+          fullWidth
+          size="small"
+          value={row.value}
+          onChange={(e: any) => onChange(index, "value", e.target.value)}
+        />
       </TableCell>
       <TableCell align="right">
         <IconButton onClick={() => onDelete(index)}>

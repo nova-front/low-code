@@ -9,6 +9,13 @@ export type FieldType =
   | "button"
   | "unknown";
 
+type OptionsItem = {
+  label: string;
+  value: string;
+  disabled: boolean;
+};
+
+export type OptionsProps = OptionsItem[] | string[];
 export interface FormItemProps {
   id?: string | number;
   name: string;
@@ -19,4 +26,5 @@ export interface FormItemProps {
   required?: boolean;
   disabled?: boolean;
   multiple?: boolean;
+  options?: OptionsProps;
 }

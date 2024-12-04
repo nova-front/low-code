@@ -23,6 +23,7 @@ export const getInitData = (data: any) => {
     case "switch":
       break;
     case "select":
+      initData.options = ["A"];
       break;
     case "autocomplete":
       break;

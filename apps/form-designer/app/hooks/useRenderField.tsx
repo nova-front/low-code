@@ -15,8 +15,25 @@ import { top100Films } from "../mock";
 const useRenderField = () => {
   const renderField = useCallback((fieldData: FormItemProps) => {
     let resultNode: React.ReactNode = "";
-    const { id, name, multiple, type, ...otherProps } = fieldData;
+    const { id, name, multiple, type, options = [], ...otherProps } = fieldData;
     const defaultValue = multiple ? ["12"] : "12";
+
+    const lastOptions = options
+      ?.map((option: any) => {
+        if (typeof option === "string") {
+          if (option) {
+            return option;
+          }
+          return false;
+        } else {
+          if (!option.label || !option.value) {
+            return false;
+          } else {
+            return option;
+          }
+        }
+      })
+      .filter(Boolean);
 
     // TODO: 待完善
     switch (type) {
@@ -94,9 +111,8 @@ const useRenderField = () => {
           <Select
             fullWidth
             {...otherProps}
-            autoWidth
-            defaultValue={defaultValue}
-            options={["None", "12", "13", "14"]}
+            options={lastOptions}
+            // defaultValue={defaultValue}
           />
         );
         break;

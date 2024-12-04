@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import update from "immutability-helper";
 import {
   Box,
@@ -18,22 +18,18 @@ import { Button } from "@/components/mui";
 
 import { TableRowCard } from "./TableRowCard";
 
-const DataSourceValues = () => {
-  const [rows, setRows] = useState<any[]>([
-    {
-      label: "A",
-      value: "a",
-    },
-    {
-      label: "B",
-      value: "b",
-    },
-    {
-      label: "C",
-      value: "c",
-    },
-  ]);
-  const [itemType, setItemType] = useState<"string" | "object">("string");
+import { OptionsProps } from "@/type";
+
+interface DataSourceValuesProps {
+  dataSource: OptionsProps;
+  onUpdate: any;
+}
+
+const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
+  const [rows, setRows] = useState<any[]>([]);
+  const [itemType, setItemType] = useState<"string" | "object">(
+    typeof dataSource[0] === "object" ? "object" : "string"
+  );
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
     setRows((prevCards: any[]) =>
@@ -46,12 +42,51 @@ const DataSourceValues = () => {
     );
   }, []);
 
+  const onUpdateFn = useCallback(
+    (itemType: "string" | "object", cards: any[]) => {
+      if (itemType === "string") {
+        onUpdate(
+          "options",
+          cards.map((item) => item.value)
+        );
+      } else {
+        onUpdate("options", cards);
+      }
+    },
+    [onUpdate]
+  );
+
   const onAdd = useCallback(() => {
     const newCards = update(rows, {
       $push: [{ id: crypto.randomUUID(), label: "", value: "" }],
     });
     setRows(newCards);
-  }, [rows]);
+    onUpdateFn(itemType, newCards);
+  }, [itemType, onUpdateFn, rows]);
+
+  const onChange = useCallback(
+    (index: number, key: "label" | "value", value: string) => {
+      if (itemType === "string") {
+        const newCards = update(rows, {
+          [index]: {
+            [`label`]: { $set: value },
+            [`value`]: { $set: value },
+          },
+        });
+        setRows(newCards);
+        onUpdateFn(itemType, newCards);
+      } else {
+        const newCards = update(rows, {
+          [index]: {
+            [key]: { $set: value },
+          },
+        });
+        setRows(newCards);
+        onUpdateFn(itemType, newCards);
+      }
+    },
+    [itemType, onUpdateFn, rows]
+  );
 
   const onDelete = useCallback(
     (index: number) => {
@@ -59,8 +94,9 @@ const DataSourceValues = () => {
         $splice: [[index, 1]],
       });
       setRows(newCards);
+      onUpdateFn(itemType, newCards);
     },
-    [rows]
+    [itemType, onUpdateFn, rows]
   );
 
   const renderCard = useCallback(
@@ -71,25 +107,52 @@ const DataSourceValues = () => {
     ) => {
       return (
         <TableRowCard
-          key={card.id}
+          key={index}
           index={index}
           id={card.id}
           itemType={itemType}
           row={card}
           moveCard={moveCard}
           onDelete={onDelete}
+          onChange={onChange}
         />
       );
     },
-    [moveCard, onDelete]
+    [moveCard, onChange, onDelete]
   );
 
   const itemTypeOnChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, value: any) => {
       setItemType(value);
+      if (value === "string") {
+        const newCards = rows.map((row: any) => {
+          return {
+            label: row.value,
+            value: row.value,
+          };
+        });
+        setRows(newCards);
+        onUpdateFn(value, newCards);
+      } else {
+        onUpdateFn(value, rows);
+      }
     },
-    []
+    [onUpdateFn, rows]
   );
+
+  useEffect(() => {
+    const _rows = dataSource?.map((item: any) => {
+      if (typeof item === "string") {
+        return {
+          label: item,
+          value: item,
+        };
+      } else {
+        return item;
+      }
+    });
+    setRows(_rows);
+  }, [dataSource]);
 
   return (
     <FormControl fullWidth sx={{ mt: 2 }}>
@@ -116,7 +179,7 @@ const DataSourceValues = () => {
         <Table aria-label="data source values table">
           <TableHead
             sx={{
-              bgcolor: "#1976d2",
+              bgcolor: "#2196f3",
               "& .MuiTableCell-root": { color: "#fff" },
             }}
           >
