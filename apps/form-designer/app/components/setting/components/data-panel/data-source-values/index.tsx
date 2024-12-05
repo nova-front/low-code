@@ -31,17 +31,6 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
     typeof dataSource[0] === "object" ? "object" : "string"
   );
 
-  const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-    setRows((prevCards: any[]) =>
-      update(prevCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex] as any],
-        ],
-      })
-    );
-  }, []);
-
   const onUpdateFn = useCallback(
     (itemType: "string" | "object", cards: any[]) => {
       if (itemType === "string") {
@@ -50,10 +39,34 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
           cards.map((item) => item.value)
         );
       } else {
-        onUpdate("options", cards);
+        onUpdate(
+          "options",
+          cards.map((item: any) => {
+            return {
+              label: item.label,
+              value: item.value,
+            };
+          })
+        );
       }
     },
     [onUpdate]
+  );
+
+  const moveCard = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const newCardFn = (prevCards: any[]) =>
+        update(prevCards, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevCards[dragIndex] as any],
+          ],
+        });
+      const cards = newCardFn(rows);
+      setRows(cards);
+      onUpdateFn(itemType, cards);
+    },
+    [itemType, onUpdateFn, rows]
   );
 
   const onAdd = useCallback(() => {
@@ -144,11 +157,12 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
     const _rows = dataSource?.map((item: any) => {
       if (typeof item === "string") {
         return {
+          id: crypto.randomUUID(),
           label: item,
           value: item,
         };
       } else {
-        return item;
+        return { id: crypto.randomUUID(), ...item };
       }
     });
     setRows(_rows);
@@ -186,7 +200,7 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
             <TableRow>
               {itemType === "object" && <TableCell>Label</TableCell>}
               <TableCell>Value</TableCell>
-              <TableCell align="right">&nbsp;</TableCell>
+              <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
