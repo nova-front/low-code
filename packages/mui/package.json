@@ -14,7 +14,7 @@
     "./switch": "./src/switch/switch.tsx",
     "./switches.group": "./src/switch/switches.group.tsx",
     "./select": "./src/select/select.tsx",
-    "./autocomplete": "./src/combo-box/combo.box.tsx"
+    "./autocomplete": "./src/autocomplete/autocomplete.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
