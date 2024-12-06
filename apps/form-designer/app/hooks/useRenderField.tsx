@@ -10,13 +10,11 @@ import {
   Select,
   Autocomplete,
 } from "../components/mui";
-import { top100Films } from "../mock";
 
 const useRenderField = () => {
   const renderField = useCallback((fieldData: FormItemProps) => {
     let resultNode: React.ReactNode = "";
     const { id, name, multiple, type, options = [], ...otherProps } = fieldData;
-    const defaultValue = multiple ? ["12"] : "12";
 
     const lastOptions = options
       ?.map((option: any) => {
@@ -45,39 +43,11 @@ const useRenderField = () => {
         break;
       case "checkbox":
         resultNode = (
-          <CheckBoxGroup
-            {...otherProps}
-            row
-            // error
-            defaultValue={["A"]}
-            // options={["A", "B", "C"]}
-            // disabled
-            options={[
-              { value: "A", label: "AA" },
-              { value: "B", label: "BB" },
-              { value: "C", label: "CC", disabled: true },
-            ]}
-            // onChange={(w) => console.log(w)}
-          />
+          <CheckBoxGroup {...otherProps} row options={lastOptions} />
         );
         break;
       case "radio":
-        resultNode = (
-          <RadioGroup
-            {...otherProps}
-            row
-            // error
-            defaultValue={"A"}
-            // options={["A", "B", "C"]}】
-            // disabled
-            options={[
-              { value: "A", label: "AA" },
-              { value: "B", label: "BB" },
-              { value: "C", label: "CC", disabled: true },
-            ]}
-            onChange={(e, w) => console.log(e, w)}
-          />
-        );
+        resultNode = <RadioGroup {...otherProps} row options={lastOptions} />;
         break;
       case "switch":
         resultNode = (
@@ -107,18 +77,15 @@ const useRenderField = () => {
         );
         break;
       case "select":
-        resultNode = (
-          <Select
-            fullWidth
-            {...otherProps}
-            options={lastOptions}
-            // defaultValue={defaultValue}
-          />
+        resultNode = fieldData.defaultValue ? (
+          <Select fullWidth {...otherProps} options={lastOptions} />
+        ) : (
+          <Select fullWidth {...otherProps} options={lastOptions} />
         );
         break;
       case "autocomplete":
         resultNode = (
-          <Autocomplete disablePortal {...otherProps} options={top100Films} />
+          <Autocomplete disablePortal {...otherProps} options={lastOptions} />
         );
         break;
       case "button":

@@ -27,4 +27,5 @@ export interface FormItemProps {
   disabled?: boolean;
   multiple?: boolean;
   options?: OptionsProps;
+  defaultValue?: any;
 }
