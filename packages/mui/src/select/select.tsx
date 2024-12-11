@@ -27,7 +27,7 @@ interface SelectProps {
 }
 
 const Select = ({
-  defaultValue = "",
+  defaultValue,
   value,
   onChange,
   label,
@@ -52,11 +52,11 @@ const Select = ({
     >
       {label && <InputLabel>{label}</InputLabel>}
       <SelectBasic
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         label={label}
         inputProps={inputProps}
         multiple={multiple}
-        {...{ value, onChange }}
+        {...{ defaultValue, value, onChange }}
       >
         {options.map((option: string | OptionProps, i: number) => {
           if (typeof option === "string") {
