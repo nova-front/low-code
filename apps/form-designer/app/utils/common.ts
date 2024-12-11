@@ -8,6 +8,7 @@ export const getInitData = (data: any) => {
     helperText: "this is a description",
     required: false,
     disabled: false,
+    defaultValue: "",
   };
   switch (data.type as FieldType) {
     case "textfield":
@@ -18,6 +19,7 @@ export const getInitData = (data: any) => {
       break;
     case "checkbox":
       initData.options = ["default"];
+      initData.defaultValue = [];
       break;
     case "radio":
       initData.options = ["default"];
