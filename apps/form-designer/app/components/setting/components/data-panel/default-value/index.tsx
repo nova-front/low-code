@@ -7,17 +7,23 @@ interface DefaultValueProps {
   data: FormItemProps;
   defaultValue: any;
   onUpdate: any;
+  multiple?: boolean;
   dataSource?: any[];
 }
 const DefaultValue = ({
-  defaultValue = "",
+  defaultValue,
   onUpdate,
   dataSource,
   data,
+  multiple = false,
 }: DefaultValueProps) => {
   const onChangeFn = useCallback(
     (e: any) => {
-      onUpdate("defaultValue", String(e.target.value));
+      let v = e.target.value;
+      if (typeof v === "number") {
+        v = String(v);
+      }
+      onUpdate("defaultValue", v);
     },
     [onUpdate]
   );
@@ -26,7 +32,11 @@ const DefaultValue = ({
     <FormControl fullWidth sx={{ mt: 1 }}>
       <div>Default Value</div>
       {["checkbox", "radio", "select", "autocomplete"].includes(data.type) && (
-        <Select value={defaultValue} onChange={onChangeFn}>
+        <Select
+          multiple={data.type === "checkbox" || multiple}
+          value={defaultValue}
+          onChange={onChangeFn}
+        >
           {dataSource?.map((option: any, i: number) => {
             if (typeof option === "string") {
               return (

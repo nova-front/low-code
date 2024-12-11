@@ -78,6 +78,7 @@ const DataPanel = (props: DataPanelProps) => {
             </FormControl> */}
             <DefaultValue
               data={data}
+              multiple={data.multiple}
               defaultValue={data.defaultValue}
               dataSource={lastDataSource}
               onUpdate={onUpdate}

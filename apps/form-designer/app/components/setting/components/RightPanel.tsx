@@ -4,6 +4,7 @@ import useRenderField from "@/hooks/useRenderField";
 import CustomTabPanel from "./CustomPanel";
 import { Button } from "@/components/mui";
 import { tabProps } from "../util";
+import FormItem from "@/components/form-item";
 
 import { FormItemProps } from "@/type";
 
@@ -55,7 +56,8 @@ const RightPanel = ({
         }}
       >
         <Box sx={{ mt: 4 }}>
-          {renderField(fieldData)}
+          {/* {renderField(fieldData)} */}
+          <FormItem fieldData={fieldData} />
           <Box sx={{ mt: 4 }}>
             <pre>{fieldDataStr}</pre>
           </Box>

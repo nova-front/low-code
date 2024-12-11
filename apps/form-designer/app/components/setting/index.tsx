@@ -30,6 +30,26 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
   const [fieldData, setFieldData] = useState<any>({});
 
   const updatefieldData = (key: string, value: string) => {
+    const { defaultValue: oldDefaultValue } = fieldData;
+    let newDefaultValue: any = undefined;
+
+    if (key === "multiple") {
+      if (value) {
+        if (typeof oldDefaultValue === "string") {
+          newDefaultValue = [];
+        } else {
+          newDefaultValue = oldDefaultValue || [];
+        }
+      } else {
+        if (typeof oldDefaultValue === "string") {
+          newDefaultValue = oldDefaultValue;
+        } else {
+          newDefaultValue = "";
+        }
+      }
+      fieldData.defaultValue = newDefaultValue;
+    }
+
     setFieldData({
       ...fieldData,
       [key]: value,

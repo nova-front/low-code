@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import useRenderField from "../../hooks/useRenderField";
 import SettingDialog from "../setting";
+import FormItem from "../form-item";
 
 import { ItemTypes } from "../config";
 import type { Identifier, XYCoord } from "dnd-core";
@@ -35,7 +35,6 @@ export const Card: FC<CardProps> = ({
   onDelete,
   onUpdate,
 }) => {
-  const { renderField } = useRenderField();
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -118,7 +117,9 @@ export const Card: FC<CardProps> = ({
       className={styles.card}
       data-handler-id={handlerId}
     >
-      <div className={styles.card_left}>{renderField(data)}</div>
+      <div className={styles.card_left}>
+        <FormItem fieldData={data} />
+      </div>
       <div className={styles.card_right}>
         <div className={styles.icon_box}>
           {data.type !== "unknown" && (
