@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -38,7 +38,7 @@ const CheckboxGroup = ({
   helperText,
 }: CheckboxGroupProps): JSX.Element => {
   const [checks, setChecks] = useState<(string | number | boolean)[]>(
-    value || defaultValue || []
+    defaultValue || []
   );
 
   const onChangeFn = useCallback(
@@ -65,6 +65,12 @@ const CheckboxGroup = ({
     },
     [checks, onChange]
   );
+
+  useEffect(() => {
+    if (value) {
+      setChecks(value);
+    }
+  }, [value]);
 
   return (
     <FormControl
