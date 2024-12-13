@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
@@ -6,23 +6,24 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Switch from "./switch";
 
-interface ValueItem {
-  label?: string;
-  name: string;
-  value: boolean;
+interface OptionsItem {
+  label: string;
+  value: string;
 }
 
 interface SwitchesGroupProps {
   label?: React.ReactNode;
-  options: ValueItem[];
+  options: string[] | OptionsItem[];
+  value: any[];
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    data: ValueItem[]
+    checked: boolean
   ) => void;
   row?: boolean;
   required?: boolean;
   error?: boolean;
   helperText?: React.ReactNode;
+  disabled?: boolean;
 }
 
 const SwitchesGroup = ({
@@ -32,46 +33,59 @@ const SwitchesGroup = ({
   required,
   error,
   helperText,
+  value,
   onChange,
+  disabled,
 }: SwitchesGroupProps) => {
-  const [state, setState] = useState<ValueItem[]>(options);
+  const [state, setState] = useState<any[]>([]);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => {
-    const name = event.target.name;
-    const index = state.findIndex((item: ValueItem) => item.name === name);
-    const newState: ValueItem[] = [...state];
-    if (newState[index]) {
-      newState[index].value = checked;
-      setState(newState);
-      onChange(event, newState);
+  useEffect(() => {
+    if (value?.length > 0) {
+      setState(value);
+    } else {
+      setState([]);
     }
-  };
+  }, [value]);
 
   return (
     <FormControl
       sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
       required={required}
       error={error}
+      disabled={disabled}
     >
       {label && <FormLabel component="legend">{label}</FormLabel>}
       <FormGroup row={row}>
-        {state?.map((item: ValueItem) => {
-          return (
-            <FormControlLabel
-              key={item.name}
-              control={
-                <Switch
-                  checked={item.value}
-                  onChange={handleChange}
-                  name={item.name}
-                />
-              }
-              label={item.label}
-            />
-          );
+        {options?.map((item: OptionsItem | string) => {
+          if (typeof item === "string") {
+            return (
+              <FormControlLabel
+                key={item}
+                control={
+                  <Switch
+                    checked={state?.includes(item)}
+                    onChange={onChange}
+                    name={item}
+                  />
+                }
+                label={item}
+              />
+            );
+          } else {
+            return (
+              <FormControlLabel
+                key={item.value}
+                control={
+                  <Switch
+                    checked={state?.includes(item.value)}
+                    onChange={onChange}
+                    name={item.value}
+                  />
+                }
+                label={item.label}
+              />
+            );
+          }
         })}
       </FormGroup>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
