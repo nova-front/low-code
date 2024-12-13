@@ -1,14 +1,4 @@
-import { useEffect, useState } from "react";
-import {
-  Box,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  FormControl,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import DataSourceValues from "./data-source-values";
 import DefaultValue from "./default-value";
 import { DataPanelProps } from "../../type";
@@ -16,7 +6,6 @@ import { DataPanelProps } from "../../type";
 const DataPanel = (props: DataPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
 
-  // const [defaultValue, setDefaultValue] = useState<any>("");
   const dataSource = data.options || [];
   const lastDataSource =
     data.options
@@ -35,10 +24,6 @@ const DataPanel = (props: DataPanelProps) => {
         }
       })
       .filter(Boolean) || [];
-
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setDefaultValue(event.target.value as string);
-  // };
 
   return (
     <div
@@ -64,18 +49,6 @@ const DataPanel = (props: DataPanelProps) => {
                 label="Multiple"
               />
             )}
-            {/* <FormControl fullWidth sx={{ mt: 1 }}>
-              <div>Default Value</div>
-              <Select value={defaultValue} onChange={handleChange}>
-                {lastDataSource?.map((item: any, i: number) => {
-                  return (
-                    <MenuItem key={i} value={item.value | item}>
-                      {item.label || item}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl> */}
             <DefaultValue
               data={data}
               multiple={data.multiple}
