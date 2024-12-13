@@ -34,6 +34,7 @@ const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {
       {multiple && (
         <Select
           fullWidth
+          multiple
           options={lastOptions}
           value={value}
           onChange={(e) => setValue(e.target.value)}
