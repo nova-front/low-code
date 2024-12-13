@@ -31,9 +31,11 @@ const DefaultValue = ({
   return (
     <FormControl fullWidth sx={{ mt: 1 }}>
       <div>Default Value</div>
-      {["checkbox", "radio", "select", "autocomplete"].includes(data.type) && (
+      {["checkbox", "radio", "select", "autocomplete", "switch"].includes(
+        data.type
+      ) && (
         <Select
-          multiple={data.type === "checkbox" || multiple}
+          multiple={["checkbox", "switch"].includes(data.type) || multiple}
           value={defaultValue}
           onChange={onChangeFn}
         >
