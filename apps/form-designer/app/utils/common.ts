@@ -5,7 +5,7 @@ export const getInitData = (data: any) => {
   const initData = {
     ...data,
     label: data.name,
-    helperText: "this is a description",
+    helperText: "",
     required: false,
     disabled: false,
     defaultValue: "",
