@@ -29,7 +29,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
 
   const [fieldData, setFieldData] = useState<any>({});
 
-  const updatefieldData = (key: string, value: string) => {
+  const updatefieldData = (key: string, value: any) => {
     const { defaultValue: oldDefaultValue } = fieldData;
     let newDefaultValue: any = undefined;
 
@@ -46,6 +46,24 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
         } else {
           newDefaultValue = "";
         }
+      }
+      fieldData.defaultValue = newDefaultValue;
+    }
+
+    if (key === "options") {
+      if (typeof oldDefaultValue !== "string") {
+        newDefaultValue = [];
+        oldDefaultValue?.forEach((item: any) => {
+          if (typeof item === "string") {
+            if (value?.includes(item)) {
+              newDefaultValue.push(item);
+            }
+          } else {
+            if (value?.includes(item.value)) {
+              newDefaultValue.push(item.value);
+            }
+          }
+        });
       }
       fieldData.defaultValue = newDefaultValue;
     }
