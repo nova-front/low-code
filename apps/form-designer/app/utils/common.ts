@@ -18,19 +18,21 @@ export const getInitData = (data: any) => {
       initData.placeholder = "Please enter a value";
       break;
     case "checkbox":
-      initData.options = ["default"];
+      initData.options = ["item a"];
       initData.defaultValue = [];
       break;
     case "radio":
-      initData.options = ["default"];
+      initData.options = ["item a"];
       break;
     case "switch":
+      initData.options = ["open"];
+      initData.defaultValue = [];
       break;
     case "select":
-      initData.options = ["default"];
+      initData.options = ["item a"];
       break;
     case "autocomplete":
-      initData.options = ["default"];
+      initData.options = ["item a"];
       break;
     case "button":
       break;
