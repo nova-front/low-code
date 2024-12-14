@@ -1,14 +1,14 @@
-import type { Identifier, XYCoord } from "dnd-core";
-import type { FC } from "react";
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-
 import { ItemTypes } from "@/components/config";
 import { TableCell, TableRow, IconButton, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import MenuIcon from "@mui/icons-material/Menu";
+
+import type { Identifier, XYCoord } from "dnd-core";
+import type { FC } from "react";
 
 const style = {
-  // border: "1px dashed gray",
   padding: "0.5rem 1rem",
   marginBottom: ".5rem",
   backgroundColor: "white",
@@ -123,6 +123,9 @@ export const TableRowCard: FC<CardProps> = ({
       key={row.name}
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
+      <TableCell>
+        <MenuIcon />
+      </TableCell>
       {itemType === "object" && (
         <TableCell component="th" scope="row">
           <TextField

@@ -140,8 +140,8 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
       if (value === "string") {
         const newCards = rows.map((row: any) => {
           return {
-            label: row.value,
-            value: row.value,
+            label: String(row.value),
+            value: String(row.value),
           };
         });
         setRows(newCards);
@@ -177,7 +177,7 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
           justifyContent: "space-between",
         }}
       >
-        <Box>Data Source Values</Box>
+        <Box>Data Source Values【options】</Box>
         <RadioGroup
           row
           aria-labelledby="item type label"
@@ -198,9 +198,12 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
             }}
           >
             <TableRow>
+              <TableCell width={50}>&nbsp;</TableCell>
               {itemType === "object" && <TableCell>Label</TableCell>}
               <TableCell>Value</TableCell>
-              <TableCell align="right">Action</TableCell>
+              <TableCell width={50} align="right">
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -208,7 +211,7 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box sx={{ mt: 1 }}>
+      <Box sx={{ mt: 1, mb: 1 }}>
         <Button size="small" variant="contained" onClick={onAdd}>
           Add
         </Button>

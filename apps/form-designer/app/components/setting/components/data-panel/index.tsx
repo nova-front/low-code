@@ -10,9 +10,9 @@ const DataPanel = (props: DataPanelProps) => {
   const lastDataSource =
     data.options
       ?.map((option: any) => {
-        if (typeof option === "string") {
+        if (typeof option === "string" || typeof option === "number") {
           if (option) {
-            return option;
+            return String(option);
           }
           return false;
         } else {
@@ -34,7 +34,7 @@ const DataPanel = (props: DataPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ pt: 2, height: "calc(100vh - 112px)", overflowY: "auto" }}>
           <FormGroup>
             {["select", "autocomplete"].includes(data.type) && (
               <FormControlLabel
