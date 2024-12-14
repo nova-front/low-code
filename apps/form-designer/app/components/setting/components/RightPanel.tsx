@@ -1,6 +1,5 @@
 import { useState, useMemo, Fragment } from "react";
 import { Stack, Box, Tabs, Tab } from "@mui/material";
-import useRenderField from "@/hooks/useRenderField";
 import CustomTabPanel from "./CustomPanel";
 import { Button } from "@/components/mui";
 import { tabProps } from "../util";
@@ -21,7 +20,6 @@ const RightPanel = ({
   onReset,
   onClose,
 }: RightPanelProps) => {
-  const { renderField } = useRenderField();
   const [value, setValue] = useState(0);
 
   const onChangeFn = (event: React.SyntheticEvent, newValue: number) => {
@@ -64,7 +62,6 @@ const RightPanel = ({
             height: "calc(100vh - 360px)",
           }}
         >
-          {/* {renderField(fieldData)} */}
           <FormItem fieldData={fieldData} />
           <Box
             sx={{

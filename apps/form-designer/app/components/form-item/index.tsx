@@ -22,6 +22,7 @@ const FormItem = ({ fieldData }: { fieldData: FormItemProps }) => {
       {type === "radio" && <RadioGroupBox fieldData={fieldData} />}
       {type === "switch" && <SwitchesGroupBox fieldData={fieldData} />}
       {type === "autocomplete" && <AutocompleteBox fieldData={fieldData} />}
+      {type === "unknown" && `【${fieldData.name}】正在开发...`}
     </>
   );
 };
