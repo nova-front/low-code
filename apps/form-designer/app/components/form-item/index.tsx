@@ -5,6 +5,7 @@ import SelectBox from "./SelectBox";
 import CheckBoxGroupBox from "./CheckBoxGroupBox";
 import RadioGroupBox from "./RadioGroupBox";
 import SwitchesGroupBox from "./SwitchesGroupBox";
+import AutocompleteBox from "./AutocompleteBox";
 
 import { FormItemProps } from "@/type";
 
@@ -20,6 +21,7 @@ const FormItem = ({ fieldData }: { fieldData: FormItemProps }) => {
       {type === "checkbox" && <CheckBoxGroupBox fieldData={fieldData} />}
       {type === "radio" && <RadioGroupBox fieldData={fieldData} />}
       {type === "switch" && <SwitchesGroupBox fieldData={fieldData} />}
+      {type === "autocomplete" && <AutocompleteBox fieldData={fieldData} />}
     </>
   );
 };

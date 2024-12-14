@@ -1,7 +1,7 @@
 import { useState, useCallback, forwardRef, Fragment } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { TransitionProps } from "@mui/material/transitions";
 import Slide from "@mui/material/Slide";
 import AppBar from "@mui/material/AppBar";
@@ -94,7 +94,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
 
   return (
     <Fragment>
-      <BorderColorIcon color="primary" onClick={openFn} />
+      <SettingsIcon color="primary" onClick={openFn} />
       <Dialog
         fullScreen
         open={open}

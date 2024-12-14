@@ -1,3 +1,4 @@
+import { top100Films } from "@/mock";
 import { FieldType } from "../type";
 
 // TODO: 待完善
@@ -32,7 +33,7 @@ export const getInitData = (data: any) => {
       initData.options = ["item a"];
       break;
     case "autocomplete":
-      initData.options = ["item a"];
+      initData.options = top100Films;
       break;
     case "button":
       break;
