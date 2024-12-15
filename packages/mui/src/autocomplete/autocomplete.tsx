@@ -7,7 +7,6 @@ import {
 
 interface AutocompleteProps {
   label?: React.ReactNode;
-  disablePortal?: boolean;
   options: readonly unknown[];
   freeSolo?: true;
   required?: boolean;
@@ -18,7 +17,6 @@ interface AutocompleteProps {
 
 const Autocomplete = ({
   label,
-  disablePortal,
   options,
   freeSolo,
   required,
@@ -35,7 +33,6 @@ const Autocomplete = ({
       disabled={disabled}
     >
       <AutocompleteBase
-        disablePortal={disablePortal}
         options={options}
         renderInput={(params) => (
           <TextField {...params} label={label} required={required} />
