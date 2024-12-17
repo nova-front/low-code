@@ -49,7 +49,6 @@ const CheckboxGroup = ({
       currentValue: string | number
     ) => {
       if (!onChange) return;
-      console.log(checked, index, checks, currentValue);
       let newValue: (string | number | boolean)[] = [];
       if (checked) {
         newValue = [

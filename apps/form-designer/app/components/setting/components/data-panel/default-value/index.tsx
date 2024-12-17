@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { FormControl, MenuItem, Select, TextField } from "@mui/material";
-
-import Autocomplete from "@repo/mui/autocomplete";
+import { Autocomplete } from "@/components/mui";
 
 import { FormItemProps } from "@/type";
 
@@ -19,7 +18,6 @@ const DefaultValue = ({
   data,
   multiple = false,
 }: DefaultValueProps) => {
-  console.log("defaultValue", defaultValue);
   const onChangeFn = useCallback(
     (e: any) => {
       let v = e.target.value;
@@ -32,18 +30,30 @@ const DefaultValue = ({
   );
 
   const autoDefaultValue = useMemo(() => {
-    const v =
-      dataSource?.find((option: any) => option.value === defaultValue) ||
-      defaultValue ||
-      null;
-    return v;
-  }, [defaultValue]);
+    if (!multiple) {
+      const v =
+        dataSource?.find((option: any) => option.value === defaultValue) ||
+        defaultValue ||
+        null;
+      return v;
+    } else {
+      const vs = defaultValue?.map((item: any) => {
+        return dataSource?.find((option: any) => option.value === item) || item;
+      });
+      return vs;
+    }
+  }, [dataSource, defaultValue, multiple]);
 
   const autoOnChangeFn = useCallback(
     (value: any) => {
-      onUpdate("defaultValue", value?.value);
+      if (!multiple) {
+        onUpdate("defaultValue", value?.value);
+      } else {
+        const vs = value?.map((item: any) => item.value);
+        onUpdate("defaultValue", vs);
+      }
     },
-    [onUpdate]
+    [multiple, onUpdate]
   );
 
   return (
@@ -78,6 +88,7 @@ const DefaultValue = ({
       )}
       {["autocomplete"].includes(data.type) && (
         <Autocomplete
+          multiple={multiple}
           options={dataSource}
           value={autoDefaultValue}
           onChange={autoOnChangeFn}

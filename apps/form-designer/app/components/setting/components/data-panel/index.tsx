@@ -37,18 +37,19 @@ const DataPanel = (props: DataPanelProps) => {
         <Box sx={{ pt: 2, height: "calc(100vh - 112px)", overflowY: "auto" }}>
           <FormGroup>
             {["select", "autocomplete"].includes(data.type) && (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={data.multiple}
-                    onChange={(e: any) => {
-                      onUpdate?.("multiple", e.target.checked);
-                    }}
-                  />
-                }
-                label="Multiple"
-                disabled={data.type === "autocomplete"}
-              />
+              <Box>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={data.multiple}
+                      onChange={(e: any) => {
+                        onUpdate?.("multiple", e.target.checked);
+                      }}
+                    />
+                  }
+                  label="Multiple"
+                />
+              </Box>
             )}
             <DefaultValue
               data={data}

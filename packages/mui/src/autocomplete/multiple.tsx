@@ -15,7 +15,7 @@ interface AutocompleteProps {
   disabled?: boolean;
   error?: boolean;
   helperText?: React.ReactNode;
-  value: OptionType | null;
+  value: OptionType[];
   onChange: any;
   options: readonly OptionType[];
 }
@@ -42,15 +42,11 @@ const AutocompleteMultiple = ({
         multiple
         options={options}
         getOptionLabel={(option) => option.label}
-        // defaultValue={[top100Films[13]]}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            label={label}
-            placeholder="Favorites"
-          />
-        )}
+        renderInput={(params) => <TextField {...params} label={label} />}
+        value={value}
+        onChange={(event, value) => {
+          onChange(value);
+        }}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
