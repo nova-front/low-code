@@ -105,7 +105,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
       >
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+            <Typography sx={{ flex: 1 }} variant="h6" component="div">
               {fieldData.name} Component
             </Typography>
             <IconButton

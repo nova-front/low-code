@@ -15,28 +15,32 @@ const ValidationPanel = (props: ValidationPanelProps) => {
       {value === index && (
         <Box sx={{ mt: 2 }}>
           <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={data.required}
-                  onChange={(e: any) => {
-                    onUpdate?.("required", e.target.checked);
-                  }}
-                />
-              }
-              label="Required"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={data.disabled}
-                  onChange={(e: any) => {
-                    onUpdate?.("disabled", e.target.checked);
-                  }}
-                />
-              }
-              label="Disabled"
-            />
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={data.required}
+                    onChange={(e: any) => {
+                      onUpdate?.("required", e.target.checked);
+                    }}
+                  />
+                }
+                label="Required"
+              />
+            </Box>
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={data.disabled}
+                    onChange={(e: any) => {
+                      onUpdate?.("disabled", e.target.checked);
+                    }}
+                  />
+                }
+                label="Disabled"
+              />
+            </Box>
           </FormGroup>
         </Box>
       )}

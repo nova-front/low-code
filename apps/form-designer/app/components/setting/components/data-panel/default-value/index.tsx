@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { FormControl, MenuItem, Select, TextField } from "@mui/material";
+import { Box, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { Autocomplete } from "@/components/mui";
 
 import { FormItemProps } from "@/type";
@@ -58,7 +58,7 @@ const DefaultValue = ({
 
   return (
     <FormControl fullWidth sx={{ mt: 1 }}>
-      <div>Default Value</div>
+      <Box sx={{ mb: 1 }}>Default Value</Box>
       {["checkbox", "radio", "select", "switch"].includes(data.type) && (
         <Select
           multiple={["checkbox", "switch"].includes(data.type) || multiple}
