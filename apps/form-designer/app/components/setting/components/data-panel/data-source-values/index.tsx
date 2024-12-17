@@ -18,14 +18,19 @@ import { Button } from "@/components/mui";
 
 import { TableRowCard } from "./TableRowCard";
 
-import { OptionsProps } from "@/type";
+import { FormItemProps, OptionsProps } from "@/type";
 
 interface DataSourceValuesProps {
+  data: FormItemProps;
   dataSource: OptionsProps;
   onUpdate: any;
 }
 
-const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
+const DataSourceValues = ({
+  data,
+  dataSource,
+  onUpdate,
+}: DataSourceValuesProps) => {
   const [rows, setRows] = useState<any[]>([]);
   const [itemType, setItemType] = useState<"string" | "object">(
     typeof dataSource[0] === "object" ? "object" : "string"
@@ -139,10 +144,17 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
       setItemType(value);
       if (value === "string") {
         const newCards = rows.map((row: any) => {
-          return {
-            label: String(row.value),
-            value: String(row.value),
-          };
+          if (data.type === "autocomplete") {
+            return {
+              label: String(row.label),
+              value: String(row.label),
+            };
+          } else {
+            return {
+              label: String(row.value),
+              value: String(row.value),
+            };
+          }
         });
         setRows(newCards);
         onUpdateFn(value, newCards);
@@ -150,7 +162,7 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
         onUpdateFn(value, rows);
       }
     },
-    [onUpdateFn, rows]
+    [data.type, onUpdateFn, rows]
   );
 
   useEffect(() => {
@@ -167,6 +179,14 @@ const DataSourceValues = ({ dataSource, onUpdate }: DataSourceValuesProps) => {
     });
     setRows(_rows);
   }, [dataSource]);
+
+  if (
+    !["checkbox", "radio", "select", "autocomplete", "switch"].includes(
+      data.type
+    )
+  ) {
+    return <></>;
+  }
 
   return (
     <FormControl fullWidth sx={{ mt: 2 }}>

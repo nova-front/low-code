@@ -56,11 +56,11 @@ const DataPanel = (props: DataPanelProps) => {
               dataSource={lastDataSource}
               onUpdate={onUpdate}
             />
-            {["checkbox", "radio", "select", "autocomplete", "switch"].includes(
-              data.type
-            ) && (
-              <DataSourceValues dataSource={dataSource} onUpdate={onUpdate} />
-            )}
+            <DataSourceValues
+              data={data}
+              dataSource={dataSource}
+              onUpdate={onUpdate}
+            />
           </FormGroup>
         </Box>
       )}

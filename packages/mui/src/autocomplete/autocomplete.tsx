@@ -3,6 +3,8 @@ import {
   FormHelperText,
   Autocomplete as AutocompleteBase,
   TextField,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
 } from "@mui/material";
 
 interface AutocompleteProps {
@@ -13,6 +15,14 @@ interface AutocompleteProps {
   disabled?: boolean;
   error?: boolean;
   helperText?: React.ReactNode;
+  value: any;
+  onChange?: (
+    event: React.SyntheticEvent,
+    value: unknown | unknown[],
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<unknown> | undefined
+  ) => void;
+  multiple?: boolean;
 }
 
 const Autocomplete = ({
@@ -23,6 +33,9 @@ const Autocomplete = ({
   disabled,
   error,
   helperText,
+  value = "",
+  onChange,
+  multiple,
 }: AutocompleteProps) => {
   return (
     <FormControl
@@ -33,12 +46,16 @@ const Autocomplete = ({
       disabled={disabled}
     >
       <AutocompleteBase
+        multiple={multiple}
         options={options}
         renderInput={(params) => (
           <TextField {...params} label={label} required={required} />
         )}
         freeSolo={freeSolo}
         disabled={disabled}
+        value={value}
+        onChange={onChange}
+        getOptionLabel={(option) => option?.label || option}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
