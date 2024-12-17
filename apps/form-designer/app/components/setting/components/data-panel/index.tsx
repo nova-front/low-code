@@ -47,6 +47,7 @@ const DataPanel = (props: DataPanelProps) => {
                   />
                 }
                 label="Multiple"
+                disabled={data.type === "autocomplete"}
               />
             )}
             <DefaultValue

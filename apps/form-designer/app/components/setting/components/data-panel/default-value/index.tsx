@@ -1,11 +1,7 @@
 import { useCallback, useMemo } from "react";
-import {
-  FormControl,
-  MenuItem,
-  Select,
-  TextField,
-  Autocomplete,
-} from "@mui/material";
+import { FormControl, MenuItem, Select, TextField } from "@mui/material";
+
+import Autocomplete from "@repo/mui/autocomplete";
 
 import { FormItemProps } from "@/type";
 
@@ -36,41 +32,16 @@ const DefaultValue = ({
   );
 
   const autoDefaultValue = useMemo(() => {
-    // if (!multiple) {
-    //   return dataSource?.find((item: any) => item === defaultValue);
-    // }
-    const arr = dataSource?.filter((item: any) => {
-      if (typeof item === "string") {
-        if (typeof defaultValue === "string") {
-          return item === defaultValue;
-        } else {
-          return defaultValue?.includes(item);
-        }
-      } else {
-        if (typeof defaultValue === "string") {
-          return item.value === defaultValue;
-        } else {
-          return defaultValue?.includes(item.value);
-        }
-      }
-    });
-    return arr;
-  }, [dataSource, defaultValue]);
+    const v =
+      dataSource?.find((option: any) => option.value === defaultValue) ||
+      defaultValue ||
+      null;
+    return v;
+  }, [defaultValue]);
 
   const autoOnChangeFn = useCallback(
-    (e: any, value: any) => {
-      if (value === null) {
-        onUpdate("defaultValue", "");
-        return;
-      }
-      if (typeof value === "string") {
-        onUpdate("defaultValue", value);
-      } else if (value instanceof Array) {
-        const v = value?.map((item: any) => item.value);
-        onUpdate("defaultValue", v);
-      } else {
-        onUpdate("defaultValue", value.value);
-      }
+    (value: any) => {
+      onUpdate("defaultValue", value?.value);
     },
     [onUpdate]
   );
@@ -107,11 +78,9 @@ const DefaultValue = ({
       )}
       {["autocomplete"].includes(data.type) && (
         <Autocomplete
-          multiple={multiple}
           options={dataSource}
           value={autoDefaultValue}
           onChange={autoOnChangeFn}
-          renderInput={(params) => <TextField {...params} variant="outlined" />}
         />
       )}
       {["textfield", "textarea"].includes(data.type) && (

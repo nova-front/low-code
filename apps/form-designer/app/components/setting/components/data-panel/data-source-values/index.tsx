@@ -198,16 +198,26 @@ const DataSourceValues = ({
         }}
       >
         <Box>Data Source Values【options】</Box>
-        <RadioGroup
-          row
-          aria-labelledby="item type label"
-          name="item type"
-          value={itemType}
-          onChange={itemTypeOnChange}
-        >
-          <FormControlLabel value="string" control={<Radio />} label="String" />
-          <FormControlLabel value="object" control={<Radio />} label="Object" />
-        </RadioGroup>
+        {["checkbox", "radio", "select", "switch"].includes(data.type) && (
+          <RadioGroup
+            row
+            aria-labelledby="item type label"
+            name="item type"
+            value={itemType}
+            onChange={itemTypeOnChange}
+          >
+            <FormControlLabel
+              value="string"
+              control={<Radio />}
+              label="String"
+            />
+            <FormControlLabel
+              value="object"
+              control={<Radio />}
+              label="Object"
+            />
+          </RadioGroup>
+        )}
       </Box>
       <TableContainer component={Paper} sx={{ mt: 1 }}>
         <Table aria-label="data source values table">
