@@ -104,7 +104,12 @@ const Autocomplete = ({
         }}
         freeSolo
         renderInput={(params) => (
-          <TextField {...params} label={label} required={required} />
+          <TextField
+            {...params}
+            label={label}
+            required={required}
+            disabled={disabled}
+          />
         )}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}

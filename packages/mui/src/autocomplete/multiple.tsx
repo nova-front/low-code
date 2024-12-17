@@ -40,9 +40,12 @@ const AutocompleteMultiple = ({
     >
       <AutocompleteBase
         multiple
+        disabled={disabled}
         options={options}
         getOptionLabel={(option) => option.label}
-        renderInput={(params) => <TextField {...params} label={label} />}
+        renderInput={(params) => (
+          <TextField {...params} label={label} disabled={disabled} />
+        )}
         value={value}
         onChange={(event, value) => {
           onChange(value);
