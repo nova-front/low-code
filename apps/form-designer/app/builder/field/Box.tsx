@@ -1,11 +1,11 @@
 import { memo } from "react";
 import { useDrag } from "react-dnd";
+import { getInitData } from "@/utils/common";
 import { ItemTypes } from "../config";
-import { getInitData } from "../../utils/common";
 
-import type { FormItemProps } from "../../type";
 import type { FC } from "react";
 import type { DragSourceMonitor } from "react-dnd";
+import type { FormItemProps } from "@/type";
 
 export interface BoxProps {
   children: React.ReactNode;

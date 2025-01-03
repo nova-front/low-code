@@ -3,13 +3,14 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import { Button } from "@/components/mui";
 import FieldBox from "./Box";
-import { Button } from "../../components/mui";
 import { basicComponents, advancedComponents } from "./config";
 
 import type { FC } from "react";
-import { FormItemProps } from "../../type.d";
-import globalStyle from "../../page.module.css";
+import { FormItemProps } from "@/type";
+
 import styles from "./styles.module.css";
 
 export interface ContainerProps {
@@ -26,7 +27,7 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
 
   return (
     <section className={styles.field_box}>
-      <header className={globalStyle.title}>Components</header>
+      <header className={styles.title}>Components</header>
       <Accordion
         expanded={expanded === "basic"}
         onChange={handleChange("basic")}

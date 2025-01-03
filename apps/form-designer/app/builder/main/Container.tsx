@@ -7,7 +7,6 @@ import { Button } from "../../components/mui";
 
 import type { FormItemProps } from "../../type";
 import type { FC } from "react";
-import globalStyle from "../../page.module.css";
 import styles from "./styles.module.css";
 
 const style = {
@@ -79,7 +78,7 @@ const Container: FC<ContainerProps> = ({
 
     return (
       <main className={styles.mian_box}>
-        <header className={globalStyle.title}>
+        <header className={styles.title}>
           You can build a form<Button variant="text">Import Data</Button>
         </header>
         <section ref={drop} className="container" style={{ backgroundColor }}>

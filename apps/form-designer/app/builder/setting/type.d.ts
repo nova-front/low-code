@@ -1,4 +1,4 @@
-import { FormItemProps } from "../../type.d";
+import { FormItemProps } from "../../type";
 
 export interface SettingDialogProps {
   initData: FormItemProps;

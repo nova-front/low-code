@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { ItemTypes } from "@/components/config";
 import { TableCell, TableRow, IconButton, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import MenuIcon from "@mui/icons-material/Menu";
+import { ItemTypes } from "../../../../config";
 
 import type { Identifier, XYCoord } from "dnd-core";
 import type { FC } from "react";

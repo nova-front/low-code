@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { TabPanelProps } from "../type";
 
 const CustomPanel = (props: TabPanelProps) => {

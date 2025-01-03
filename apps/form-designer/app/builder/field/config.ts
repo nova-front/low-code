@@ -1,4 +1,4 @@
-import { type FormItemProps } from "../../type.d";
+import { type FormItemProps } from "@/type";
 
 export const basicComponents: FormItemProps[] = [
   {
