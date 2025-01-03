@@ -12,13 +12,13 @@ export type FieldType =
 type OptionsItem = {
   label: string;
   value: string;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export type OptionsProps = OptionsItem[] | string[];
 export interface FormItemProps {
   id?: string | number;
-  name: string;
+  name?: string;
   type: FieldType;
   label?: React.ReactNode;
   helperText?: React.ReactNode;
