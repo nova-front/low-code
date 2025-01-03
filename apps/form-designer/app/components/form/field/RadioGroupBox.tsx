@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { RadioGroup } from "../mui";
-import { FormItemProps } from "@/type";
+import { RadioGroup } from "../config";
+import { FormItemProps } from "@/components/form/type";
 
 const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const { options = [], defaultValue, ...otherProps } = fieldData;

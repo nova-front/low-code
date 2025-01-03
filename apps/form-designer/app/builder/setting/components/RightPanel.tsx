@@ -1,11 +1,11 @@
 import { useState, useMemo, Fragment } from "react";
 import { Stack, Box, Tabs, Tab } from "@mui/material";
 import CustomTabPanel from "./CustomPanel";
-import { Button } from "@/components/mui";
+import { Button } from "@/components/form/config";
 import { tabProps } from "../util";
-import FormItem from "@/components/form-item";
+import FormItem from "@/components/form/item";
 
-import { FormItemProps } from "@/type";
+import { FormItemProps } from "@/components/form/type";
 
 interface RightPanelProps {
   fieldData: FormItemProps;

@@ -1,5 +1,5 @@
 import { top100Films } from "@/mock";
-import { FieldType } from "../type";
+import { FieldType } from "@/components/form/type";
 
 // TODO: 待完善
 export const getInitData = (data: any) => {

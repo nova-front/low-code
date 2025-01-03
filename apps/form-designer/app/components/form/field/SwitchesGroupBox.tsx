@@ -1,5 +1,5 @@
-import { FormItemProps } from "@/type";
-import { SwitchesGroup } from "../mui";
+import { FormItemProps } from "@/components/form/type";
+import { SwitchesGroup } from "../config";
 import { useCallback, useEffect, useState } from "react";
 
 const SwitchesGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {

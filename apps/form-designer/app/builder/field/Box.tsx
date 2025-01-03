@@ -5,7 +5,7 @@ import { ItemTypes } from "../config";
 
 import type { FC } from "react";
 import type { DragSourceMonitor } from "react-dnd";
-import type { FormItemProps } from "@/type";
+import type { FormItemProps } from "@/components/form/type";
 
 export interface BoxProps {
   children: React.ReactNode;

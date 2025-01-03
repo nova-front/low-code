@@ -14,11 +14,11 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Button } from "@/components/mui";
+import { Button } from "@/components/form/config";
 
 import { TableRowCard } from "./TableRowCard";
 
-import { FormItemProps, OptionsProps } from "@/type";
+import { FormItemProps, OptionsProps } from "@/components/form/type";
 
 interface DataSourceValuesProps {
   data: FormItemProps;

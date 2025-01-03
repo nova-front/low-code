@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { TextField } from "../mui";
-import { FormItemProps } from "@/type";
+import { TextArea } from "../config";
+import { FormItemProps } from "@/components/form/type";
 
-const TextFieldBox = ({ fieldData }: { fieldData: FormItemProps }) => {
+const TextAreaBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const { defaultValue = "", ...otherProps } = fieldData;
 
   const [value, setValue] = useState<any>("");
@@ -12,7 +12,7 @@ const TextFieldBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   }, [defaultValue]);
 
   return (
-    <TextField
+    <TextArea
       fullWidth
       value={value}
       onChange={(e) => setValue(e.target.value)}
@@ -21,4 +21,4 @@ const TextFieldBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   );
 };
 
-export default TextFieldBox;
+export default TextAreaBox;

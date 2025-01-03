@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Autocomplete } from "../mui";
-import { FormItemProps } from "@/type";
+import { Autocomplete } from "../config";
+import { FormItemProps } from "@/components/form/type";
 
 const AutocompleteBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const { defaultValue, multiple, options = [], ...otherProps } = fieldData;

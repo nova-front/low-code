@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CheckBoxGroup } from "../mui";
-import { FormItemProps } from "@/type";
+import { CheckBoxGroup } from "../config";
+import { FormItemProps } from "@/components/form/type";
 
 const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const { options = [], defaultValue, ...otherProps } = fieldData;

@@ -3,9 +3,9 @@ import { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../config";
 import { Card } from "./Card";
-import { Button } from "../../components/mui";
+import { Button } from "@/components/form/config";
 
-import type { FormItemProps } from "../../type";
+import type { FormItemProps } from "../../components/form/type";
 import type { FC } from "react";
 import styles from "./styles.module.css";
 

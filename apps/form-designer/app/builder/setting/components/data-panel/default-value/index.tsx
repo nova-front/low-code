@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { Box, FormControl, MenuItem, Select, TextField } from "@mui/material";
-import { Autocomplete } from "@/components/mui";
+import { Autocomplete } from "@/components/form/config";
 
-import { FormItemProps } from "@/type";
+import { FormItemProps } from "@/components/form/type";
 
 interface DefaultValueProps {
   data: FormItemProps;

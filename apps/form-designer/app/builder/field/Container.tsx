@@ -4,12 +4,12 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { Button } from "@/components/mui";
+import { Button } from "@/components/form/config";
 import FieldBox from "./Box";
 import { basicComponents, advancedComponents } from "./config";
 
 import type { FC } from "react";
-import { FormItemProps } from "@/type";
+import { FormItemProps } from "@/components/form/type";
 
 import styles from "./styles.module.css";
 

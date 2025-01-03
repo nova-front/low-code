@@ -1,13 +1,13 @@
 import { memo } from "react";
-import TextFieldBox from "./TextFieldBox";
-import TextAreaBox from "./TextAreaBox";
-import SelectBox from "./SelectBox";
-import CheckBoxGroupBox from "./CheckBoxGroupBox";
-import RadioGroupBox from "./RadioGroupBox";
-import SwitchesGroupBox from "./SwitchesGroupBox";
-import AutocompleteBox from "./AutocompleteBox";
+import TextFieldBox from "./field/TextFieldBox";
+import TextAreaBox from "./field/TextAreaBox";
+import SelectBox from "./field/SelectBox";
+import CheckBoxGroupBox from "./field/CheckBoxGroupBox";
+import RadioGroupBox from "./field/RadioGroupBox";
+import SwitchesGroupBox from "./field/SwitchesGroupBox";
+import AutocompleteBox from "./field/AutocompleteBox";
 
-import { FormItemProps } from "@/type";
+import { FormItemProps } from "@/components/form/type";
 
 const FormItem = ({ fieldData }: { fieldData: FormItemProps }) => {
   const { type } = fieldData;
