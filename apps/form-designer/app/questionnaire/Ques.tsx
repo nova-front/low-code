@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import Form from "@/components/form";
 import { Box } from "@mui/material";
@@ -15,7 +15,7 @@ const Questionnaire = () => {
       }}
     >
       <h1 style={{ textAlign: "center" }}>问卷调查</h1>
-      {/* <Form components={components} /> */}
+      <Form components={components} />
     </Box>
   );
 };
