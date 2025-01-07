@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TextField } from "../config";
+import { TextField } from "@/components";
 import { FormItemProps } from "@/components/form/type";
 
 const TextFieldBox = ({ fieldData }: { fieldData: FormItemProps }) => {

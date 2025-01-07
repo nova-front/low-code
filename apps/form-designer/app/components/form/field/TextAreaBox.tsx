@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TextArea } from "../config";
+import { TextArea } from "@/components";
 import { FormItemProps } from "@/components/form/type";
 
 const TextAreaBox = ({ fieldData }: { fieldData: FormItemProps }) => {

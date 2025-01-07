@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../config";
 import { Card } from "./Card";
-import { Button } from "@/components/form/config";
+import { Button } from "@/components";
 
 import type { FormItemProps } from "../../components/form/type";
 import type { FC } from "react";

@@ -1,5 +1,5 @@
 import { FormItemProps } from "@/components/form/type";
-import { Select } from "../config";
+import { Select } from "@/components";
 import { useEffect, useState } from "react";
 
 const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {

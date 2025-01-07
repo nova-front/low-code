@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RadioGroup } from "../config";
+import { RadioGroup } from "@/components";
 import { FormItemProps } from "@/components/form/type";
 
 const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {

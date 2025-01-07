@@ -14,7 +14,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Button } from "@/components/form/config";
+import { Button } from "@/components";
 
 import { TableRowCard } from "./TableRowCard";
 

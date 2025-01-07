@@ -5,7 +5,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
 import useCopy from "@/hooks/useCopy";
-import { Button } from "@/components/form/config";
+import { Button } from "@/components";
 
 import FieldContainer from "./field/Container";
 import MainContainer from "./main/Container";

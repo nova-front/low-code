@@ -4,7 +4,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { Button } from "@/components/form/config";
+import { Button } from "@/components";
 import FieldBox from "./Box";
 import { basicComponents, advancedComponents } from "./config";
 

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Autocomplete } from "../config";
+import { Autocomplete } from "@/components";
 import { FormItemProps } from "@/components/form/type";
 
 const AutocompleteBox = ({ fieldData }: { fieldData: FormItemProps }) => {

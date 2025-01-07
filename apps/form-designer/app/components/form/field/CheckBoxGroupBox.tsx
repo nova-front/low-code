@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CheckBoxGroup } from "../config";
+import { CheckBoxGroup } from "@/components";
 import { FormItemProps } from "@/components/form/type";
 
 const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {

@@ -1,7 +1,7 @@
 import { useState, useMemo, Fragment } from "react";
 import { Stack, Box, Tabs, Tab } from "@mui/material";
 import CustomTabPanel from "./CustomPanel";
-import { Button } from "@/components/form/config";
+import { Button } from "@/components";
 import { tabProps } from "../util";
 import FormItem from "@/components/form/item";
 
