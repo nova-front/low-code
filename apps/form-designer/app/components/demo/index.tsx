@@ -8,7 +8,16 @@ interface DemoProps {
 const Demo = ({ title, children }: DemoProps) => {
   return (
     <Box>
-      {title && <Typography variant="h5">{title}</Typography>}
+      {title && (
+        <Typography
+          sx={{
+            mb: 1,
+          }}
+          variant="h5"
+        >
+          {title}
+        </Typography>
+      )}
       {children}
     </Box>
   );
