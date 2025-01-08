@@ -15,7 +15,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Form Designer",
-  description: "这是一个表单设计器",
+  description: "一套成熟的表单解决方案。",
+  keywords: ["Form", "Form Designer", "成熟的表单解决方案"],
 };
 
 export default function RootLayout({
