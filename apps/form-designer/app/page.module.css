@@ -1,0 +1,23 @@
+.pageBox {
+  padding: 24px 0;
+}
+.title {
+  margin: 0 0 12px 24px;
+}
+.listBox {
+  display: flex;
+  margin: 0 12px;
+  li {
+    flex:1;
+    padding: 12px;
+  }
+}
+.itemBox {
+  display: flex;
+  flex: 1;
+  justify-content: center;  
+  align-items: center;
+  height: 300px;
+  color: #fff;
+  font-size: 24px;
+}
