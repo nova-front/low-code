@@ -1,9 +1,30 @@
 import { useEffect, useState } from "react";
-import { RadioGroup } from "@/components";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import { Radio } from "@/components";
 import { FormItemProps } from "@/components/form/type";
 
+interface OptionProps {
+  label: string;
+  value: any;
+  disabled?: boolean;
+}
+
 const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
-  const { options = [], defaultValue, ...otherProps } = fieldData;
+  const {
+    name,
+    label,
+    row,
+    defaultValue,
+    options = [],
+    disabled,
+    required,
+    error,
+    helperText,
+  } = fieldData;
 
   const [value, setValue] = useState<any>("");
 
@@ -29,13 +50,45 @@ const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   }, [defaultValue]);
 
   return (
-    <RadioGroup
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      {...otherProps}
-      row
-      options={lastOptions}
-    />
+    <FormControl
+      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      required={required}
+      error={error}
+      disabled={disabled}
+    >
+      {label && <FormLabel>{label}</FormLabel>}
+      <RadioGroup
+        row={row}
+        name={name}
+        defaultValue={defaultValue}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      >
+        {lastOptions.map((option: string | number | OptionProps, i: number) => {
+          if (typeof option === "string" || typeof option === "number") {
+            return (
+              <FormControlLabel
+                key={i}
+                value={option}
+                control={<Radio disabled={disabled} />}
+                label={option}
+              />
+            );
+          } else {
+            return (
+              <FormControlLabel
+                key={i}
+                value={option.value}
+                control={<Radio disabled={disabled || option.disabled} />}
+                label={option.label}
+                disabled={disabled || option.disabled}
+              />
+            );
+          }
+        })}
+      </RadioGroup>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+    </FormControl>
   );
 };
 

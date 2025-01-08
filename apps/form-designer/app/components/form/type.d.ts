@@ -28,4 +28,6 @@ export interface FormItemProps {
   multiple?: boolean;
   options?: OptionsProps;
   defaultValue?: any;
+  row?: boolean; // RadioGroup 专属
+  error?: boolean;
 }

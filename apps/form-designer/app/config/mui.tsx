@@ -2,7 +2,7 @@ import TextField from "@repo/mui/textfield";
 import TextArea from "@repo/mui/textarea";
 import Button from "@repo/mui/button";
 import CheckBoxGroup from "@repo/mui/checkbox.group";
-import RadioGroup from "@repo/mui/radio.group";
+import Radio from "@repo/mui/radio";
 import SwitchesGroup from "@repo/mui/switches.group";
 import Select from "@repo/mui/select";
 import Autocomplete from "@repo/mui/autocomplete";
@@ -12,7 +12,7 @@ export {
   Button,
   TextArea,
   CheckBoxGroup,
-  RadioGroup,
+  Radio,
   SwitchesGroup,
   Select,
   Autocomplete,
