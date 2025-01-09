@@ -39,7 +39,7 @@ const Box: FC<BoxProps> = memo(({ data, children, onAdd }) => {
   );
 
   return (
-    <div ref={drag} style={{ opacity, marginBottom: "8px" }}>
+    <div ref={drag as any} style={{ opacity, marginBottom: "8px" }}>
       {children}
     </div>
   );

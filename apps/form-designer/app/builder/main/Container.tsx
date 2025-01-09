@@ -81,7 +81,11 @@ const Container: FC<ContainerProps> = ({
         <header className={styles.title}>
           You can build a form<Button variant="text">Import Data</Button>
         </header>
-        <section ref={drop} className="container" style={{ backgroundColor }}>
+        <section
+          ref={drop as any}
+          className="container"
+          style={{ backgroundColor }}
+        >
           {cards.length === 0 && <p className={styles.tip}>Drag here</p>}
           <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
         </section>
