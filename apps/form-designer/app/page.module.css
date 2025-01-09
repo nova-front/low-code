@@ -7,10 +7,10 @@
 .listBox {
   display: flex;
   margin: 0 12px;
-  li {
-    flex:1;
-    padding: 12px;
-  }
+}
+.listBox li {
+  flex:1;
+  padding: 12px;
 }
 .itemBox {
   display: flex;

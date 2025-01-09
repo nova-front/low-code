@@ -8,22 +8,22 @@
 .json_box {
   width: 460px;
   padding-right: 12px;
-  :global(.container) {
-    display: block;
-    height: calc(100vh - 60px);
-    padding: 12px;
-    background-color: #eee;
-    border-radius: 4px;
-    white-space: pre-wrap;
-    overflow-y: auto;
-  }
+  
+}
+.json_box :global(.container) {
+  display: block;
+  height: calc(100vh - 60px);
+  padding: 12px;
+  background-color: #eee;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow-y: auto;
 }
 
 .field_box {
   width: 200px;
   padding-left: 12px;
-
-  button {
-    width: 100%;
-  }
+}
+.field_box button {
+  width: 100%;
 }
