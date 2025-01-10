@@ -1,4 +1,12 @@
-import { TextField, Grid2 as Grid } from "@mui/material";
+import {
+  TextField,
+  Grid2 as Grid,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import { DisplayPanelProps } from "../../type";
 
 const DisplayPanel = (props: DisplayPanelProps) => {
@@ -41,6 +49,30 @@ const DisplayPanel = (props: DisplayPanelProps) => {
                 value={data.placeholder}
                 onChange={(e: any) => onUpdate?.("placeholder", e.target.value)}
               />
+            </Grid>
+          )}
+          {["checkbox", "radio", "switch"].includes(data.type) && (
+            <Grid size={6}>
+              <FormControl>
+                <FormLabel>Direction</FormLabel>
+                <RadioGroup
+                  row
+                  name="Direction"
+                  value={data.direction}
+                  onChange={(e: any) => onUpdate?.("direction", e.target.value)}
+                >
+                  <FormControlLabel
+                    value="row"
+                    control={<Radio />}
+                    label="Row"
+                  />
+                  <FormControlLabel
+                    value="column"
+                    control={<Radio />}
+                    label="Column"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
           )}
         </Grid>

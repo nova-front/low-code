@@ -30,4 +30,5 @@ export interface FormItemProps {
   defaultValue?: any;
   row?: boolean; // RadioGroup 专属
   error?: boolean;
+  direction?: "row" | "column"; // eg: radio row 横向排列，column 纵向排列
 }
