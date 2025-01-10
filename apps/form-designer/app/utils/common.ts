@@ -21,13 +21,16 @@ export const getInitData = (data: any) => {
     case "checkbox":
       initData.options = ["item a"];
       initData.defaultValue = [];
+      initData.direction = "row";
       break;
     case "radio":
       initData.options = ["item a"];
+      initData.direction = "row";
       break;
     case "switch":
       initData.options = ["open"];
       initData.defaultValue = [];
+      initData.direction = "row";
       break;
     case "select":
       initData.options = ["item a"];

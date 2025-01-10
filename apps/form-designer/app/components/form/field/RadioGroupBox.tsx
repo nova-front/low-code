@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
@@ -17,13 +17,13 @@ const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const {
     name,
     label,
-    row,
     defaultValue,
     options = [],
     disabled,
     required,
     error,
     helperText,
+    direction,
   } = fieldData;
 
   const [value, setValue] = useState<any>("");
@@ -48,6 +48,10 @@ const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
+
+  const row = useMemo(() => {
+    return direction !== "column";
+  }, [direction]);
 
   return (
     <FormControl

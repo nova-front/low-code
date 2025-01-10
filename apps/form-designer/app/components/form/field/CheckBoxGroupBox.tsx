@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -20,10 +20,10 @@ const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
     label,
     options = [],
     disabled,
-    row,
     required,
     error,
     helperText,
+    direction,
   } = fieldData;
 
   const [checks, setChecks] = useState<(string | number | boolean)[]>(
@@ -68,6 +68,10 @@ const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   useEffect(() => {
     setChecks(defaultValue);
   }, [defaultValue]);
+
+  const row = useMemo(() => {
+    return direction !== "column";
+  }, [direction]);
 
   return (
     <FormControl
