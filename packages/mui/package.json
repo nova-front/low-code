@@ -10,7 +10,6 @@
     "./checkbox": "./src/checkbox.tsx",
     "./radio": "./src/radio.tsx",
     "./switch": "./src/switch/switch.tsx",
-    "./switches.group": "./src/switch/switches.group.tsx",
     "./select": "./src/select/select.tsx",
     "./autocomplete": "./src/autocomplete/index.tsx"
   },
