@@ -88,7 +88,6 @@ const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
                 key={i}
                 control={
                   <Checkbox
-                    defaultChecked={checks?.includes(option)}
                     checked={checks?.includes(option)}
                     disabled={disabled}
                     onChange={(e, checked) => onChangeFn(e, checked, i, option)}
@@ -103,7 +102,6 @@ const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
                 key={i}
                 control={
                   <Checkbox
-                    defaultChecked={checks?.includes(option.value)}
                     checked={checks?.includes(option.value)}
                     disabled={disabled || option.disabled}
                     onChange={(e, checked) =>
