@@ -11,7 +11,7 @@
     "./radio": "./src/radio.tsx",
     "./switch": "./src/switch/switch.tsx",
     "./select": "./src/select/select.tsx",
-    "./autocomplete": "./src/autocomplete/index.tsx"
+    "./autocomplete": "./src/autocomplete/autocomplete.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
