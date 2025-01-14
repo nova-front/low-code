@@ -1,8 +1,5 @@
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import SelectBasic, { SelectChangeEvent } from "@mui/material/Select";
-import FormHelperText from "@mui/material/FormHelperText";
 
 interface OptionProps {
   label: string;
@@ -16,14 +13,9 @@ interface SelectProps {
   onChange?: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
   label?: React.ReactNode;
   options: string[] | OptionProps[];
-  size?: "small" | "medium";
-  fullWidth?: boolean;
-  disabled?: boolean;
-  required?: boolean;
-  error?: boolean;
-  helperText?: React.ReactNode;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   multiple?: boolean;
+  fullWidth?: boolean;
 }
 
 const Select = ({
@@ -32,54 +24,39 @@ const Select = ({
   onChange,
   label,
   options,
-  size,
-  fullWidth,
-  disabled,
-  required,
-  error,
-  helperText,
   inputProps,
   multiple,
+  fullWidth,
 }: SelectProps) => {
   return (
-    <FormControl
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
-      size={size}
+    <SelectBasic
+      // defaultValue={defaultValue}
       fullWidth={fullWidth}
-      error={error}
-      disabled={disabled}
-      required={required}
+      label={label}
+      inputProps={inputProps}
+      multiple={multiple}
+      {...{ defaultValue, value, onChange }}
     >
-      {label && <InputLabel>{label}</InputLabel>}
-      <SelectBasic
-        // defaultValue={defaultValue}
-        label={label}
-        inputProps={inputProps}
-        multiple={multiple}
-        {...{ defaultValue, value, onChange }}
-      >
-        {options.map((option: string | OptionProps, i: number) => {
-          if (typeof option === "string") {
-            return (
-              <MenuItem key={i} value={String(option)}>
-                {option}
-              </MenuItem>
-            );
-          } else {
-            return (
-              <MenuItem
-                key={i}
-                value={String(option.value)}
-                disabled={option.disabled}
-              >
-                {option.label}
-              </MenuItem>
-            );
-          }
-        })}
-      </SelectBasic>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+      {options.map((option: string | OptionProps, i: number) => {
+        if (typeof option === "string") {
+          return (
+            <MenuItem key={i} value={String(option)}>
+              {option}
+            </MenuItem>
+          );
+        } else {
+          return (
+            <MenuItem
+              key={i}
+              value={String(option.value)}
+              disabled={option.disabled}
+            >
+              {option.label}
+            </MenuItem>
+          );
+        }
+      })}
+    </SelectBasic>
   );
 };
 
