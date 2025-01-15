@@ -1,7 +1,6 @@
 import CheckboxBasic from "@mui/material/Checkbox";
 
 interface CheckboxProps {
-  defaultChecked?: boolean;
   className?: string;
   disabled?: boolean;
   checked?: boolean;
@@ -24,7 +23,6 @@ interface CheckboxProps {
 }
 
 const Checkbox = ({
-  defaultChecked,
   className,
   disabled,
   checked,
@@ -37,7 +35,6 @@ const Checkbox = ({
 }: CheckboxProps): JSX.Element => {
   return (
     <CheckboxBasic
-      defaultChecked={defaultChecked}
       className={className}
       disabled={disabled}
       checked={checked}
