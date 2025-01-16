@@ -16,7 +16,7 @@ const linkConfig = [
     bgColor: "#afb42b",
   },
   {
-    title: "表单设计工具",
+    title: "表单设计",
     href: "/builder",
     bgColor: "#8bc34a",
   },

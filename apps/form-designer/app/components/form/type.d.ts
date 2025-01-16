@@ -31,4 +31,6 @@ export interface FormItemProps {
   row?: boolean; // RadioGroup 专属
   error?: boolean;
   direction?: "row" | "column"; // eg: radio row 横向排列，column 纵向排列
+  size?: "small" | "medium";
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>; // eg: select 有这个属性
 }
