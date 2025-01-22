@@ -7,6 +7,7 @@ import DisplayPanel from "./display-panel";
 import ValidationPanel from "./validation-panel";
 import CustomPanel from "./CustomPanel";
 import DataPanel from "./data-panel";
+import ApiPanel from "./api-panel";
 import { tabProps } from "../util";
 
 const LeftPanel = ({ fieldData, updatefieldData }: any) => {
@@ -28,6 +29,7 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
           <Tab label="Validation" {...tabProps(1)} />
           <Tab label="Data" {...tabProps(2)} />
           <Tab label="Conditional" {...tabProps(3)} />
+          <Tab label="API" {...tabProps(4)} />
         </Tabs>
       </Box>
       <DisplayPanel
@@ -53,6 +55,12 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
       <CustomPanel value={value} index={3}>
         Conditional
       </CustomPanel>
+      <ApiPanel
+        value={value}
+        index={4}
+        data={fieldData}
+        onUpdate={updatefieldData}
+      />
     </React.Fragment>
   );
 };

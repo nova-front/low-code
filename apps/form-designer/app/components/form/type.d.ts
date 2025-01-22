@@ -33,4 +33,5 @@ export interface FormItemProps {
   direction?: "row" | "column"; // eg: radio row 横向排列，column 纵向排列
   size?: "small" | "medium";
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>; // eg: select 有这个属性
+  key?: string;
 }

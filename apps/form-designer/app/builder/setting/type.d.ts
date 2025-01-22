@@ -26,3 +26,8 @@ export interface DataPanelProps extends TabPanelProps {
   data: FormItemProps;
   onUpdate: (key: string, value: string) => void;
 }
+
+export interface ApiPanelProps extends TabPanelProps {
+  data: FormItemProps;
+  onUpdate: (key: string, value: string) => void;
+}
