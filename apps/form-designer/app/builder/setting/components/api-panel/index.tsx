@@ -1,4 +1,5 @@
-import { TextField, Grid2 as Grid } from "@mui/material";
+import { TextField, Grid2 as Grid, Tooltip, IconButton } from "@mui/material";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { ApiPanelProps } from "../../type";
 
 const ApiPanel = (props: ApiPanelProps) => {
@@ -17,7 +18,19 @@ const ApiPanel = (props: ApiPanelProps) => {
           <Grid size={12}>
             <TextField
               fullWidth
-              label="Property Name"
+              label={
+                <>
+                  Property Name
+                  <Tooltip
+                    placement="right-start"
+                    title="The name of this field in the API endpoint.【key: abc】"
+                  >
+                    <IconButton>
+                      <HelpOutlineIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              }
               variant="outlined"
               value={data.key}
               onChange={(e: any) => onUpdate?.("key", e.target.value)}
