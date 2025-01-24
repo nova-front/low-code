@@ -43,9 +43,7 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
         index={1}
         data={fieldData}
         onUpdate={updatefieldData}
-      >
-        Validation
-      </ValidationPanel>
+      />
       <DataPanel
         value={value}
         index={2}
