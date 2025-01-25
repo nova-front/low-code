@@ -1,13 +1,13 @@
 import { top100Films } from "@/mock";
 import { FieldType } from "@/components/form/type";
 
-function generateKey() {
+export const generateString = () => {
   const characters = "abcdefghijklmnopqrstuvwxyz";
   return Array.from(
     { length: 6 },
     () => characters[Math.floor(Math.random() * characters.length)]
   ).join("");
-}
+};
 
 // TODO: 待完善
 export const getInitData = (data: any) => {
@@ -18,7 +18,7 @@ export const getInitData = (data: any) => {
     required: false,
     disabled: false,
     defaultValue: "",
-    key: generateKey(),
+    key: generateString(),
   };
   switch (data.type as FieldType) {
     case "textfield":
