@@ -126,6 +126,41 @@ export const ContentEditable = forwardRef<
       onBlur?.();
     };
 
+    // 在组件内部添加paste处理函数
+    const handlePaste = useCallback(
+      (e: React.ClipboardEvent) => {
+        e.preventDefault();
+        const pastedText = e.clipboardData.getData("text/plain");
+        const selection = window.getSelection();
+        if (!selection || !divRef.current) return;
+
+        // 创建文档片段保存粘贴内容
+        const fragment = document.createDocumentFragment();
+        const textNode = document.createTextNode(pastedText);
+        fragment.appendChild(textNode);
+
+        // 插入内容并保持选区正确
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(fragment);
+
+        // 调整选区到插入内容末尾
+        const newRange = document.createRange();
+        newRange.setStart(
+          divRef.current,
+          getCharacterOffset(divRef.current, textNode, pastedText.length)
+        );
+        newRange.collapse(true);
+
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+
+        // 立即触发输入更新
+        handleInput();
+      },
+      [handleInput]
+    );
+
     // 暴露API
     useImperativeHandle(ref, () => ({
       focus: () => divRef.current?.focus(),
@@ -155,6 +190,7 @@ export const ContentEditable = forwardRef<
         <div
           ref={divRef}
           contentEditable
+          onPaste={handlePaste}
           onInput={handleInput}
           onFocus={handleFocus}
           onBlur={handleBlur}
