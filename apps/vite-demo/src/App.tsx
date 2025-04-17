@@ -1,32 +1,36 @@
 import {
   ContentEditable,
   UndoableEditor,
-  Demo1,
-  Demo2,
-  Demo3,
-  Demo4,
-  Demo5,
+  UndoableEditorHandle,
 } from "@repo/editor";
+import { useRef } from "react";
 
 function App() {
+  const undoableEditorRef = useRef<UndoableEditorHandle>(null);
   return (
     <div>
-      <h2>一</h2>
-      <Demo1 />
-      <h2>二</h2>
-      <Demo2 />
-      <h2>三</h2>
-      <Demo3 />
-      <h2>四</h2>
-      <Demo4 />
-      <h2>五</h2>
-      <Demo5 />
-      <h2>成品</h2>
+      <h2>DOM + ContentEditable 实现 TextArea 基础功能</h2>
       <div>
         <ContentEditable />
       </div>
-      <br />
-      <UndoableEditor />
+      <h2>use-undo 实现撤销/重做功能，同时保持与原生编辑体验的一致性</h2>
+      <UndoableEditor ref={undoableEditorRef} />
+      <div style={{ display: "flex", gap: "12px", marginTop: "12px" }}>
+        <button onClick={() => undoableEditorRef.current?.undo()}>
+          撤销(Ctrl + Z)
+        </button>
+        <button onClick={() => undoableEditorRef.current?.redo()}>
+          重做(Ctrl + Y)
+        </button>
+        <button
+          onClick={() => {
+            const state = undoableEditorRef.current?.getState();
+            alert(JSON.stringify(state, null, 2));
+          }}
+        >
+          获取状态
+        </button>
+      </div>
     </div>
   );
 }

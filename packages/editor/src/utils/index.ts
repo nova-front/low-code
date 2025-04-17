@@ -22,7 +22,6 @@ export const getCharacterOffset = (
   );
 
   let charCount = 0;
-  let found = false;
 
   do {
     const currentNode = walker.currentNode;
@@ -32,7 +31,6 @@ export const getCharacterOffset = (
 
       if (currentNode === node) {
         charCount += Math.min(offset, textLength);
-        found = true;
         break;
       }
       charCount += textLength;
