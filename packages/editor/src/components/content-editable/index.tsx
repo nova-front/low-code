@@ -20,11 +20,14 @@ interface ContentEditableProps {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export interface ContentEditableHandle {
   focus: () => void;
   setSelection: (selection: { start: number; end: number }) => void;
+  getElement: () => HTMLDivElement | null;
 }
 
 export const ContentEditable = forwardRef<
@@ -40,6 +43,8 @@ export const ContentEditable = forwardRef<
       className,
       style,
       children,
+      onFocus,
+      onBlur,
     }: ContentEditableProps,
     ref
   ): ReactNode => {
@@ -110,6 +115,17 @@ export const ContentEditable = forwardRef<
       });
     }, [onChange, isComposing]);
 
+    // 合并焦点状态处理
+    const handleFocus = () => {
+      setIsFocused(true);
+      onFocus?.();
+    };
+
+    const handleBlur = () => {
+      setIsFocused(false);
+      onBlur?.();
+    };
+
     // 暴露API
     useImperativeHandle(ref, () => ({
       focus: () => divRef.current?.focus(),
@@ -129,6 +145,7 @@ export const ContentEditable = forwardRef<
           console.warn("Failed to set selection:", e);
         }
       },
+      getElement: () => divRef.current,
     }));
 
     const showPlaceholder = !isFocused && !divRef.current?.textContent?.trim();
@@ -139,8 +156,8 @@ export const ContentEditable = forwardRef<
           ref={divRef}
           contentEditable
           onInput={handleInput}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={() => setIsComposing(false)}
           style={{

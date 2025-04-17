@@ -33,6 +33,8 @@ export const UndoableEditor = forwardRef<UndoableEditorHandle>((_, ref) => {
   const editorRef = useRef<ContentEditableHandle>(null);
   const isInternalUpdate = useRef(false);
   const lastKeyPressed = useRef<string | null>(null);
+  // 新增本地焦点状态管理
+  const [isFocused, setIsFocused] = useState(false);
 
   // 防抖配置（300ms普通输入，立即提交的特殊按键）
   const debouncedSetState = useRef(
@@ -94,7 +96,10 @@ export const UndoableEditor = forwardRef<UndoableEditorHandle>((_, ref) => {
   // 键盘事件监听
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      lastKeyPressed.current = e.key;
+      // 1. 检查焦点状态和实际聚焦元素
+      const editorElement = editorRef.current?.getElement();
+      const isEditorActive = document.activeElement === editorElement;
+      if (!isEditorActive) return;
 
       // 快捷键处理（保留原有逻辑）
       if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key === "z") {
@@ -111,7 +116,7 @@ export const UndoableEditor = forwardRef<UndoableEditorHandle>((_, ref) => {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo]);
+  }, [undo, redo, isFocused]);
 
   return (
     <ContentEditable
@@ -119,6 +124,8 @@ export const UndoableEditor = forwardRef<UndoableEditorHandle>((_, ref) => {
       value={state.present.content}
       selection={state.present.selection}
       onChange={handleChange}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     />
   );
 });
