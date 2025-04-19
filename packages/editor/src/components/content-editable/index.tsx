@@ -6,8 +6,11 @@ import React, {
   useCallback,
   useImperativeHandle,
   ReactNode,
+  useMemo,
 } from "react";
+import { WaveUnderline } from "../wave-underline";
 import { findNodeAndOffset, getCharacterOffset } from "../../utils";
+import { generateTestData } from "../wave-underline/utils";
 
 interface ContentEditableProps {
   value?: string;
@@ -22,6 +25,7 @@ interface ContentEditableProps {
   children?: React.ReactNode;
   onFocus?: () => void;
   onBlur?: () => void;
+  spellcheck?: boolean;
 }
 
 export interface ContentEditableHandle {
@@ -45,6 +49,7 @@ export const ContentEditable = forwardRef<
       children,
       onFocus,
       onBlur,
+      spellcheck = false,
     }: ContentEditableProps,
     ref
   ): ReactNode => {
@@ -52,6 +57,14 @@ export const ContentEditable = forwardRef<
     const [isFocused, setIsFocused] = useState(false);
     const [isComposing, setIsComposing] = useState(false);
     const lastHtml = useRef(value);
+    const [dimensions, setDimensions] = useState({
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+      fontSize: 12,
+      lineHeight: 1.5,
+    });
 
     useEffect(() => {
       if (!divRef.current || divRef.current.innerHTML === value) return;
@@ -161,6 +174,66 @@ export const ContentEditable = forwardRef<
       [handleInput]
     );
 
+    const showPlaceholder = !isFocused && !divRef.current?.textContent?.trim();
+
+    // TODO: 后续删除
+    const testData = useMemo(() => {
+      return generateTestData({
+        canvasWidth: dimensions.width,
+        canvasHeight: dimensions.height,
+        fontSize: dimensions.fontSize,
+        lineHeightMultiplier: dimensions.lineHeight,
+      });
+    }, [
+      dimensions.fontSize,
+      dimensions.height,
+      dimensions.lineHeight,
+      dimensions.width,
+    ]);
+
+    useEffect(() => {
+      const element = divRef.current;
+      if (!element) return;
+
+      const computedStyle = window.getComputedStyle(element);
+
+      // 解析字体大小（去除单位 px）
+      const fontSize = parseInt(computedStyle.fontSize, 10) || 16;
+
+      // 解析行高（处理 normal/数字/带单位的值）
+      let lineHeight: number;
+      const lh = computedStyle.lineHeight;
+
+      if (lh === "normal") {
+        // 浏览器默认行高通常为 1.2
+        lineHeight = Math.round(fontSize * 1.2);
+      } else if (lh.includes("px")) {
+        lineHeight = parseInt(lh, 10);
+      } else if (lh.includes("%")) {
+        lineHeight = Math.round((fontSize * parseFloat(lh)) / 100);
+      } else {
+        // 处理无单位数字（如 1.5）
+        lineHeight = Math.round(fontSize * parseFloat(lh));
+      }
+
+      const updateDimensions = () => {
+        setDimensions({
+          width: element.offsetWidth,
+          height: element.offsetHeight,
+          top: element.offsetTop,
+          left: element.offsetLeft,
+          fontSize: fontSize,
+          lineHeight: lineHeight / fontSize,
+        });
+      };
+
+      const resizeObserver = new ResizeObserver(updateDimensions);
+      resizeObserver.observe(element);
+      updateDimensions(); // 初始调用
+
+      return () => resizeObserver.disconnect();
+    }, []);
+
     // 暴露API
     useImperativeHandle(ref, () => ({
       focus: () => divRef.current?.focus(),
@@ -183,10 +256,17 @@ export const ContentEditable = forwardRef<
       getElement: () => divRef.current,
     }));
 
-    const showPlaceholder = !isFocused && !divRef.current?.textContent?.trim();
-
     return (
-      <div style={{ position: "relative", ...style }} className={className}>
+      <div
+        style={{
+          position: "relative",
+          padding: "4px",
+          border: "1px solid #ddd",
+          borderRadius: "4px",
+          ...style,
+        }}
+        className={className}
+      >
         <div
           ref={divRef}
           contentEditable
@@ -198,20 +278,27 @@ export const ContentEditable = forwardRef<
           onCompositionEnd={() => setIsComposing(false)}
           style={{
             minHeight: "100px",
-            padding: "8px",
             outline: "none",
             whiteSpace: "pre-wrap",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
             lineHeight: "1.5",
           }}
         />
+        {spellcheck && (
+          <WaveUnderline
+            ranges={testData}
+            color="#ff3366"
+            width={dimensions.width}
+            height={dimensions.height}
+            top={dimensions.top}
+            left={dimensions.left}
+          />
+        )}
         {showPlaceholder && (
           <div
             style={{
               position: "absolute",
-              top: "8px",
-              left: "8px",
+              top: "0px",
+              left: "0px",
               color: "#999",
               pointerEvents: "none",
             }}
