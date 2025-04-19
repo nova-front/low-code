@@ -11,7 +11,7 @@ function App() {
     <div>
       <h2>DOM + ContentEditable 实现 TextArea 基础功能</h2>
       <div>
-        <ContentEditable />
+        <ContentEditable spellcheck placeholder="请输入" />
       </div>
       <h2>use-undo 实现撤销/重做功能，同时保持与原生编辑体验的一致性</h2>
       <UndoableEditor ref={undoableEditorRef} />
