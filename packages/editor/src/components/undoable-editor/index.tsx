@@ -8,12 +8,22 @@ import React, {
 } from "react";
 import useUndo from "use-undo";
 import { debounce } from "lodash-es";
-import { ContentEditable, ContentEditableHandle } from "../content-editable";
+import {
+  ContentEditable,
+  ContentEditableHandle,
+  ContentEditableProps,
+} from "../content-editable";
 
 interface EditorState {
   content: string;
   selection: { start: number; end: number };
 }
+
+interface UndoableEditorProps
+  extends Omit<
+    ContentEditableProps,
+    "value" | "selection" | "onChange" | "onFocus" | "onBlur" | "ref"
+  > {}
 
 // 类型定义
 export interface UndoableEditorHandle {
@@ -23,7 +33,10 @@ export interface UndoableEditorHandle {
 }
 
 // 修改后的组件定义
-export const UndoableEditor = forwardRef<UndoableEditorHandle>((_, ref) => {
+export const UndoableEditor = forwardRef<
+  UndoableEditorHandle,
+  UndoableEditorProps
+>((props, ref) => {
   const [state, { undo, redo, set: setState, canUndo, canRedo }] =
     useUndo<EditorState>({
       content: "",
@@ -120,6 +133,7 @@ export const UndoableEditor = forwardRef<UndoableEditorHandle>((_, ref) => {
 
   return (
     <ContentEditable
+      {...props}
       ref={editorRef}
       value={state.present.content}
       selection={state.present.selection}
