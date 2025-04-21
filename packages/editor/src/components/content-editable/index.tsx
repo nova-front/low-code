@@ -11,11 +11,12 @@ import { WaveUnderline } from "../wave-underline";
 import {
   findNodeAndOffset,
   getCharacterOffset,
-  getExactTextPositions,
+  getTextPositionsWithDictionary,
   TextPosition,
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
+import { EnglishDictionary } from "../../utils/dictionary";
 
 export interface ContentEditableProps {
   value?: string;
@@ -71,8 +72,26 @@ export const ContentEditable = forwardRef<
     const [ranges, setRanges] = useState<TextPosition[]>([]);
 
     const updatePositions = () => {
+      const words = [
+        "i",
+        "am",
+        "apple",
+        "banana",
+        "orange",
+        "pear",
+        "hello",
+        "world",
+        "typescript",
+        "javascript",
+        "example",
+        // ...可扩展更多单词
+      ];
+      const dictionary = new EnglishDictionary(words);
       if (contentRef.current && spellcheck) {
-        const ranges = getExactTextPositions(contentRef.current!, "applexx");
+        const ranges = getTextPositionsWithDictionary(
+          contentRef.current!,
+          dictionary
+        );
         setRanges(ranges);
       }
     };

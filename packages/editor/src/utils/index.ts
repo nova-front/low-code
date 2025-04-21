@@ -1,3 +1,5 @@
+import { EnglishDictionary } from "./dictionary";
+
 // 光标位置管理工具函数
 export const getCharacterOffset = (
   container: HTMLElement,
@@ -67,47 +69,46 @@ export interface TextPosition {
   startOffset: number;
   endOffset: number;
   height: number;
+  isValid: boolean;
+  word: string;
 }
 
-export function getExactTextPositions(
+export function getTextPositionsWithDictionary(
   editableElement: HTMLElement,
-  targetWord: string
+  dictionary: EnglishDictionary
 ): TextPosition[] {
   const results: TextPosition[] = [];
-  if (!targetWord || !editableElement) return results;
+  if (!editableElement) return results;
 
-  // 强化正则：支持跨行匹配和严格边界
-  const escaped = escapeRegExp(targetWord);
-  const regex = new RegExp(`\\b${escapeRegExp(escaped)}\\b`, "gi");
-
-  // 获取所有文本内容（包括隐藏的换行文本）
+  // 获取所有文本节点
   const allTextNodes = getAllTextNodes(editableElement);
-  const fullText = allTextNodes.map((n) => n.textContent || "").join("\n");
   const elementRect = editableElement.getBoundingClientRect();
 
-  // 构建节点位置映射表
+  // 构建全文和位置映射
+  let fullText = "";
   const nodeMap: { node: Text; start: number; end: number }[] = [];
-  let currentPos = 0;
+
   allTextNodes.forEach((node) => {
     const text = node.textContent || "";
     nodeMap.push({
       node,
-      start: currentPos,
-      end: currentPos + text.length,
+      start: fullText.length,
+      end: fullText.length + text.length,
     });
-    currentPos += text.length + 1; // +1 for the added newline
+    fullText += text + " ";
   });
 
-  // 执行匹配
+  // 匹配所有英文单词（至少2个字母）
+  const wordRegex = /\b([a-zA-Z']{2,})\b/g;
   let match: RegExpExecArray | null;
-  while ((match = regex.exec(fullText)) !== null) {
-    const matchStart = match.index;
-    const matchEnd = matchStart + targetWord.length;
 
-    // 边界二次校验
-    const prevChar = fullText[matchStart - 1] || "";
-    const nextChar = fullText[matchEnd] || "";
-    if (/[a-zA-Z]/.test(prevChar) || /[a-zA-Z]/.test(nextChar)) continue;
+  while ((match = wordRegex.exec(fullText)) !== null) {
+    const matchedWord = match[1];
+    const matchStart = match.index;
+    const matchEnd = matchStart + matchedWord.length;
+
+    // 验证单词合法性
+    const isValid = dictionary.isValidWord(matchedWord);
 
     // 定位节点
     const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
@@ -115,6 +116,7 @@ export function getExactTextPositions(
       matchStart,
       matchEnd
     );
+
     if (!startNode || !endNode) continue;
 
     // 计算位置
@@ -123,11 +125,13 @@ export function getExactTextPositions(
     range.setEnd(endNode, endOffset);
 
     Array.from(range.getClientRects()).forEach((rect) => {
-      if (rect.width > 0 && rect.height > 0) {
+      if (rect.width > 0 && rect.height > 0 && !isValid) {
         results.push({
+          word: matchedWord,
           startOffset: Math.round(rect.left - elementRect.left),
           endOffset: Math.round(rect.right - elementRect.left),
           height: Math.round(rect.bottom - elementRect.top),
+          isValid,
         });
       }
     });
