@@ -13,6 +13,7 @@ interface GenerateOptions {
   maxWaveLength?: number; // 默认100px
 }
 
+// 生成测试数据的方法【实际不需要用到】
 export const generateTestData = (options: GenerateOptions) => {
   const {
     canvasWidth,
