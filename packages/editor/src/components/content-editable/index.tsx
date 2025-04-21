@@ -15,6 +15,7 @@ import {
   getExactTextPositions,
   TextPosition,
 } from "../../utils";
+import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 
 export interface ContentEditableProps {
   value?: string;
@@ -223,6 +224,13 @@ export const ContentEditable = forwardRef<
 
       return () => resizeObserver.disconnect();
     }, []);
+
+    useWidthChangeObserver(divRef as React.RefObject<HTMLElement>, (width) => {
+      if (divRef.current) {
+        const ranges = getExactTextPositions(divRef.current, "applexx");
+        setRanges(ranges);
+      }
+    });
 
     // 暴露API
     useImperativeHandle(ref, () => ({
