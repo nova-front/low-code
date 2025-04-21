@@ -1,0 +1,37 @@
+/**
+ * 英文词典类，用于高效单词校验
+ */
+export class EnglishDictionary {
+  private wordSet: Set<string>; // 存储所有单词（小写）
+  private prefixMap: Map<string, boolean>; // 前缀索引表
+  private readonly prefixLength = 3; // 前缀长度
+
+  /**
+   * 创建词典实例
+   * @param words 初始单词数组
+   */
+  constructor(words: string[]) {
+    this.wordSet = new Set(words.map((w) => w.toLowerCase()));
+    this.prefixMap = new Map();
+
+    // 构建3字母前缀索引
+    for (const word of this.wordSet) {
+      const prefix = word.slice(0, this.prefixLength);
+      this.prefixMap.set(prefix, true);
+    }
+  }
+
+  /**
+   * 检查单词是否在词典中
+   * @param word 待检查单词
+   * @returns 是否有效单词（不区分大小写）
+   */
+  isValidWord(word: string): boolean {
+    const lowerWord = word.toLowerCase();
+    const prefix = lowerWord.slice(0, this.prefixLength);
+
+    // 先检查前缀快速过滤
+    if (!this.prefixMap.has(prefix)) return false;
+    return this.wordSet.has(lowerWord);
+  }
+}
