@@ -9,10 +9,15 @@ import React, {
   useMemo,
 } from "react";
 import { WaveUnderline } from "../wave-underline";
-import { findNodeAndOffset, getCharacterOffset } from "../../utils";
+import {
+  findNodeAndOffset,
+  getCharacterOffset,
+  getExactTextPositions,
+  TextPosition,
+} from "../../utils";
 import { generateTestData } from "../wave-underline/utils";
 
-interface ContentEditableProps {
+export interface ContentEditableProps {
   value?: string;
   selection?: { start: number; end: number };
   onChange?: (state: {
@@ -65,6 +70,7 @@ export const ContentEditable = forwardRef<
       fontSize: 12,
       lineHeight: 1.5,
     });
+    const [ranges, setRanges] = useState<TextPosition[]>([]);
 
     useEffect(() => {
       if (!divRef.current || divRef.current.innerHTML === value) return;
@@ -136,6 +142,10 @@ export const ContentEditable = forwardRef<
 
     const handleBlur = () => {
       setIsFocused(false);
+      if (divRef.current) {
+        const ranges = getExactTextPositions(divRef.current, "applexx");
+        setRanges(ranges);
+      }
       onBlur?.();
     };
 
@@ -285,7 +295,7 @@ export const ContentEditable = forwardRef<
         />
         {spellcheck && (
           <WaveUnderline
-            ranges={testData}
+            ranges={ranges}
             color="#ff3366"
             width={dimensions.width}
             height={dimensions.height}

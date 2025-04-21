@@ -14,7 +14,7 @@ function App() {
         <ContentEditable spellcheck placeholder="请输入" />
       </div>
       <h2>use-undo 实现撤销/重做功能，同时保持与原生编辑体验的一致性</h2>
-      <UndoableEditor ref={undoableEditorRef} />
+      <UndoableEditor spellcheck ref={undoableEditorRef} />
       <div style={{ display: "flex", gap: "12px", marginTop: "12px" }}>
         <button onClick={() => undoableEditorRef.current?.undo()}>
           撤销(Ctrl + Z)
