@@ -71,68 +71,87 @@ export interface TextPosition {
 
 export function getExactTextPositions(
   editableElement: HTMLElement,
-  targetText: string
+  targetWord: string
 ): TextPosition[] {
   const results: TextPosition[] = [];
-  if (!targetText || targetText.length === 0) return results;
+  if (!targetWord || !editableElement) return results;
 
-  // 创建正则表达式：匹配精确目标，前后有单词边界（空格/标点/开头结尾）
-  const regex = new RegExp(`\\b${escapeRegExp(targetText)}\\b`, "gi");
+  // 强化正则：支持跨行匹配和严格边界
+  const escaped = escapeRegExp(targetWord);
+  const regex = new RegExp(`\\b${escapeRegExp(escaped)}\\b`, "gi");
+
+  // 获取所有文本内容（包括隐藏的换行文本）
+  const allTextNodes = getAllTextNodes(editableElement);
+  const fullText = allTextNodes.map((n) => n.textContent || "").join("\n");
   const elementRect = editableElement.getBoundingClientRect();
-  const walker = document.createTreeWalker(
-    editableElement,
-    NodeFilter.SHOW_TEXT
-  );
 
-  // 临时变量用于跨节点合并文本
-  let accumulatedText = "";
-  let nodeStartIndex = 0;
+  // 构建节点位置映射表
   const nodeMap: { node: Text; start: number; end: number }[] = [];
-
-  // 第一阶段：收集并合并所有文本节点
-  while (walker.nextNode()) {
-    const textNode = walker.currentNode as Text;
-    const text = textNode.textContent || "";
+  let currentPos = 0;
+  allTextNodes.forEach((node) => {
+    const text = node.textContent || "";
     nodeMap.push({
-      node: textNode,
-      start: nodeStartIndex,
-      end: nodeStartIndex + text.length,
+      node,
+      start: currentPos,
+      end: currentPos + text.length,
     });
-    accumulatedText += text;
-    nodeStartIndex += text.length;
-  }
+    currentPos += text.length + 1; // +1 for the added newline
+  });
 
-  // 第二阶段：使用正则匹配完整词汇
+  // 执行匹配
   let match: RegExpExecArray | null;
-  while ((match = regex.exec(accumulatedText)) !== null) {
+  while ((match = regex.exec(fullText)) !== null) {
     const matchStart = match.index;
-    const matchEnd = match.index + targetText.length;
+    const matchEnd = matchStart + targetWord.length;
 
-    // 找到匹配的文本节点范围
+    // 边界二次校验
+    const prevChar = fullText[matchStart - 1] || "";
+    const nextChar = fullText[matchEnd] || "";
+    if (/[a-zA-Z]/.test(prevChar) || /[a-zA-Z]/.test(nextChar)) continue;
+
+    // 定位节点
     const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
       nodeMap,
       matchStart,
       matchEnd
     );
+    if (!startNode || !endNode) continue;
 
-    // 创建 Range 并计算位置
+    // 计算位置
     const range = document.createRange();
     range.setStart(startNode, startOffset);
     range.setEnd(endNode, endOffset);
 
-    const rects = range.getClientRects();
-    for (const rect of Array.from(rects)) {
-      if (rect.width === 0) continue;
-
-      const startOffset = Math.round(rect.left - elementRect.left);
-      const endOffset = Math.round(rect.right - elementRect.left);
-      const height = Math.round(rect.bottom - elementRect.top);
-
-      results.push({ startOffset, endOffset, height });
-    }
+    Array.from(range.getClientRects()).forEach((rect) => {
+      if (rect.width > 0 && rect.height > 0) {
+        results.push({
+          startOffset: Math.round(rect.left - elementRect.left),
+          endOffset: Math.round(rect.right - elementRect.left),
+          height: Math.round(rect.bottom - elementRect.top),
+        });
+      }
+    });
   }
 
   return results;
+}
+
+// 获取所有文本节点（包括深层嵌套）
+function getAllTextNodes(element: HTMLElement): Text[] {
+  const nodes: Text[] = [];
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+    acceptNode: (node) => {
+      // 过滤掉纯空白文本节点（保留包含换行符的）
+      return node.textContent?.trim() || node.textContent?.includes("\n")
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT;
+    },
+  });
+
+  while (walker.nextNode()) {
+    nodes.push(walker.currentNode as Text);
+  }
+  return nodes;
 }
 
 // 辅助函数：转义正则特殊字符
