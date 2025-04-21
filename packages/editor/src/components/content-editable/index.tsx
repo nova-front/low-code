@@ -58,7 +58,7 @@ export const ContentEditable = forwardRef<
     }: ContentEditableProps,
     ref
   ): ReactNode => {
-    const divRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const [isFocused, setIsFocused] = useState(false);
     const [isComposing, setIsComposing] = useState(false);
     const lastHtml = useRef(value);
@@ -67,14 +67,12 @@ export const ContentEditable = forwardRef<
       height: 0,
       top: 0,
       left: 0,
-      fontSize: 12,
-      lineHeight: 1.5,
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
 
     const updatePositions = () => {
-      if (divRef.current && spellcheck) {
-        const ranges = getExactTextPositions(divRef.current!, "applexx");
+      if (contentRef.current && spellcheck) {
+        const ranges = getExactTextPositions(contentRef.current!, "applexx");
         setRanges(ranges);
       }
     };
@@ -84,24 +82,24 @@ export const ContentEditable = forwardRef<
     }, 300);
 
     useEffect(() => {
-      if (!divRef.current || divRef.current.innerHTML === value) return;
+      if (!contentRef.current || contentRef.current.innerHTML === value) return;
 
       // 标记为外部更新
       const isExternalUpdate = value !== lastHtml.current;
       if (isExternalUpdate) {
         // 保存当前滚动位置
-        const scrollTop = divRef.current.scrollTop;
+        const scrollTop = contentRef.current.scrollTop;
 
         // 执行DOM更新
-        divRef.current.innerHTML = value;
+        contentRef.current.innerHTML = value;
         lastHtml.current = value;
 
         // 恢复选择状态
         if (selection) {
           const { start, end } = selection;
           const range = document.createRange();
-          const startPos = findNodeAndOffset(divRef.current, start);
-          const endPos = findNodeAndOffset(divRef.current, end);
+          const startPos = findNodeAndOffset(contentRef.current, start);
+          const endPos = findNodeAndOffset(contentRef.current, end);
 
           try {
             range.setStart(startPos.node, startPos.offset);
@@ -115,13 +113,13 @@ export const ContentEditable = forwardRef<
         }
 
         // 恢复滚动位置
-        divRef.current.scrollTop = scrollTop;
+        contentRef.current.scrollTop = scrollTop;
       }
     }, [value, selection]); // 仅在外部value变化时更新
 
     // 处理内容变化
     const handleInput = useCallback(() => {
-      if (!divRef.current || isComposing) return;
+      if (!contentRef.current || isComposing) return;
 
       // 获取当前选择状态
       const selection = window.getSelection();
@@ -129,18 +127,18 @@ export const ContentEditable = forwardRef<
 
       const range = selection.getRangeAt(0);
       const start = getCharacterOffset(
-        divRef.current,
+        contentRef.current,
         range.startContainer,
         range.startOffset
       );
       const end = getCharacterOffset(
-        divRef.current,
+        contentRef.current,
         range.endContainer,
         range.endOffset
       );
 
       onChange?.({
-        content: divRef.current.innerHTML,
+        content: contentRef.current.innerHTML,
         selection: { start, end },
       });
 
@@ -164,7 +162,7 @@ export const ContentEditable = forwardRef<
         const pastedText = e.clipboardData.getData("text/plain");
         const selection = window.getSelection();
 
-        if (!selection || !divRef.current) return;
+        if (!selection || !contentRef.current) return;
 
         // 删除当前选中的内容（如果有）
         const range = selection.getRangeAt(0);
@@ -189,32 +187,13 @@ export const ContentEditable = forwardRef<
       [handleInput]
     );
 
-    const showPlaceholder = !isFocused && !divRef.current?.textContent?.trim();
+    const showPlaceholder =
+      !isFocused && !contentRef.current?.textContent?.trim();
 
+    // 初始化 WaveUnderline 基础属性，并根据 contentRef 进行调整
     useEffect(() => {
-      const element = divRef.current;
+      const element = contentRef.current;
       if (!element) return;
-
-      const computedStyle = window.getComputedStyle(element);
-
-      // 解析字体大小（去除单位 px）
-      const fontSize = parseInt(computedStyle.fontSize, 10) || 16;
-
-      // 解析行高（处理 normal/数字/带单位的值）
-      let lineHeight: number;
-      const lh = computedStyle.lineHeight;
-
-      if (lh === "normal") {
-        // 浏览器默认行高通常为 1.2
-        lineHeight = Math.round(fontSize * 1.2);
-      } else if (lh.includes("px")) {
-        lineHeight = parseInt(lh, 10);
-      } else if (lh.includes("%")) {
-        lineHeight = Math.round((fontSize * parseFloat(lh)) / 100);
-      } else {
-        // 处理无单位数字（如 1.5）
-        lineHeight = Math.round(fontSize * parseFloat(lh));
-      }
 
       const updateDimensions = () => {
         setDimensions({
@@ -222,8 +201,6 @@ export const ContentEditable = forwardRef<
           height: element.offsetHeight,
           top: element.offsetTop,
           left: element.offsetLeft,
-          fontSize: fontSize,
-          lineHeight: lineHeight / fontSize,
         });
       };
 
@@ -235,18 +212,21 @@ export const ContentEditable = forwardRef<
     }, []);
 
     // 监测屏幕宽度
-    useWidthChangeObserver(divRef as React.RefObject<HTMLElement>, (width) => {
-      updatePositions();
-    });
+    useWidthChangeObserver(
+      contentRef as React.RefObject<HTMLElement>,
+      (width) => {
+        updatePositions();
+      }
+    );
 
     // 暴露API
     useImperativeHandle(ref, () => ({
-      focus: () => divRef.current?.focus(),
+      focus: () => contentRef.current?.focus(),
       setSelection: (sel) => {
-        if (!divRef.current) return;
+        if (!contentRef.current) return;
         const range = document.createRange();
-        const startPos = findNodeAndOffset(divRef.current, sel.start);
-        const endPos = findNodeAndOffset(divRef.current, sel.end);
+        const startPos = findNodeAndOffset(contentRef.current, sel.start);
+        const endPos = findNodeAndOffset(contentRef.current, sel.end);
 
         try {
           range.setStart(startPos.node, startPos.offset);
@@ -258,7 +238,7 @@ export const ContentEditable = forwardRef<
           console.warn("Failed to set selection:", e);
         }
       },
-      getElement: () => divRef.current,
+      getElement: () => contentRef.current,
     }));
 
     return (
@@ -273,7 +253,7 @@ export const ContentEditable = forwardRef<
         className={className}
       >
         <div
-          ref={divRef}
+          ref={contentRef}
           contentEditable
           onPaste={handlePaste}
           onInput={handleInput}
