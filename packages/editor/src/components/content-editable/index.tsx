@@ -6,7 +6,6 @@ import React, {
   useCallback,
   useImperativeHandle,
   ReactNode,
-  useMemo,
 } from "react";
 import { WaveUnderline } from "../wave-underline";
 import {
@@ -16,6 +15,7 @@ import {
   TextPosition,
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export interface ContentEditableProps {
   value?: string;
@@ -71,6 +71,17 @@ export const ContentEditable = forwardRef<
       lineHeight: 1.5,
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
+
+    const updatePositions = () => {
+      if (divRef.current && spellcheck) {
+        const ranges = getExactTextPositions(divRef.current!, "applexx");
+        setRanges(ranges);
+      }
+    };
+
+    const debouncedSpellCheck = useDebounce(() => {
+      updatePositions();
+    }, 300);
 
     useEffect(() => {
       if (!divRef.current || divRef.current.innerHTML === value) return;
@@ -132,6 +143,8 @@ export const ContentEditable = forwardRef<
         content: divRef.current.innerHTML,
         selection: { start, end },
       });
+
+      debouncedSpellCheck();
     }, [onChange, isComposing]);
 
     // 合并焦点状态处理
@@ -142,10 +155,6 @@ export const ContentEditable = forwardRef<
 
     const handleBlur = () => {
       setIsFocused(false);
-      if (divRef.current) {
-        const ranges = getExactTextPositions(divRef.current, "applexx");
-        setRanges(ranges);
-      }
       onBlur?.();
     };
 
@@ -225,11 +234,9 @@ export const ContentEditable = forwardRef<
       return () => resizeObserver.disconnect();
     }, []);
 
+    // 监测屏幕宽度
     useWidthChangeObserver(divRef as React.RefObject<HTMLElement>, (width) => {
-      if (divRef.current) {
-        const ranges = getExactTextPositions(divRef.current, "applexx");
-        setRanges(ranges);
-      }
+      updatePositions();
     });
 
     // 暴露API
