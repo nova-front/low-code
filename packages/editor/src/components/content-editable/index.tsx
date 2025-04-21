@@ -15,7 +15,6 @@ import {
   getExactTextPositions,
   TextPosition,
 } from "../../utils";
-import { generateTestData } from "../wave-underline/utils";
 
 export interface ContentEditableProps {
   value?: string;
@@ -149,57 +148,38 @@ export const ContentEditable = forwardRef<
       onBlur?.();
     };
 
-    // 在组件内部添加paste处理函数
     const handlePaste = useCallback(
-      (e: React.ClipboardEvent) => {
+      (e: React.ClipboardEvent<HTMLDivElement>) => {
         e.preventDefault();
         const pastedText = e.clipboardData.getData("text/plain");
         const selection = window.getSelection();
+
         if (!selection || !divRef.current) return;
 
-        // 创建文档片段保存粘贴内容
-        const fragment = document.createDocumentFragment();
-        const textNode = document.createTextNode(pastedText);
-        fragment.appendChild(textNode);
-
-        // 插入内容并保持选区正确
+        // 删除当前选中的内容（如果有）
         const range = selection.getRangeAt(0);
         range.deleteContents();
-        range.insertNode(fragment);
 
-        // 调整选区到插入内容末尾
+        // 插入纯文本节点
+        const textNode = document.createTextNode(pastedText);
+        range.insertNode(textNode);
+
+        // 将光标移动到插入内容的末尾
         const newRange = document.createRange();
-        newRange.setStart(
-          divRef.current,
-          getCharacterOffset(divRef.current, textNode, pastedText.length)
-        );
+        newRange.setStartAfter(textNode);
         newRange.collapse(true);
 
+        // 更新选区
         selection.removeAllRanges();
         selection.addRange(newRange);
 
-        // 立即触发输入更新
+        // 触发输入更新
         handleInput();
       },
       [handleInput]
     );
 
     const showPlaceholder = !isFocused && !divRef.current?.textContent?.trim();
-
-    // TODO: 后续删除
-    const testData = useMemo(() => {
-      return generateTestData({
-        canvasWidth: dimensions.width,
-        canvasHeight: dimensions.height,
-        fontSize: dimensions.fontSize,
-        lineHeightMultiplier: dimensions.lineHeight,
-      });
-    }, [
-      dimensions.fontSize,
-      dimensions.height,
-      dimensions.lineHeight,
-      dimensions.width,
-    ]);
 
     useEffect(() => {
       const element = divRef.current;
