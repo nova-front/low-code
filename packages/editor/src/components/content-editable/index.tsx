@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useImperativeHandle,
   ReactNode,
+  useMemo,
 } from "react";
 import { WaveUnderline } from "../wave-underline";
 import {
@@ -246,14 +247,33 @@ export const ContentEditable = forwardRef<
       getElement: () => contentRef.current,
     }));
 
+    const { mainStyle, editorStyle } = useMemo(() => {
+      let mainStyle = {};
+      let editorStyle = {};
+      if (style) {
+        const {
+          padding,
+          paddingLeft,
+          paddingTop,
+          paddingRight,
+          paddingBottom,
+          ...other
+        } = style;
+        mainStyle = style;
+        editorStyle = other;
+      }
+      return { mainStyle, editorStyle };
+    }, [style]);
+
     return (
       <div
         style={{
+          padding: "6px",
+          minHeight: "100px",
+          ...mainStyle,
           position: "relative",
-          padding: "4px",
           border: "1px solid #ddd",
           borderRadius: "4px",
-          ...style,
         }}
         className={className}
       >
@@ -270,7 +290,7 @@ export const ContentEditable = forwardRef<
             minHeight: "100px",
             outline: "none",
             whiteSpace: "pre-wrap",
-            lineHeight: "1.5",
+            ...editorStyle,
           }}
         />
         {spellcheck && (
@@ -286,11 +306,13 @@ export const ContentEditable = forwardRef<
         {showPlaceholder && (
           <div
             style={{
+              padding: "6px",
+              ...mainStyle,
+              pointerEvents: "none",
               position: "absolute",
               top: "0px",
               left: "0px",
               color: "#999",
-              pointerEvents: "none",
             }}
           >
             {placeholder}
