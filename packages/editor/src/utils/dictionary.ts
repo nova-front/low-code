@@ -15,7 +15,8 @@ export class EnglishDictionary {
     this.prefixMap = new Map();
 
     // 构建3字母前缀索引
-    for (const word of this.wordSet) {
+    // 为了兼容低版本 ES 标准，将 Set 转换为数组进行迭代
+    for (const word of Array.from(this.wordSet)) {
       const prefix = word.slice(0, this.prefixLength);
       this.prefixMap.set(prefix, true);
     }
