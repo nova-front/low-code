@@ -17,7 +17,7 @@ import {
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
 import { EnglishDictionary } from "../../utils/dictionary";
-
+import * as dictionaryData from "../../utils/dictionary_data.json";
 export interface ContentEditableProps {
   value?: string;
   selection?: { start: number; end: number };
@@ -71,22 +71,8 @@ export const ContentEditable = forwardRef<
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
 
-    const updatePositions = () => {
-      const words = [
-        "i",
-        "am",
-        "apple",
-        "banana",
-        "orange",
-        "pear",
-        "hello",
-        "world",
-        "typescript",
-        "javascript",
-        "example",
-        // ...可扩展更多单词
-      ];
-      const dictionary = new EnglishDictionary(words);
+    const updatePositions = async () => {
+      const dictionary = new EnglishDictionary(dictionaryData.dictionary);
       if (contentRef.current && spellcheck) {
         const ranges = getTextPositionsWithDictionary(
           contentRef.current!,
