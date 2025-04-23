@@ -75,6 +75,7 @@ export const WaveUnderline: React.FC<WaveUnderlineProps> = ({
         width: `${width}px`,
         height: `${height}px`,
         pointerEvents: "none",
+        transform: "translateZ(0)",
         ...style,
       }}
     />
