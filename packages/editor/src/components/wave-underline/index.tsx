@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, CSSProperties } from "react";
 
+// 绘制点
+interface RangeProps {
+  startOffset: number;
+  endOffset: number;
+  height: number;
+}
+
 interface WaveUnderlineProps {
-  ranges: { startOffset: number; endOffset: number; height: number }[];
-  color?: string;
+  ranges: RangeProps[]; // 绘制位置
+  color?: string; // 波浪线颜色
   width?: number;
   height?: number;
   top?: number;
   left?: number;
-  style?: CSSProperties;
 }
 
 export const WaveUnderline: React.FC<WaveUnderlineProps> = ({
@@ -17,7 +23,6 @@ export const WaveUnderline: React.FC<WaveUnderlineProps> = ({
   height = 100,
   top = 0,
   left = 0,
-  style,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -75,8 +80,7 @@ export const WaveUnderline: React.FC<WaveUnderlineProps> = ({
         width: `${width}px`,
         height: `${height}px`,
         pointerEvents: "none",
-        transform: "translateZ(0)",
-        ...style,
+        transform: "translateZ(0)", // GPU 加速
       }}
     />
   );
