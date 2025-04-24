@@ -1,3 +1,4 @@
+import { convert } from "html-to-text";
 import { EnglishDictionary } from "./dictionary";
 
 // 光标位置管理工具函数
@@ -186,3 +187,40 @@ function findNodesFromIndex(
 
   return { startNode, startOffset, endNode, endOffset };
 }
+
+// html 转换成纯文本
+export const htmlConvertText = (html: string) => {
+  // 转换选项配置
+  const options = {
+    // wordwrap: 0, // 禁用自动换行
+    preserveNewlines: true, // 保留原始换行
+    selectors: [
+      // 处理段落和换行
+      {
+        selector: "p",
+        options: { leadingLineBreaks: 1, trailingLineBreaks: 1 },
+      },
+      { selector: "br", format: "lineBreak" },
+      // 处理div
+      {
+        selector: "div",
+        options: { leadingLineBreaks: 1, trailingLineBreaks: 1 },
+      },
+      // 处理标题
+      {
+        selector: "h1",
+        options: { leadingLineBreaks: 2, trailingLineBreaks: 2 },
+      },
+      {
+        selector: "h2",
+        options: { leadingLineBreaks: 2, trailingLineBreaks: 2 },
+      },
+      // 忽略图片
+      { selector: "img", format: "skip" },
+      // 处理链接但不保留href
+      { selector: "a", options: { ignoreHref: true } },
+    ],
+  };
+
+  return convert(html, options);
+};
