@@ -19,6 +19,7 @@ import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
 import { EnglishDictionary } from "../../utils/dictionary";
 import * as dictionaryData from "../../utils/dictionary_data.json";
+
 export interface ContentEditableProps {
   value?: string;
   selection?: { start: number; end: number };
@@ -32,7 +33,7 @@ export interface ContentEditableProps {
   children?: React.ReactNode;
   onFocus?: () => void;
   onBlur?: () => void;
-  spellcheck?: boolean;
+  spellcheck?: boolean; // 拼写检查
 }
 
 export interface ContentEditableHandle {
@@ -64,13 +65,16 @@ export const ContentEditable = forwardRef<
     const [isFocused, setIsFocused] = useState(false);
     const [isComposing, setIsComposing] = useState(false);
     const lastHtml = useRef(value);
-    const [dimensions, setDimensions] = useState({
+    const [waveUnderlineDimensions, setwaveUnderlineDimensions] = useState({
       width: 0,
       height: 0,
       top: 0,
       left: 0,
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
+
+    const showPlaceholder =
+      !isFocused && !contentRef.current?.textContent?.trim();
 
     const updatePositions = async () => {
       const dictionary = new EnglishDictionary(dictionaryData.dictionary);
@@ -162,6 +166,7 @@ export const ContentEditable = forwardRef<
       onBlur?.();
     };
 
+    // 处理粘贴事件
     const handlePaste = useCallback(
       (e: React.ClipboardEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -193,16 +198,14 @@ export const ContentEditable = forwardRef<
       [handleInput]
     );
 
-    const showPlaceholder =
-      !isFocused && !contentRef.current?.textContent?.trim();
-
     // 初始化 WaveUnderline 基础属性，并根据 contentRef 进行调整
+    // 宽度变化，画布尺寸动态调整
     useEffect(() => {
       const element = contentRef.current;
       if (!element) return;
 
       const updateDimensions = () => {
-        setDimensions({
+        setwaveUnderlineDimensions({
           width: element.offsetWidth,
           height: element.offsetHeight,
           top: element.offsetTop,
@@ -217,7 +220,7 @@ export const ContentEditable = forwardRef<
       return () => resizeObserver.disconnect();
     }, []);
 
-    // 监测屏幕宽度
+    // 监测屏幕宽度变化，更新波浪线位置信息
     useWidthChangeObserver(
       contentRef as React.RefObject<HTMLElement>,
       (width) => {
@@ -247,6 +250,7 @@ export const ContentEditable = forwardRef<
       getElement: () => contentRef.current,
     }));
 
+    // 样式解耦
     const { mainStyle, editorStyle } = useMemo(() => {
       let mainStyle = {};
       let editorStyle = {};
@@ -297,10 +301,10 @@ export const ContentEditable = forwardRef<
           <WaveUnderline
             ranges={ranges}
             color="#ff3366"
-            width={dimensions.width}
-            height={dimensions.height}
-            top={dimensions.top}
-            left={dimensions.left}
+            width={waveUnderlineDimensions.width}
+            height={waveUnderlineDimensions.height}
+            top={waveUnderlineDimensions.top}
+            left={waveUnderlineDimensions.left}
           />
         )}
         {showPlaceholder && (
@@ -310,8 +314,8 @@ export const ContentEditable = forwardRef<
               ...mainStyle,
               pointerEvents: "none",
               position: "absolute",
-              top: "0px",
-              left: "0px",
+              top: 0,
+              left: 0,
               color: "#999",
             }}
           >
