@@ -13,6 +13,7 @@ import {
   findNodeAndOffset,
   getCharacterOffset,
   getTextPositionsWithDictionary,
+  htmlConvertText,
   TextPosition,
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
@@ -22,8 +23,9 @@ import * as dictionaryData from "../../utils/dictionary_data.json";
 
 export interface ContentEditableProps {
   value?: string;
+  onChange?: (v: string) => void;
   selection?: { start: number; end: number };
-  onChange?: (state: {
+  undoOnChange?: (state: {
     content: string;
     selection: { start: number; end: number };
   }) => void;
@@ -33,7 +35,7 @@ export interface ContentEditableProps {
   children?: React.ReactNode;
   onFocus?: () => void;
   onBlur?: () => void;
-  spellcheck?: boolean; // 拼写检查
+  spellcheck?: boolean; // 拼写检查, 注意性能
 }
 
 export interface ContentEditableHandle {
@@ -51,6 +53,7 @@ export const ContentEditable = forwardRef<
       value = "",
       selection,
       onChange,
+      undoOnChange,
       placeholder,
       className,
       style,
@@ -72,13 +75,12 @@ export const ContentEditable = forwardRef<
       left: 0,
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
-
-    const showPlaceholder =
-      !isFocused && !contentRef.current?.textContent?.trim();
+    const [showPlaceholder, setShowPlaceholder] = useState<boolean>(true);
 
     const updatePositions = async () => {
+      if (!spellcheck) return;
       const dictionary = new EnglishDictionary(dictionaryData.dictionary);
-      if (contentRef.current && spellcheck) {
+      if (contentRef.current) {
         const ranges = getTextPositionsWithDictionary(
           contentRef.current!,
           dictionary
@@ -91,8 +93,19 @@ export const ContentEditable = forwardRef<
       updatePositions();
     }, 300);
 
+    // 只执行一次
     useEffect(() => {
-      if (!contentRef.current || contentRef.current.innerHTML === value) return;
+      if (!contentRef.current) return;
+      contentRef.current.innerHTML = value;
+      setShowPlaceholder(
+        !isFocused && !contentRef.current?.textContent?.trim()
+      );
+    }, []);
+
+    useEffect(() => {
+      if (!contentRef.current) return;
+      const text = htmlConvertText(contentRef.current.innerHTML);
+      if (text === value) return;
 
       // 标记为外部更新
       const isExternalUpdate = value !== lastHtml.current;
@@ -147,13 +160,19 @@ export const ContentEditable = forwardRef<
         range.endOffset
       );
 
-      onChange?.({
+      const text = htmlConvertText(contentRef.current.innerHTML);
+      onChange?.(text);
+      undoOnChange?.({
         content: contentRef.current.innerHTML,
         selection: { start, end },
       });
 
-      debouncedSpellCheck();
-    }, [onChange, isComposing]);
+      setShowPlaceholder(
+        !isFocused && !contentRef.current?.textContent?.trim()
+      );
+
+      spellcheck && debouncedSpellCheck();
+    }, [onChange, undoOnChange, isComposing, spellcheck]);
 
     // 合并焦点状态处理
     const handleFocus = () => {
@@ -202,7 +221,7 @@ export const ContentEditable = forwardRef<
     // 宽度变化，画布尺寸动态调整
     useEffect(() => {
       const element = contentRef.current;
-      if (!element) return;
+      if (!element || !spellcheck) return;
 
       const updateDimensions = () => {
         setwaveUnderlineDimensions({
@@ -224,7 +243,7 @@ export const ContentEditable = forwardRef<
     useWidthChangeObserver(
       contentRef as React.RefObject<HTMLElement>,
       (width) => {
-        updatePositions();
+        spellcheck && updatePositions();
       }
     );
 
