@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   ContentEditable,
   UndoableEditor,
@@ -8,10 +8,18 @@ import DemoBox from "./components/demo";
 
 function App() {
   const undoableEditorRef = useRef<UndoableEditorHandle>(null);
+  const [value, setValue] = useState<any>("abc");
   return (
     <div>
-      <DemoBox title="DOM + ContentEditable 实现 TextArea 基础功能">
+      <DemoBox title="DOM + ContentEditable 实现 TextArea 基础功能(非受控)">
         <ContentEditable placeholder="请输入" />
+      </DemoBox>
+      <DemoBox title="TextArea 基础(受控)">
+        <ContentEditable
+          placeholder="请输入"
+          value={value}
+          onChange={setValue}
+        />
       </DemoBox>
       <DemoBox title="24px蓝色字体, 行高 1.6, 内边距 12px, 开启 spellcheck">
         <ContentEditable

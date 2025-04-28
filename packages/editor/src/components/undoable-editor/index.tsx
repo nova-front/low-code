@@ -137,7 +137,7 @@ export const UndoableEditor = forwardRef<
       ref={editorRef}
       value={state.present.content}
       selection={state.present.selection}
-      onChange={handleChange}
+      undoOnChange={handleChange}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
     />
