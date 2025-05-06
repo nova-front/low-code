@@ -137,6 +137,8 @@ export const ContentEditable = forwardRef<
 
         // 恢复滚动位置
         contentRef.current.scrollTop = scrollTop;
+
+        spellcheck && debouncedSpellCheck();
       }
     }, [value, selection]); // 仅在外部value变化时更新
 
