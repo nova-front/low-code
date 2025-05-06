@@ -1,5 +1,5 @@
 import { convert } from "html-to-text";
-import { EnglishDictionary } from "./dictionary";
+import { EnglishDictionary } from "./dictionary/englishDictionary";
 
 // 光标位置管理工具函数
 export const getCharacterOffset = (

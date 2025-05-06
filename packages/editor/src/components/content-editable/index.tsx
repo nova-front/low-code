@@ -18,8 +18,8 @@ import {
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
-import { EnglishDictionary } from "../../utils/dictionary";
-import * as dictionaryData from "../../utils/dictionary_data.json";
+import { EnglishDictionary } from "../../utils/dictionary/englishDictionary";
+import * as dictionaryData from "../../utils/dictionary/data.json";
 
 export interface ContentEditableProps {
   value?: string;
