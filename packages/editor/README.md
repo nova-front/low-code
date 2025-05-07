@@ -44,6 +44,6 @@ const trie = new DictionaryTrie(['a', 'b', ...]);
 trie.check('apple');
 ```
 
-### hunspell-asm
+### 借助 typo-js 实现
 
-实现基于 hunspell-asm 的字典检查
+useSpellChecker.ts
