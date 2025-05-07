@@ -18,8 +18,9 @@ import {
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
-import { EnglishDictionary } from "../../utils/dictionary/englishDictionary";
 import * as dictionaryData from "../../utils/dictionary/data.json";
+import { DictionaryTrie } from "../../utils/dictionary/dictionaryTrie";
+// import { EnglishDictionary } from "../../utils/dictionary/englishDictionary";
 
 export interface ContentEditableProps {
   value?: string;
@@ -76,14 +77,18 @@ export const ContentEditable = forwardRef<
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
     const [showPlaceholder, setShowPlaceholder] = useState<boolean>(true);
+    const dictRef = useRef<any>(null); // 词典
 
     const updatePositions = async () => {
       if (!spellcheck) return;
-      const dictionary = new EnglishDictionary(dictionaryData.dictionary);
       if (contentRef.current) {
+        // 字典初始化
+        if (dictRef.current === null) {
+          dictRef.current = new DictionaryTrie(dictionaryData.dictionary);
+        }
         const ranges = getTextPositionsWithDictionary(
           contentRef.current!,
-          dictionary
+          dictRef.current
         );
         setRanges(ranges);
       }
