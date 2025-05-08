@@ -4,7 +4,7 @@ import {
   UndoableEditor,
   UndoableEditorHandle,
 } from "@repo/editor";
-import DemoBox from "./components/demo";
+import DemoBox from "../../components/demo";
 
 function App() {
   const undoableEditorRef = useRef<UndoableEditorHandle>(null);
