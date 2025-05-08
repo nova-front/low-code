@@ -15,4 +15,6 @@
 | `lowcode-api`             | 提供接口                                                                             |
 | `lowcode-admin`           | 管理生成的json表单数据，有唯一名称                                                   |
 
+## 富文本
+
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
