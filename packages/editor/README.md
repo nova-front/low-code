@@ -24,12 +24,16 @@ pnpm dev
 
 ## 词典
 
-### 类实现
+src/dictionary
+
+### 简单类实现
 
 englishDictionary.ts
 
 ```ts
-const dictionary = new EnglishDictionary(['a', 'b', ...]);
+import { EnglishDictionary } from "../../dictionary/englishDictionary";
+
+const dictionary = new EnglishDictionary();
 dictionary.check("apple");
 ```
 
@@ -38,12 +42,21 @@ dictionary.check("apple");
 dictionaryTrie.ts
 
 ```ts
+import { DictionaryTrie } from "../../dictionary/dictionaryTrie";
+
 // 初始化时构建Trie
-const trie = new DictionaryTrie(['a', 'b', ...]);
+const dictionary = new DictionaryTrie();
 // 验证单词合法性
-trie.check('apple');
+dictionary.check("apple");
 ```
 
-### 借助 typo-js 实现
+### typo-js 实现
 
-useSpellChecker.ts
+useTypo.ts
+
+```ts
+import { useSpellChecker } from "../../dictionary/useTypo";
+
+const { check } = useSpellChecker();
+check("apple");
+```
