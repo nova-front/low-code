@@ -1,6 +1,4 @@
 import { convert } from "html-to-text";
-import { EnglishDictionary } from "./dictionary/englishDictionary";
-import { DictionaryTrie } from "./dictionary/dictionaryTrie";
 
 // 光标位置管理工具函数
 export const getCharacterOffset = (
@@ -77,7 +75,7 @@ export interface TextPosition {
 
 export function getTextPositionsWithDictionary(
   editableElement: HTMLElement,
-  dictionary: EnglishDictionary | DictionaryTrie // 字典类
+  dictionary: { check: (word: string) => boolean } // 字典方法
 ): TextPosition[] {
   const results: TextPosition[] = [];
   if (!editableElement) return results;
@@ -110,7 +108,7 @@ export function getTextPositionsWithDictionary(
     const matchEnd = matchStart + matchedWord.length;
 
     // 验证单词合法性
-    const isValid = dictionary.check(matchedWord);
+    const isValid = dictionary?.check(matchedWord);
 
     // 定位节点
     const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
