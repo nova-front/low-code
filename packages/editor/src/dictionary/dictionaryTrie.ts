@@ -1,3 +1,5 @@
+import * as dictionaryData from "./data.json";
+
 class TrieNode {
   children: Record<string, TrieNode>;
   isEnd: boolean;
@@ -11,8 +13,9 @@ class TrieNode {
 export class DictionaryTrie {
   private root: TrieNode;
 
-  constructor(words: string[] = []) {
+  constructor() {
     this.root = new TrieNode();
+    const words = dictionaryData.dictionary;
     for (const word of words) {
       this.insert(word);
     }

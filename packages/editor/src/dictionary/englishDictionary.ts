@@ -1,3 +1,5 @@
+import * as dictionaryData from "./data.json";
+
 /**
  * 英文词典类，用于高效单词校验
  */
@@ -10,7 +12,8 @@ export class EnglishDictionary {
    * 创建词典实例
    * @param words 初始单词数组
    */
-  constructor(words: string[]) {
+  constructor() {
+    const words = dictionaryData.dictionary;
     this.wordSet = new Set(words.map((w) => w.toLowerCase()));
     this.prefixMap = new Map();
 
