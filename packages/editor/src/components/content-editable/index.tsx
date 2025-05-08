@@ -18,9 +18,7 @@ import {
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
-import * as dictionaryData from "../../utils/dictionary/data.json";
-import { DictionaryTrie } from "../../utils/dictionary/dictionaryTrie";
-// import { EnglishDictionary } from "../../utils/dictionary/englishDictionary";
+import { useSpellChecker } from "../../dictionary/useTypo";
 
 export interface ContentEditableProps {
   value?: string;
@@ -77,20 +75,30 @@ export const ContentEditable = forwardRef<
     });
     const [ranges, setRanges] = useState<TextPosition[]>([]);
     const [showPlaceholder, setShowPlaceholder] = useState<boolean>(true);
-    const dictRef = useRef<any>(null); // 词典
 
-    const updatePositions = async () => {
+    // 拼写检查
+    const { check, ready } = useSpellChecker();
+    const dictRef = useRef<any>(null);
+
+    useEffect(() => {
+      if (ready && spellcheck) {
+        dictRef.current = {
+          check,
+          ready,
+        };
+      }
+    }, [ready]);
+
+    const updatePositions = () => {
       if (!spellcheck) return;
       if (contentRef.current) {
-        // 字典初始化
-        if (dictRef.current === null) {
-          dictRef.current = new DictionaryTrie(dictionaryData.dictionary);
+        if (dictRef.current) {
+          const ranges = getTextPositionsWithDictionary(
+            contentRef.current!,
+            dictRef.current
+          );
+          setRanges(ranges);
         }
-        const ranges = getTextPositionsWithDictionary(
-          contentRef.current!,
-          dictRef.current
-        );
-        setRanges(ranges);
       }
     };
 
