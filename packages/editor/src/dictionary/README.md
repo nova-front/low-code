@@ -36,3 +36,5 @@ import { useSpellChecker } from "../../dictionary/useTypo";
 const { check } = useSpellChecker();
 check("apple");
 ```
+
+### typo + web worker 极致体验
