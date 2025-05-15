@@ -12,13 +12,13 @@ import { WaveUnderline } from "../wave-underline";
 import {
   findNodeAndOffset,
   getCharacterOffset,
-  getTextPositionsWithDictionary,
+  getTextPositionsWithErrorDictionary,
   htmlConvertText,
   TextPosition,
 } from "../../utils";
 import { useWidthChangeObserver } from "../../hooks/useWidthChangeObserver";
 import { useDebounce } from "../../hooks/useDebounce";
-import { useSpellChecker } from "../../dictionary/useTypo";
+import { useSpellChecker } from "../../dictionary/useTypeByWorker";
 
 export interface ContentEditableProps {
   value?: string;
@@ -77,34 +77,44 @@ export const ContentEditable = forwardRef<
     const [showPlaceholder, setShowPlaceholder] = useState<boolean>(true);
 
     // 拼写检查
-    const { check, ready } = useSpellChecker();
-    const dictRef = useRef<any>(null);
+    const { worker } = useSpellChecker();
+    const workerRef = useRef<any>(null);
 
     useEffect(() => {
-      if (ready && spellcheck) {
-        dictRef.current = {
-          check,
-          ready,
-        };
-      }
-    }, [ready]);
+      if (!worker) return;
+
+      workerRef.current = worker;
+
+      worker.onmessage = (event) => {
+        if (event.data.type === "CHECK_RESULT") {
+          const { currentCheckCache } = event.data.payload;
+          if (contentRef.current) {
+            const ranges = getTextPositionsWithErrorDictionary(
+              contentRef.current,
+              currentCheckCache
+            );
+            setRanges(ranges);
+          }
+        }
+      };
+    }, [worker]);
 
     const updatePositions = () => {
       if (!spellcheck) return;
       if (contentRef.current) {
-        if (dictRef.current) {
-          const ranges = getTextPositionsWithDictionary(
-            contentRef.current!,
-            dictRef.current
-          );
-          setRanges(ranges);
+        if (workerRef.current) {
+          const fullText = contentRef.current.innerText;
+          workerRef.current?.postMessage({
+            type: "CHECK_TEXT",
+            payload: { fullText: fullText },
+          });
         }
       }
     };
 
     const debouncedSpellCheck = useDebounce(() => {
       updatePositions();
-    }, 300);
+    }, 500);
 
     // 只执行一次
     useEffect(() => {
