@@ -7,6 +7,8 @@ import {
 import DemoBox from "../../components/demo";
 
 function App() {
+  document.title = "Editor编辑器演示";
+
   const undoableEditorRef = useRef<UndoableEditorHandle>(null);
   const [value, setValue] = useState<any>("abc");
   return (
