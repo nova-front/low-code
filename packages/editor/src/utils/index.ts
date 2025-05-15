@@ -110,31 +110,33 @@ export function getTextPositionsWithDictionary(
     // 验证单词合法性
     const isValid = dictionary?.check(matchedWord);
 
-    // 定位节点
-    const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
-      nodeMap,
-      matchStart,
-      matchEnd
-    );
+    if (isValid === false) {
+      // 定位节点
+      const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
+        nodeMap,
+        matchStart,
+        matchEnd
+      );
 
-    if (!startNode || !endNode) continue;
+      if (!startNode || !endNode) continue;
 
-    // 计算位置
-    const range = document.createRange();
-    range.setStart(startNode, startOffset);
-    range.setEnd(endNode, endOffset);
+      // 计算位置
+      const range = document.createRange();
+      range.setStart(startNode, startOffset);
+      range.setEnd(endNode, endOffset);
 
-    Array.from(range.getClientRects()).forEach((rect) => {
-      if (rect.width > 0 && rect.height > 0 && !isValid) {
-        results.push({
-          word: matchedWord,
-          startOffset: Math.round(rect.left - elementRect.left),
-          endOffset: Math.round(rect.right - elementRect.left),
-          height: Math.round(rect.bottom - elementRect.top),
-          isValid,
-        });
-      }
-    });
+      Array.from(range.getClientRects()).forEach((rect) => {
+        if (rect.width > 0 && rect.height > 0 && !isValid) {
+          results.push({
+            word: matchedWord,
+            startOffset: Math.round(rect.left - elementRect.left),
+            endOffset: Math.round(rect.right - elementRect.left),
+            height: Math.round(rect.bottom - elementRect.top),
+            isValid,
+          });
+        }
+      });
+    }
   }
 
   return results;

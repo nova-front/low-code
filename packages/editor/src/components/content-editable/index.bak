@@ -105,10 +105,8 @@ export const ContentEditable = forwardRef<
     };
 
     const debouncedSpellCheck = useDebounce(() => {
-      setTimeout(() => {
-        updatePositions();
-      }, 0);
-    }, 300);
+      updatePositions();
+    }, 500);
 
     // 只执行一次
     useEffect(() => {
