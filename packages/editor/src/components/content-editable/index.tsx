@@ -328,6 +328,7 @@ export const ContentEditable = forwardRef<
         <div
           ref={contentRef}
           contentEditable
+          spellCheck={false}
           onPaste={handlePaste}
           onInput={handleInput}
           onFocus={handleFocus}
