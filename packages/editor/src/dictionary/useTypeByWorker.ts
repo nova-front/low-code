@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
+// TODO: 需优化
 export const useSpellChecker = () => {
   const [worker, setWorker] = useState<Worker | null>(null);
   const customWords = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     // 初始化 Worker, TODO：这个链接怎么设置才是对的
-    const newWorker = new Worker(new URL("./worker.ts", import.meta.url), {
+    const newWorker = new Worker(new URL("./worker", import.meta.url), {
       type: "module",
     });
     setWorker(newWorker);
@@ -14,10 +15,13 @@ export const useSpellChecker = () => {
     // 加载字典
     const loadDictionary = async () => {
       try {
-        // TODO: 这个链接怎么才能设置到组件库
         const [affData, dicData] = await Promise.all([
-          fetch("/dictionaries/en_US.aff").then((res) => res.text()),
-          fetch("/dictionaries/en_US.dic").then((res) => res.text()),
+          fetch(new URL("../assets/en_US.aff", import.meta.url)).then((res) =>
+            res.text()
+          ),
+          fetch(new URL("../assets/en_US.dic", import.meta.url)).then((res) =>
+            res.text()
+          ),
         ]);
 
         newWorker.postMessage({
