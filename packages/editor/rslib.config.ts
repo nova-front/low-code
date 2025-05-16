@@ -22,6 +22,10 @@ export default defineConfig({
   ],
   output: {
     target: "web",
+    copy: [
+      // `./src/assets/image.png` -> `./dist/assets/image.png`
+      { from: "./src/assets", to: "assets" },
+    ],
   },
   plugins: [pluginReact()],
 });
