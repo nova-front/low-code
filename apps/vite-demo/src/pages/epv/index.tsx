@@ -1,4 +1,4 @@
-import { ContentEditable } from "@repo/editor";
+import { ContentEditable } from "@leslies/editor";
 import DemoBox from "../../components/demo";
 
 function Epv() {

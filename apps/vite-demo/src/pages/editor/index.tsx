@@ -3,7 +3,7 @@ import {
   ContentEditable,
   UndoableEditor,
   UndoableEditorHandle,
-} from "@repo/editor";
+} from "@leslies/editor";
 import DemoBox from "../../components/demo";
 
 function App() {
