@@ -34,11 +34,13 @@
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },
-  "private": true,
   "dependencies": {
     "html-to-text": "^9.0.5",
     "lodash-es": "^4.17.21",
     "typo-js": "^1.2.5",
     "use-undo": "^1.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
