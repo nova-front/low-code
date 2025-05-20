@@ -40,6 +40,12 @@
     "typo-js": "^1.2.5",
     "use-undo": "^1.1.1"
   },
+  "keywords": [
+    "editor",
+    "spellcheck",
+    "富文本",
+    "typo-js"
+  ],
   "publishConfig": {
     "access": "public"
   }
