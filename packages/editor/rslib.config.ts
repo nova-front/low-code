@@ -4,13 +4,7 @@ import { defineConfig } from "@rslib/core";
 export default defineConfig({
   source: {
     entry: {
-      index: [
-        "./src/**/*.ts",
-        "./src/**/*.tsx",
-        "./src/**/*.js",
-        "./src/**/*.jsx",
-        "./src/**/*.json",
-      ],
+      index: ["./src/**"],
     },
   },
   lib: [
@@ -23,8 +17,8 @@ export default defineConfig({
   output: {
     target: "web",
     copy: [
-      // `./src/assets/image.png` -> `./dist/assets/image.png`
-      { from: "./src/assets", to: "assets" },
+      // `./assets/image.png` -> `./dist/assets/image.png`
+      { from: "./assets", to: "assets" },
     ],
   },
   plugins: [pluginReact()],
