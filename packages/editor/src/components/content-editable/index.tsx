@@ -191,22 +191,19 @@ export const ContentEditable = forwardRef<
         content: contentRef.current.innerHTML,
         selection: { start, end },
       });
-
-      setShowPlaceholder(
-        !isFocused && !contentRef.current?.textContent?.trim()
-      );
-
       spellcheck && debouncedSpellCheck();
     }, [onChange, undoOnChange, isComposing, spellcheck]);
 
     // 合并焦点状态处理
     const handleFocus = () => {
       setIsFocused(true);
+      setShowPlaceholder(false);
       onFocus?.();
     };
 
     const handleBlur = () => {
       setIsFocused(false);
+      setShowPlaceholder(!contentRef.current?.textContent?.trim());
       onBlur?.();
     };
 
