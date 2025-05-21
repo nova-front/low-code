@@ -12,7 +12,7 @@
 ### DOM + ContentEditable 实现 TextArea 基础功能(非受控)
 
 ```ts
-import { ContentEditable } from "@leslies/editor";
+import { ContentEditable } from "@nova-fe/editor";
 
 <ContentEditable placeholder="请输入" />
 ```
@@ -20,7 +20,7 @@ import { ContentEditable } from "@leslies/editor";
 ### TextArea 基础(受控)
 
 ```ts
-import { ContentEditable } from "@leslies/editor";
+import { ContentEditable } from "@nova-fe/editor";
 
 <ContentEditable
   placeholder="请输入"
@@ -47,7 +47,7 @@ import { ContentEditable } from "@leslies/editor";
 ### use-undo 实现撤销/重做功能，同时保持与原生编辑体验的一致性
 
 ```ts
-import { UndoableEditor } from "@leslies/editor";
+import { UndoableEditor } from "@nova-fe/editor";
 
 <UndoableEditor spellcheck />
 ```

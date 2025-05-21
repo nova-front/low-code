@@ -3,7 +3,7 @@ import {
   ContentEditable,
   UndoableEditor,
   UndoableEditorHandle,
-} from "@leslies/editor";
+} from "@nova-fe/editor";
 import DemoBox from "../../components/demo";
 
 function App() {
