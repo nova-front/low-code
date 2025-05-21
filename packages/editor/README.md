@@ -51,3 +51,26 @@ import { UndoableEditor } from "@nova-fe/editor";
 
 <UndoableEditor spellcheck />
 ```
+
+## 在 Vite 中使用
+
+需要调整配置
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vite.dev/config/
+export default defineConfig({
+  optimizeDeps: {
+    exclude: ["@nova-fe/editor"],
+    include: ["deepmerge", "typo-js"],
+  },
+  build: {
+    rollupOptions: {
+      external: ["@nova-fe/editor"],
+    },
+  },
+  // ...
+});
+```
