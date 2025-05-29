@@ -95,3 +95,56 @@ const dtsBuild = {
 
 export default [baseBuild, dtsBuild];
 ```
+
+## Jest 单元测试
+
+```bash
+# 安装
+npm install --save-dev jest @types/jest ts-jest @jest/globals
+```
+
+### 修改 tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    "types": ["jest", "@types/jest"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true
+  }
+}
+```
+
+### jest.config.js
+
+```js
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+module.exports = {
+  preset: "ts-jest", // 使用 ts-jest 处理 TypeScript
+  testEnvironment: "jsdom", // 浏览器环境（服务器环境用 'node'）
+  transform: {
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        tsconfig: "tsconfig.json",
+      },
+    ],
+  },
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1", // 路径别名（与 tsconfig.json 一致）
+  },
+  testMatch: ["**/*.test.ts"], // 匹配测试文件
+  collectCoverage: true, // 收集测试覆盖率
+  coverageDirectory: "coverage", // 覆盖率报告目录
+};
+```
+
+### package.json 添加脚本
+
+```json
+"scripts": {
+  "test": "jest",
+  "test:watch": "jest --watch"
+},
+```
