@@ -148,3 +148,7 @@ module.exports = {
   "test:watch": "jest --watch"
 },
 ```
+
+### release-it
+
+用于自动化版本控制和包发布相关任务。
