@@ -1,7 +1,7 @@
 {
   "name": "vite-demo",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@nova-fe/editor": "*",
+    "@nova-fe/utils": "*",
+    "@nova-fe/base-ui": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.6.0"
