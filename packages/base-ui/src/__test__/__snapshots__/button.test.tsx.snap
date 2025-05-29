@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button 组件 渲染快照匹配 1`] = `
+<DocumentFragment>
+  <button>
+    Snapshot
+  </button>
+</DocumentFragment>
+`;
