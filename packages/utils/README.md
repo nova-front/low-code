@@ -1,0 +1,16 @@
+# @nova-fe/utils
+
+基于 rollup + typescript 封装常用的工具函数，利用 Jest 实现自动化测试；prettierrc + vscode 自定义工作区 保持代码风格一致；可在 react、vue 项目中使用。
+
+## 例子
+
+```ts
+import { sleep } from "@nova-fe/utils";
+
+const clickFn = async () => {
+  await sleep(3000);
+  console.log("3秒后执行");
+};
+```
+
+## 可在框架上不断完善

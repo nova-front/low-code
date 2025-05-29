@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "declaration": false, // 由rollup-plugin-dts处理
+    "isolatedModules": true,
+    "outDir": null        // 禁用默认输出
+  },
+  "exclude": ["dist"]     // 忽略构建目录
+}
