@@ -1,7 +1,7 @@
 {
   "name": "@nova-fe/utils",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "基于 rollup 4 + typescript 封装常用的工具函数，利用 Jest 实现自动化测试；vscode 自定义工作区 保持代码风格一致；可在 react、vue 项目中使用。",
   "scripts": {
     "dev": "rollup -c --watch",
     "build": "rollup -c",
@@ -23,12 +23,14 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
-  "author": "",
+  "keywords": ["Rollup","工具库", "Util", "React", "Vue"],
+  "author": "Leslie",
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^30.0.0-beta.3",
+    "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",

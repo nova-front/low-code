@@ -15,7 +15,10 @@ npm init -y
 # 本地安装Rollup
 npm install rollup --save-dev
 
-# 安装相应插件
+# 安装相应插件1
+npm install @rollup/plugin-commonjs @rollup/plugin-node-resolve --save-dev
+
+# 安装相应插件2
 npm install @rollup/plugin-json @rollup/plugin-terser @rollup/plugin-typescript rollup-plugin-delete rollup-plugin-dts --save-dev
 ```
 
@@ -43,6 +46,8 @@ export * from "./time";
 ## rollup.config.mjs
 
 ```mjs
+import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import json from "@rollup/plugin-json";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
@@ -69,6 +74,8 @@ const baseBuild = {
   ],
   plugins: [
     del({ targets: "dist" }),
+    commonjs(),
+    nodeResolve(),
     typescript({
       declaration: false, // 禁用默认声明生成（由dts插件处理）
       outDir: null, // 避免干扰

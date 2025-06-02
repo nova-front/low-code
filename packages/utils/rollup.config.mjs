@@ -1,3 +1,5 @@
+import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import json from "@rollup/plugin-json";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
@@ -24,6 +26,8 @@ const baseBuild = {
   ],
   plugins: [
     del({ targets: "dist" }),
+    commonjs(),
+    nodeResolve(),
     typescript({
       declaration: false, // 禁用默认声明生成（由dts插件处理）
       outDir: null, // 避免干扰
