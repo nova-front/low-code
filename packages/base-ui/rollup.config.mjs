@@ -1,3 +1,5 @@
+import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import del from "rollup-plugin-delete";
 import dts from "rollup-plugin-dts";
@@ -17,6 +19,8 @@ const baseBuild = {
   external: ["react", "react/jsx-runtime", "react-dom"],
   plugins: [
     del({ targets: "dist" }),
+    commonjs(),
+    nodeResolve(),
     typescript({
       tsconfig: "./tsconfig.json", // 确保路径正确
       declaration: false, // 禁用默认声明生成（由dts插件处理）
