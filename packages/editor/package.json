@@ -1,7 +1,7 @@
 {
   "name": "@nova-fe/editor",
   "version": "1.0.2",
-  "description": "支持英语拼写检查文本输入框, 5w+字符实时编辑",
+  "description": "支持英语拼写检查文本输入框, 5w+字符实时编辑。",
   "type": "module",
   "exports": {
     ".": {
