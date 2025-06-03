@@ -47,6 +47,8 @@
     "富文本",
     "typo-js"
   ],
+  "author": "Leslie",
+  "license": "ISC",
   "publishConfig": {
     "access": "public"
   }
