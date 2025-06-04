@@ -117,6 +117,7 @@ export const TableRowCard: FC<CardProps> = ({
 
   return (
     <TableRow
+      component="div"
       ref={ref}
       style={{ ...style, opacity }}
       data-handler-id={handlerId}
