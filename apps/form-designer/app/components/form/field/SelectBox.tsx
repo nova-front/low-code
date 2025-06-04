@@ -67,7 +67,7 @@ const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {
           inputProps={inputProps}
           options={lastOptions}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e: { target: { value: any } }) => setValue(e.target.value)}
         />
       )}
       {helperText && <FormHelperText>{helperText}</FormHelperText>}

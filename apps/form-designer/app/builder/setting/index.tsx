@@ -21,7 +21,13 @@ const Transition = forwardRef(function Transition(
   },
   ref: React.Ref<unknown>
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return (
+    <Slide
+      direction="up"
+      ref={ref as unknown as React.RefObject<HTMLButtonElement>}
+      {...props}
+    />
+  );
 });
 
 const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {

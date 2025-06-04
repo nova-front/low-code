@@ -14,6 +14,11 @@ import { FormItemProps } from "@/components/form/type";
 
 import styles from "./styles.module.css";
 
+const FixedDndProvider = DndProvider as React.FC<{
+  backend: any;
+  children: React.ReactNode;
+}>;
+
 export default function Home() {
   const { copy } = useCopy();
   const [cards, setCards] = useState<FormItemProps[]>([]);
@@ -77,7 +82,7 @@ export default function Home() {
   }, [copy, getParamData]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <FixedDndProvider backend={HTML5Backend}>
       <div className={styles.page}>
         {/* 左 */}
         <FieldContainer onAdd={onAdd} />
@@ -99,6 +104,6 @@ export default function Home() {
           <pre className="container">{dataStr}</pre>
         </main>
       </div>
-    </DndProvider>
+    </FixedDndProvider>
   );
 }

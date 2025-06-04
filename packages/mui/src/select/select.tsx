@@ -10,7 +10,7 @@ interface OptionProps {
 interface SelectProps {
   defaultValue?: any; // The default value. Use when the component is not controlled.
   value?: any;
-  onChange?: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
+  onChange?: any;
   label?: React.ReactNode;
   options: string[] | OptionProps[];
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
