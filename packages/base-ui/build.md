@@ -1,8 +1,10 @@
-# React 组件库
+# 组件库
+
+Headless UI, 可深度定制UI的设计系统。
 
 ## 核心库
 
-Rollup - 当前使用版本 4.41.1
+React + Ts + Rollup 4 + Jest
 
 ## 开始
 
@@ -19,31 +21,99 @@ npm install rollup --save-dev
 npm install @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-typescript rollup-plugin-delete rollup-plugin-dts --save-dev
 ```
 
-## 代码
+## 第一个组件
 
-根目录新建 src, index.ts, button.tsx
+根目录新建 src, index.ts, button/index.tsx
 
 ```tsx
-// button.tsx
-import React from "react";
-import { ReactNode } from "react";
+// button/index.tsx
+import React, {
+  forwardRef,
+  ButtonHTMLAttributes,
+  AnchorHTMLAttributes,
+} from "react";
 
-interface ButtonProps {
-  children: ReactNode;
+// 按钮类型定义
+type BaseButtonProps = {
+  children?: React.ReactNode;
   className?: string;
-  appName: string;
-}
+  disabled?: boolean;
+  as?: React.ElementType;
+};
 
-export const Button = ({ children, className, appName }: ButtonProps) => {
+// 合并原生按钮属性
+type ButtonProps = BaseButtonProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseButtonProps> &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof BaseButtonProps>;
+
+export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
+  const {
+    children,
+    className = "",
+    disabled = false,
+    as: Element = "button",
+    ...restProps
+  } = props;
+
+  const buttonClasses = [
+    "unstyled-button",
+    className,
+    disabled ? "unstyled-button--disabled" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // 角色处理逻辑优化
+  const elementProps: Record<string, any> = {};
+  if (Element === "button") {
+    elementProps.type =
+      (restProps as ButtonHTMLAttributes<HTMLButtonElement>).type || "button";
+    elementProps.disabled = disabled;
+  } else {
+    // 对于非按钮元素，默认添加 role="button"
+    elementProps.role = "button";
+
+    if (disabled) {
+      elementProps.tabIndex = -1;
+      elementProps["aria-disabled"] = true;
+    }
+  }
+
+  // 过滤掉非按钮元素的 type 属性
+  const filteredProps = { ...restProps };
+  if (Element !== "button") {
+    delete (filteredProps as any).type;
+
+    // 特殊处理：如果是链接元素，需要移除 role
+    if (Element === "a") {
+      delete elementProps.role;
+    }
+  }
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
+    if (restProps.onClick) {
+      restProps.onClick(event as any);
+    }
+  };
+
   return (
-    <button
-      className={className}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
+    <Element
+      {...filteredProps}
+      ref={ref as any}
+      className={buttonClasses}
+      onClick={handleClick}
+      {...elementProps}
     >
       {children}
-    </button>
+    </Element>
   );
-};
+});
+
+Button.displayName = "UnstyledButton";
 ```
 
 ```ts
@@ -54,6 +124,8 @@ export * from "./button";
 ## rollup.config.mjs
 
 ```mjs
+import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import del from "rollup-plugin-delete";
 import dts from "rollup-plugin-dts";
@@ -73,6 +145,8 @@ const baseBuild = {
   external: ["react", "react/jsx-runtime", "react-dom"],
   plugins: [
     del({ targets: "dist" }),
+    commonjs(),
+    nodeResolve(),
     typescript({
       tsconfig: "./tsconfig.json", // 确保路径正确
       declaration: false, // 禁用默认声明生成（由dts插件处理）

@@ -1,7 +1,7 @@
 {
   "name": "@nova-fe/base-ui",
-  "version": "1.0.0",
-  "description": "无样式UI",
+  "version": "1.0.1",
+  "description": "Headless UI, 可深度定制UI的设计系统。",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/es/index.d.ts",
@@ -21,8 +21,8 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Headless UI", "组件库", "React"],
+  "author": "Leslie",
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^30.0.0-beta.3",
