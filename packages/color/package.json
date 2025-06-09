@@ -1,11 +1,26 @@
 {
   "name": "@nova-fe/color",
   "version": "1.0.0",
-  "description": "",
+  "description": "原子化css，提供基础色，维护主题色css变量。",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean & ts-node scripts/system.ts"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
-  "author": "leslie",
-  "license": "ISC"
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@ctrl/tinycolor": "^4.1.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.15.30",
+    "fs-extra": "^11.3.0",
+    "rimraf": "^6.0.1",
+    "sass": "^1.89.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
