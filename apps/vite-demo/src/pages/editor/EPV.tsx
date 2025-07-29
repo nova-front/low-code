@@ -27,7 +27,6 @@ const EPV: React.FC = () => {
             padding: "16px",
             minHeight: "400px",
             width: "100%",
-            border: "1px solid #d9d9d9",
             borderRadius: "6px",
             fontFamily: "Georgia, 'Times New Roman', serif",
           }}
@@ -124,9 +123,11 @@ const EPV: React.FC = () => {
               placeholder="Type English text here..."
             />
           </div>
-          
+
           <div>
-            <h4 style={{ marginBottom: "0.5rem", color: "#333" }}>中英混合文本</h4>
+            <h4 style={{ marginBottom: "0.5rem", color: "#333" }}>
+              中英混合文本
+            </h4>
             <ContentEditable
               style={{
                 fontSize: "16px",
@@ -143,7 +144,7 @@ const EPV: React.FC = () => {
             />
           </div>
         </div>
-        
+
         <div
           style={{
             marginTop: "1rem",
