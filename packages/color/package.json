@@ -5,13 +5,20 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean & ts-node scripts/system.ts"
+    "build": "npm run clean & ts-node scripts/system.ts",
+    "prepublishOnly": "npm run build",
+    "check:build": "ls -la dist/system/",
+    "check:publish": "npm pack --dry-run",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "check:pre-publish": "node scripts/check-publish.js"
   },
   "files": [
     "dist"
   ],
   "keywords": [],
-  "author": "",
+  "author": "Leslie <924361501@qq.com>",
   "license": "ISC",
   "devDependencies": {
     "@ctrl/tinycolor": "^4.1.0",
