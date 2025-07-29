@@ -104,27 +104,60 @@ describe("Button Component", () => {
     expect(divButton).toHaveAttribute("role", "button");
   });
 
-  // 测试 9: 非按钮元素分配 button 角色
-  it("adds role=button to non-button elements", () => {
-    render(<Button as="div">Div Button</Button>);
+  // 测试 9: 键盘事件支持
+  it("supports keyboard events for non-button elements", () => {
+    const handleClick = jest.fn();
+    render(
+      <Button as="div" onClick={handleClick}>
+        Div Button
+      </Button>
+    );
+
     const divButton = screen.getByRole("button");
-    expect(divButton).toBeInTheDocument();
-    expect(divButton.tagName).toBe("DIV");
+
+    // 测试 Enter 键
+    fireEvent.keyDown(divButton, { key: "Enter" });
+    expect(handleClick).toHaveBeenCalledTimes(1);
+
+    // 测试 Space 键
+    fireEvent.keyDown(divButton, { key: " " });
+    expect(handleClick).toHaveBeenCalledTimes(2);
+
+    // 测试其他键不触发点击
+    fireEvent.keyDown(divButton, { key: "Escape" });
+    expect(handleClick).toHaveBeenCalledTimes(2);
   });
 
-  // 测试 10: 默认按钮类型为 button
+  // 测试 10: 禁用状态下键盘事件不触发
+  it("does not trigger keyboard events when disabled", () => {
+    const handleClick = jest.fn();
+    render(
+      <Button as="div" disabled onClick={handleClick}>
+        Disabled Div
+      </Button>
+    );
+
+    const divButton = screen.getByRole("button");
+
+    fireEvent.keyDown(divButton, { key: "Enter" });
+    fireEvent.keyDown(divButton, { key: " " });
+
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  // 测试 11: 默认按钮类型为 button
   it('defaults to type="button" for buttons', () => {
     render(<Button>Submit</Button>);
     expect(screen.getByRole("button")).toHaveAttribute("type", "button");
   });
 
-  // 测试 11: 支持自定义按钮类型
+  // 测试 12: 支持自定义按钮类型
   it("supports custom button types", () => {
     render(<Button type="submit">Submit</Button>);
     expect(screen.getByRole("button")).toHaveAttribute("type", "submit");
   });
 
-  // 测试 12: 非按钮元素没有 type 属性
+  // 测试 13: 非按钮元素没有 type 属性
   it("does not add type attribute to non-button elements", () => {
     // 测试 div 元素
     render(<Button as="div">Div Button</Button>);
@@ -141,7 +174,7 @@ describe("Button Component", () => {
     expect(link).not.toHaveAttribute("type");
   });
 
-  // 测试 13: 禁用链接是否包含正确的属性
+  // 测试 14: 禁用链接是否包含正确的属性
   it("disabled link has correct accessibility attributes", () => {
     render(
       <Button as="a" href="#" disabled>
@@ -155,5 +188,56 @@ describe("Button Component", () => {
     expect(link).toHaveClass("unstyled-button--disabled");
     // 确保默认角色没有被覆盖
     expect(link).not.toHaveAttribute("role");
+  });
+
+  // 测试 15: 事件传播控制（非按钮元素）
+  it("stops event propagation when disabled for non-button elements", () => {
+    const parentClick = jest.fn();
+    const buttonClick = jest.fn();
+
+    render(
+      <div onClick={parentClick}>
+        <Button as="div" disabled onClick={buttonClick}>
+          Disabled Div Button
+        </Button>
+      </div>
+    );
+
+    const button = screen.getByRole("button");
+    fireEvent.click(button);
+
+    expect(buttonClick).not.toHaveBeenCalled();
+    expect(parentClick).not.toHaveBeenCalled(); // 事件被阻止传播
+  });
+
+  // 测试 16: 自定义 onKeyDown 处理器
+  it("calls custom onKeyDown handler", () => {
+    const handleKeyDown = jest.fn();
+    render(
+      <Button as="div" onKeyDown={handleKeyDown}>
+        Div Button
+      </Button>
+    );
+
+    const divButton = screen.getByRole("button");
+    fireEvent.keyDown(divButton, { key: "Tab" });
+
+    expect(handleKeyDown).toHaveBeenCalledTimes(1);
+  });
+
+  // 测试 17: 边界情况 - 空类名
+  it("handles empty className correctly", () => {
+    render(<Button className="">Test</Button>);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("unstyled-button");
+    expect(button.className).toBe("unstyled-button");
+  });
+
+  // 测试 18: 边界情况 - undefined children
+  it("handles undefined children", () => {
+    render(<Button>{undefined}</Button>);
+    const button = screen.getByRole("button");
+    expect(button).toBeInTheDocument();
+    expect(button.textContent).toBe("");
   });
 });

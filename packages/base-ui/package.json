@@ -1,6 +1,6 @@
 {
   "name": "@nova-fe/base-ui",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "Headless UI, 可深度定制UI的设计系统。",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
@@ -13,13 +13,26 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm test && npm run build",
+    "postpublish": "git push --set-upstream origin main 2>/dev/null || git push && git push --tags",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "release:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
+    "check:publish": "npm pack --dry-run",
+    "check:pre-publish": "node scripts/pre-publish-check.js",
+    "publish:safe": "npm run check:pre-publish && npm publish"
   },
   "keywords": [
     "Headless UI",

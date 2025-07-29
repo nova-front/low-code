@@ -2,20 +2,65 @@ import React, {
   forwardRef,
   ButtonHTMLAttributes,
   AnchorHTMLAttributes,
+  useMemo,
+  useCallback,
 } from "react";
+import { createPrefixedClassName, getA11yProps } from "../utils";
 
-// 按钮类型定义
-type BaseButtonProps = {
+// 基础按钮属性定义
+interface BaseButtonProps {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
   as?: React.ElementType;
-};
+}
 
-// 合并原生按钮属性
+// 简化的按钮属性类型
 type ButtonProps = BaseButtonProps &
   Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseButtonProps> &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof BaseButtonProps>;
+
+// 工具函数：获取元素属性
+const getElementProps = (
+  element: React.ElementType,
+  disabled: boolean,
+  restProps: Record<string, any>
+): Record<string, any> => {
+  const elementProps: Record<string, any> = {};
+
+  if (element === "button") {
+    elementProps.type = restProps.type || "button";
+    elementProps.disabled = disabled;
+  } else {
+    // 对于非按钮元素，使用工具函数获取可访问性属性
+    const a11yProps = getA11yProps(disabled, "button");
+    // 使用展开运算符代替 Object.assign
+    Object.keys(a11yProps).forEach((key) => {
+      elementProps[key] = a11yProps[key];
+    });
+
+    // 特殊处理：如果是链接元素，需要移除 role
+    if (element === "a") {
+      delete elementProps.role;
+    }
+  }
+
+  return elementProps;
+};
+
+// 工具函数：过滤属性
+const filterProps = (
+  element: React.ElementType,
+  props: Record<string, any>
+): Record<string, any> => {
+  const filteredProps = { ...props };
+
+  if (element !== "button") {
+    delete filteredProps.type;
+  }
+
+  return filteredProps;
+};
 
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
   const {
@@ -23,60 +68,75 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
     className = "",
     disabled = false,
     as: Element = "button",
+    onClick,
     ...restProps
   } = props;
 
-  const buttonClasses = [
-    "unstyled-button",
-    className,
-    disabled ? "unstyled-button--disabled" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  // 使用 useMemo 优化类名计算
+  const buttonClasses = useMemo(
+    () => createPrefixedClassName("unstyled-button", className, { disabled }),
+    [className, disabled]
+  );
 
-  // 角色处理逻辑优化
-  const elementProps: Record<string, any> = {};
-  if (Element === "button") {
-    elementProps.type =
-      (restProps as ButtonHTMLAttributes<HTMLButtonElement>).type || "button";
-    elementProps.disabled = disabled;
-  } else {
-    // 对于非按钮元素，默认添加 role="button"
-    elementProps.role = "button";
+  // 使用 useMemo 优化元素属性计算
+  const elementProps = useMemo(
+    () => getElementProps(Element, disabled, restProps),
+    [Element, disabled, restProps]
+  );
 
-    if (disabled) {
-      elementProps.tabIndex = -1;
-      elementProps["aria-disabled"] = true;
-    }
-  }
+  // 使用 useMemo 优化属性过滤
+  const filteredProps = useMemo(
+    () => filterProps(Element, restProps),
+    [Element, restProps]
+  );
 
-  // 过滤掉非按钮元素的 type 属性
-  const filteredProps = { ...restProps };
-  if (Element !== "button") {
-    delete (filteredProps as any).type;
+  // 使用 useCallback 优化点击事件处理
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (disabled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+      // 使用类型断言来处理事件类型
+      if (onClick) {
+        onClick(event as any);
+      }
+    },
+    [disabled, onClick]
+  );
 
-    // 特殊处理：如果是链接元素，需要移除 role
-    if (Element === "a") {
-      delete elementProps.role;
-    }
-  }
+  // 使用 useCallback 优化键盘事件处理
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLElement>) => {
+      if (disabled) {
+        return;
+      }
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (disabled) {
-      event.preventDefault();
-      return;
-    }
-    if (restProps.onClick) {
-      restProps.onClick(event as any);
-    }
-  };
+      // 对于非按钮元素，支持 Enter 和 Space 键触发点击
+      if (
+        Element !== "button" &&
+        (event.key === "Enter" || event.key === " ")
+      ) {
+        event.preventDefault();
+        handleClick(event as any);
+      }
+
+      // 调用原始的 onKeyDown 处理器
+      if (restProps.onKeyDown) {
+        (restProps.onKeyDown as any)(event);
+      }
+    },
+    [disabled, Element, handleClick, restProps.onKeyDown]
+  );
 
   return (
     <Element
       {...filteredProps}
-      ref={ref as any}
+      ref={ref}
       className={buttonClasses}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       {...elementProps}
     >
       {children}
