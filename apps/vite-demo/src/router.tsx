@@ -1,24 +1,45 @@
 import { createBrowserRouter } from "react-router";
-import EditorDemo from "./pages/editor";
+import Layout from "./components/Layout";
+import EditorLayout from "./pages/editor/Layout";
+import BasicEditor from "./pages/editor/BasicEditor";
+import EPV from "./pages/editor/EPV";
 import HomePage from "./pages/home";
-import EpvPage from "./pages/epv";
 import BaseUIPage from "./pages/base-ui";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: (
+      <Layout>
+        <HomePage />
+      </Layout>
+    ),
   },
   {
     path: "/editor",
-    element: <EditorDemo />,
+    element: (
+      <Layout>
+        <EditorLayout />
+      </Layout>
+    ),
+    children: [
+      {
+        index: true,
+        element: <BasicEditor />,
+      },
+      {
+        path: "epv",
+        element: <EPV />,
+      },
+    ],
   },
-  {
-    path: "/epv",
-    element: <EpvPage />,
-  },
+
   {
     path: "/base-ui",
-    element: <BaseUIPage />,
+    element: (
+      <Layout>
+        <BaseUIPage />
+      </Layout>
+    ),
   },
 ]);
