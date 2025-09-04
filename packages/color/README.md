@@ -43,7 +43,7 @@ npm install @nova-fe/color
 或在CSS/SCSS中导入：
 
 ```css
-@import "@nova-fe/color/dist/system/theme.css";
+@import '@nova-fe/color/dist/system/theme.css';
 ```
 
 ### 2. 使用颜色变量
@@ -71,11 +71,11 @@ npm install @nova-fe/color
 import {
   lightThemeVariables,
   darkThemeVariables,
-} from "@nova-fe/color/dist/system/theme-variables";
+} from '@nova-fe/color/dist/system/theme-variables';
 
 // 获取颜色值
-const primaryColor = lightThemeVariables["--blue-6"]; // #1677FF
-const dangerColor = lightThemeVariables["--red-6"]; // #F5222D
+const primaryColor = lightThemeVariables['--blue-6']; // #1677FF
+const dangerColor = lightThemeVariables['--red-6']; // #F5222D
 ```
 
 ## 🎨 颜色体系
@@ -162,13 +162,13 @@ CSS文件已内置媒体查询，会根据系统主题偏好自动切换：
 
 ```javascript
 // 切换到暗黑主题
-document.documentElement.setAttribute("data-theme", "dark");
+document.documentElement.setAttribute('data-theme', 'dark');
 
 // 切换到明亮主题
-document.documentElement.setAttribute("data-theme", "light");
+document.documentElement.setAttribute('data-theme', 'light');
 
 // 跟随系统主题
-document.documentElement.removeAttribute("data-theme");
+document.documentElement.removeAttribute('data-theme');
 ```
 
 ## 🛠️ 开发指南
@@ -206,8 +206,8 @@ npm run clean
 ```typescript
 const PRESET_SYSTEM_COLORS = {
   // 添加自定义颜色
-  brand: "#1890ff",
-  secondary: "#722ed1",
+  brand: '#1890ff',
+  secondary: '#722ed1',
   // ... 其他颜色
 } as const;
 ```

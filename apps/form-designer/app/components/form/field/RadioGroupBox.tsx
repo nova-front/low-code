@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import FormHelperText from "@mui/material/FormHelperText";
-import { Radio } from "@/components";
-import { FormItemProps } from "@/components/form/type";
+import { useEffect, useMemo, useState } from 'react';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import { Radio } from '@/components';
+import { FormItemProps } from '@/components/form/type';
 
 interface OptionProps {
   label: string;
@@ -26,11 +26,11 @@ const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
     direction,
   } = fieldData;
 
-  const [value, setValue] = useState<any>("");
+  const [value, setValue] = useState<any>('');
 
   const lastOptions = options
     ?.map((option: any) => {
-      if (typeof option === "string") {
+      if (typeof option === 'string') {
         if (option) {
           return option;
         }
@@ -50,12 +50,12 @@ const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   }, [defaultValue]);
 
   const row = useMemo(() => {
-    return direction !== "column";
+    return direction !== 'column';
   }, [direction]);
 
   return (
     <FormControl
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       required={required}
       error={error}
       disabled={disabled}
@@ -69,7 +69,7 @@ const RadioGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
         onChange={(e) => setValue(e.target.value)}
       >
         {lastOptions.map((option: string | number | OptionProps, i: number) => {
-          if (typeof option === "string" || typeof option === "number") {
+          if (typeof option === 'string' || typeof option === 'number') {
             return (
               <FormControlLabel
                 key={i}

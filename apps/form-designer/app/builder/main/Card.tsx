@@ -1,15 +1,15 @@
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import FormItem from "@/components/form/item";
-import SettingDialog from "../setting";
-import { ItemTypes } from "../config";
+import { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import FormItem from '@/components/form/item';
+import SettingDialog from '../setting';
+import { ItemTypes } from '../config';
 
-import type { Identifier, XYCoord } from "dnd-core";
-import type { FC } from "react";
-import { FieldType } from "@/components/form/type";
+import type { Identifier, XYCoord } from 'dnd-core';
+import type { FC } from 'react';
+import { FieldType } from '@/components/form/type';
 
-import styles from "./styles.module.css";
+import styles from './styles.module.css';
 
 export interface CardProps {
   id: any;
@@ -123,7 +123,7 @@ export const Card: FC<CardProps> = ({
       </div>
       <div className={styles.card_right}>
         <div className={styles.icon_box}>
-          {data.type !== "unknown" && (
+          {data.type !== 'unknown' && (
             <SettingDialog initData={data} onUpdate={onUpdate} />
           )}
         </div>

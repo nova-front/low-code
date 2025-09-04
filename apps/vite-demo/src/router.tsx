@@ -1,14 +1,14 @@
-import { createBrowserRouter } from "react-router";
-import Layout from "./components/Layout";
-import EditorLayout from "./pages/editor/Layout";
-import BasicEditor from "./pages/editor/BasicEditor";
-import EPV from "./pages/editor/EPV";
-import HomePage from "./pages/home";
-import BaseUIPage from "./pages/base-ui";
+import { createBrowserRouter } from 'react-router';
+import Layout from './components/Layout';
+import EditorLayout from './pages/editor/Layout';
+import BasicEditor from './pages/editor/BasicEditor';
+import EPV from './pages/editor/EPV';
+import HomePage from './pages/home';
+import BaseUIPage from './pages/base-ui';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: (
       <Layout>
         <HomePage />
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/editor",
+    path: '/editor',
     element: (
       <Layout>
         <EditorLayout />
@@ -28,14 +28,14 @@ export const router = createBrowserRouter([
         element: <BasicEditor />,
       },
       {
-        path: "epv",
+        path: 'epv',
         element: <EPV />,
       },
     ],
   },
 
   {
-    path: "/base-ui",
+    path: '/base-ui',
     element: (
       <Layout>
         <BaseUIPage />

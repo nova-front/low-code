@@ -1,24 +1,24 @@
-import { useState } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useState } from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { Button } from "@/components";
-import FieldBox from "./Box";
-import { basicComponents, advancedComponents } from "./config";
+import { Button } from '@/components';
+import FieldBox from './Box';
+import { basicComponents, advancedComponents } from './config';
 
-import type { FC } from "react";
-import { FormItemProps } from "@/components/form/type";
+import type { FC } from 'react';
+import { FormItemProps } from '@/components/form/type';
 
-import styles from "./styles.module.css";
+import styles from './styles.module.css';
 
 export interface ContainerProps {
   onAdd: any;
 }
 
 const Container: FC<ContainerProps> = ({ onAdd }) => {
-  const [expanded, setExpanded] = useState<string | false>("basic");
+  const [expanded, setExpanded] = useState<string | false>('basic');
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -29,8 +29,8 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
     <section className={styles.field_box}>
       <header className={styles.title}>Components</header>
       <Accordion
-        expanded={expanded === "basic"}
-        onChange={handleChange("basic")}
+        expanded={expanded === 'basic'}
+        onChange={handleChange('basic')}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -52,8 +52,8 @@ const Container: FC<ContainerProps> = ({ onAdd }) => {
         </AccordionDetails>
       </Accordion>
       <Accordion
-        expanded={expanded === "advanced"}
-        onChange={handleChange("advanced")}
+        expanded={expanded === 'advanced'}
+        onChange={handleChange('advanced')}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

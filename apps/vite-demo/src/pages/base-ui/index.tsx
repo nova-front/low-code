@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Button } from "@nova-fe/base-ui";
-import DemoSection from "../../components/DemoSection";
+import React, { useState } from 'react';
+import { Button } from '@nova-fe/base-ui';
+import DemoSection from '../../components/DemoSection';
 
 const BaseUI: React.FC = () => {
-  document.title = "Base UI - Headless UI 组件库";
+  document.title = 'Base UI - Headless UI 组件库';
 
   const [clickCount, setClickCount] = useState(0);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const handleBasicClick = () => {
     setClickCount((prev) => prev + 1);
@@ -14,9 +14,9 @@ const BaseUI: React.FC = () => {
   };
 
   const handleAsyncClick = async () => {
-    setMessage("处理中...");
+    setMessage('处理中...');
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    setMessage("异步操作完成！");
+    setMessage('异步操作完成！');
   };
 
   return (
@@ -39,10 +39,10 @@ const BaseUI: React.FC = () => {
       >
         <div
           style={{
-            display: "flex",
-            gap: "1rem",
-            alignItems: "center",
-            flexWrap: "wrap",
+            display: 'flex',
+            gap: '1rem',
+            alignItems: 'center',
+            flexWrap: 'wrap',
           }}
         >
           <Button className="btn btn-primary" onClick={handleBasicClick}>
@@ -50,7 +50,7 @@ const BaseUI: React.FC = () => {
           </Button>
           <Button
             className="btn btn-secondary"
-            onClick={() => alert("Hello from Base UI!")}
+            onClick={() => alert('Hello from Base UI!')}
           >
             弹窗按钮
           </Button>
@@ -61,10 +61,10 @@ const BaseUI: React.FC = () => {
         {message && (
           <div
             style={{
-              marginTop: "1rem",
-              padding: "0.5rem",
-              background: "#f0f5ff",
-              borderRadius: "4px",
+              marginTop: '1rem',
+              padding: '0.5rem',
+              background: '#f0f5ff',
+              borderRadius: '4px',
             }}
           >
             📝 {message}
@@ -80,7 +80,7 @@ const BaseUI: React.FC = () => {
   带事件的禁用按钮
 </Button>`}
       >
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <Button className="btn btn-primary" disabled>
             禁用的主要按钮
           </Button>
@@ -90,13 +90,13 @@ const BaseUI: React.FC = () => {
           <Button
             className="btn btn-danger"
             disabled
-            onClick={() => alert("你不会看到这个提示")}
+            onClick={() => alert('你不会看到这个提示')}
           >
             禁用的危险按钮
           </Button>
         </div>
-        <p style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#666" }}>
-          💡 禁用状态下，按钮会自动添加{" "}
+        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#666' }}>
+          💡 禁用状态下，按钮会自动添加{' '}
           <code className="code-highlight">unstyled-button--disabled</code> 类名
         </p>
       </DemoSection>
@@ -111,7 +111,7 @@ const BaseUI: React.FC = () => {
   Div按钮
 </Button>`}
       >
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <Button
             as="a"
             href="https://github.com"
@@ -123,20 +123,20 @@ const BaseUI: React.FC = () => {
           <Button
             as="div"
             className="btn btn-secondary"
-            onClick={() => console.log("这是一个div元素")}
+            onClick={() => console.log('这是一个div元素')}
           >
             Div 按钮
           </Button>
           <Button
             as="span"
             className="btn btn-secondary"
-            onClick={() => console.log("这是一个span元素")}
+            onClick={() => console.log('这是一个span元素')}
           >
             Span 按钮
           </Button>
         </div>
-        <p style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#666" }}>
-          💡 非按钮元素会自动添加{" "}
+        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#666' }}>
+          💡 非按钮元素会自动添加{' '}
           <code className="code-highlight">role="button"</code> 和键盘事件支持
         </p>
       </DemoSection>
@@ -162,37 +162,37 @@ const BaseUI: React.FC = () => {
   transform: scale(1.05);
 }`}
       >
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <Button
             className="btn btn-primary"
-            style={{ borderRadius: "20px" }}
-            onClick={() => console.log("圆角按钮")}
+            style={{ borderRadius: '20px' }}
+            onClick={() => console.log('圆角按钮')}
           >
             圆角按钮
           </Button>
           <Button
             className="btn"
             style={{
-              background: "linear-gradient(45deg, #ff6b6b, #4ecdc4)",
-              color: "white",
-              border: "none",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "25px",
-              fontWeight: "bold",
+              background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4)',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '25px',
+              fontWeight: 'bold',
             }}
-            onClick={() => console.log("渐变按钮")}
+            onClick={() => console.log('渐变按钮')}
           >
             渐变按钮
           </Button>
           <Button
             className="btn"
             style={{
-              background: "transparent",
-              border: "2px dashed #1677ff",
-              color: "#1677ff",
-              padding: "0.5rem 1rem",
+              background: 'transparent',
+              border: '2px dashed #1677ff',
+              color: '#1677ff',
+              padding: '0.5rem 1rem',
             }}
-            onClick={() => console.log("虚线边框按钮")}
+            onClick={() => console.log('虚线边框按钮')}
           >
             虚线边框
           </Button>
@@ -206,25 +206,25 @@ const BaseUI: React.FC = () => {
   支持键盘事件的Div
 </Button>`}
       >
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <Button
             as="div"
             className="btn btn-secondary"
-            onClick={() => setMessage("Div按钮被点击！")}
-            style={{ cursor: "pointer" }}
+            onClick={() => setMessage('Div按钮被点击！')}
+            style={{ cursor: 'pointer' }}
           >
             试试按 Enter 或 Space 键
           </Button>
           <Button
             as="span"
             className="btn btn-secondary"
-            onClick={() => setMessage("Span按钮被点击！")}
-            style={{ cursor: "pointer" }}
+            onClick={() => setMessage('Span按钮被点击！')}
+            style={{ cursor: 'pointer' }}
           >
             Span 元素也支持键盘事件
           </Button>
         </div>
-        <p style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#666" }}>
+        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#666' }}>
           💡 聚焦到按钮后，按 Enter 或 Space 键试试
         </p>
       </DemoSection>
@@ -237,7 +237,7 @@ const BaseUI: React.FC = () => {
               <h4 className="card-title">🎨 Headless UI</h4>
             </div>
             <div className="card-body">
-              <ul style={{ paddingLeft: "1.2rem", color: "#666" }}>
+              <ul style={{ paddingLeft: '1.2rem', color: '#666' }}>
                 <li>完全无样式设计</li>
                 <li>通过 className 完全控制样式</li>
                 <li>专注于功能逻辑</li>
@@ -250,7 +250,7 @@ const BaseUI: React.FC = () => {
               <h4 className="card-title">🔧 高度可定制</h4>
             </div>
             <div className="card-body">
-              <ul style={{ paddingLeft: "1.2rem", color: "#666" }}>
+              <ul style={{ paddingLeft: '1.2rem', color: '#666' }}>
                 <li>支持 as 属性渲染不同元素</li>
                 <li>完整的 TypeScript 类型支持</li>
                 <li>兼容所有标准 HTML 属性</li>
@@ -263,7 +263,7 @@ const BaseUI: React.FC = () => {
               <h4 className="card-title">♿ 无障碍支持</h4>
             </div>
             <div className="card-body">
-              <ul style={{ paddingLeft: "1.2rem", color: "#666" }}>
+              <ul style={{ paddingLeft: '1.2rem', color: '#666' }}>
                 <li>完整的 a11y 支持</li>
                 <li>自动处理 ARIA 属性</li>
                 <li>键盘导航支持</li>

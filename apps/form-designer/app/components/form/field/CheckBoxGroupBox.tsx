@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import FormLabel from "@mui/material/FormLabel";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormHelperText from "@mui/material/FormHelperText";
-import { Checkbox } from "@/components";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import { Checkbox } from '@/components';
 
-import { FormItemProps } from "@/components/form/type";
+import { FormItemProps } from '@/components/form/type';
 
 interface OptionProps {
   label: string;
@@ -50,7 +50,7 @@ const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
 
   const lastOptions = options
     ?.map((option: any) => {
-      if (typeof option === "string") {
+      if (typeof option === 'string') {
         if (option) {
           return option;
         }
@@ -70,19 +70,19 @@ const CheckBoxGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   }, [defaultValue]);
 
   const row = useMemo(() => {
-    return direction !== "column";
+    return direction !== 'column';
   }, [direction]);
 
   return (
     <FormControl
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       required={required}
       error={error}
     >
       {label && <FormLabel component="legend">{label}</FormLabel>}
       <FormGroup row={row}>
         {lastOptions.map((option: string | number | OptionProps, i: number) => {
-          if (typeof option === "string" || typeof option === "number") {
+          if (typeof option === 'string' || typeof option === 'number') {
             return (
               <FormControlLabel
                 key={i}

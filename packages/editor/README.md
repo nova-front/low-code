@@ -27,7 +27,7 @@ pnpm add @nova-fe/editor
 ### 基础编辑器（非受控）
 
 ```tsx
-import { ContentEditable } from "@nova-fe/editor";
+import { ContentEditable } from '@nova-fe/editor';
 
 function App() {
   return <ContentEditable placeholder="请输入内容..." />;
@@ -37,11 +37,11 @@ function App() {
 ### 受控编辑器
 
 ```tsx
-import { ContentEditable } from "@nova-fe/editor";
-import { useState } from "react";
+import { ContentEditable } from '@nova-fe/editor';
+import { useState } from 'react';
 
 function App() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   return (
     <ContentEditable
@@ -56,30 +56,20 @@ function App() {
 ### 带拼写检查的编辑器
 
 ```tsx
-import { ContentEditable } from "@nova-fe/editor";
+import { ContentEditable } from '@nova-fe/editor';
 
 function App() {
-  return (
-    <ContentEditable
-      placeholder="请输入内容..."
-      spellcheck={true}
-    />
-  );
+  return <ContentEditable placeholder="请输入内容..." spellcheck={true} />;
 }
 ```
 
 ### 撤销重做编辑器
 
 ```tsx
-import { UndoableEditor } from "@nova-fe/editor";
+import { UndoableEditor } from '@nova-fe/editor';
 
 function App() {
-  return (
-    <UndoableEditor
-      placeholder="请输入内容..."
-      spellcheck={true}
-    />
-  );
+  return <UndoableEditor placeholder="请输入内容..." spellcheck={true} />;
 }
 ```
 
@@ -87,31 +77,32 @@ function App() {
 
 ### ContentEditable Props
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `value` | `string` | `undefined` | 受控模式下的值 |
-| `onChange` | `(text: string) => void` | `undefined` | 内容变化回调 |
-| `placeholder` | `string` | `undefined` | 占位符文本 |
-| `spellcheck` | `boolean` | `false` | 是否启用拼写检查 |
-| `disabled` | `boolean` | `false` | 是否禁用编辑 |
-| `onFocus` | `() => void` | `undefined` | 获得焦点回调 |
-| `onBlur` | `() => void` | `undefined` | 失去焦点回调 |
-| `className` | `string` | `undefined` | CSS 类名 |
+| 属性               | 类型                     | 默认值      | 描述               |
+| ------------------ | ------------------------ | ----------- | ------------------ |
+| `value`            | `string`                 | `undefined` | 受控模式下的值     |
+| `onChange`         | `(text: string) => void` | `undefined` | 内容变化回调       |
+| `placeholder`      | `string`                 | `undefined` | 占位符文本         |
+| `spellcheck`       | `boolean`                | `false`     | 是否启用拼写检查   |
+| `customDictionary` | `string[]`               | `[]`        | 自定义词典单词列表 |
+| `disabled`         | `boolean`                | `false`     | 是否禁用编辑       |
+| `onFocus`          | `() => void`             | `undefined` | 获得焦点回调       |
+| `onBlur`           | `() => void`             | `undefined` | 失去焦点回调       |
+| `className`        | `string`                 | `undefined` | CSS 类名           |
 
 #### 样式属性
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `fontSize` | `string \| number` | `"14px"` | 字体大小 |
-| `lineHeight` | `string \| number` | `"1.5"` | 行高 |
-| `fontFamily` | `string` | `undefined` | 字体族 |
-| `padding` | `string \| number` | `"8px"` | 内边距 |
-| `minHeight` | `string \| number` | `"100px"` | 最小高度 |
-| `maxHeight` | `string \| number` | `undefined` | 最大高度 |
-| `borderRadius` | `string \| number` | `"6px"` | 圆角 |
-| `backgroundColor` | `string` | `"#fff"` | 背景色 |
-| `color` | `string` | `undefined` | 文字颜色 |
-| `border` | `string` | `"1px solid #d9d9d9"` | 边框 |
+| 属性              | 类型               | 默认值                | 描述     |
+| ----------------- | ------------------ | --------------------- | -------- |
+| `fontSize`        | `string \| number` | `"14px"`              | 字体大小 |
+| `lineHeight`      | `string \| number` | `"1.5"`               | 行高     |
+| `fontFamily`      | `string`           | `undefined`           | 字体族   |
+| `padding`         | `string \| number` | `"8px"`               | 内边距   |
+| `minHeight`       | `string \| number` | `"100px"`             | 最小高度 |
+| `maxHeight`       | `string \| number` | `undefined`           | 最大高度 |
+| `borderRadius`    | `string \| number` | `"6px"`               | 圆角     |
+| `backgroundColor` | `string`           | `"#fff"`              | 背景色   |
+| `color`           | `string`           | `undefined`           | 文字颜色 |
+| `border`          | `string`           | `"1px solid #d9d9d9"` | 边框     |
 
 ### UndoableEditor Props
 
@@ -124,17 +115,17 @@ function App() {
 ### 自定义词典 API
 
 ```tsx
-import { useSpellChecker } from "@nova-fe/editor";
+import { useSpellChecker } from '@nova-fe/editor';
 
 function App() {
   const { addWord, removeWord, getAllCustomWords } = useSpellChecker();
 
   const handleAddWord = () => {
-    addWord("customword");
+    addWord('customword');
   };
 
   const handleRemoveWord = () => {
-    removeWord("customword");
+    removeWord('customword');
   };
 
   return (
@@ -185,16 +176,16 @@ function App() {
 如果在 Vite 项目中使用，可能需要调整配置：
 
 ```ts
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ["typo-js"],
+    include: ['typo-js'],
   },
   worker: {
-    format: "es",
+    format: 'es',
   },
 });
 ```
@@ -209,7 +200,7 @@ module.exports = {
     rules: [
       {
         test: /\.worker\.js$/,
-        use: { loader: "worker-loader" },
+        use: { loader: 'worker-loader' },
       },
     ],
   },
@@ -221,8 +212,8 @@ module.exports = {
 ### 获取编辑器实例
 
 ```tsx
-import { ContentEditable, ContentEditableHandle } from "@nova-fe/editor";
-import { useRef } from "react";
+import { ContentEditable, ContentEditableHandle } from '@nova-fe/editor';
+import { useRef } from 'react';
 
 function App() {
   const editorRef = useRef<ContentEditableHandle>(null);
@@ -244,13 +235,13 @@ function App() {
 ### 自定义拼写检查
 
 ```tsx
-import { ContentEditable, useSpellChecker } from "@nova-fe/editor";
+import { ContentEditable, useSpellChecker } from '@nova-fe/editor';
 
 function App() {
   const { addWords, exportCustomDictionary } = useSpellChecker();
 
   const handleImportWords = () => {
-    addWords(["word1", "word2", "word3"]);
+    addWords(['word1', 'word2', 'word3']);
   };
 
   return (
@@ -265,15 +256,19 @@ function App() {
 ## 🐛 常见问题
 
 ### Q: 拼写检查不工作？
+
 A: 确保设置了 `spellcheck={true}` 属性，并且浏览器支持 Web Workers。
 
 ### Q: 撤销重做不生效？
+
 A: 使用 `UndoableEditor` 组件而不是 `ContentEditable`。
 
 ### Q: 样式不生效？
+
 A: 检查是否使用了正确的样式属性名，避免使用 `style` 对象。
 
 ### Q: 性能问题？
+
 A: 对于大量文本，编辑器会自动启用增量检查和缓存优化。
 
 ## 📄 许可证

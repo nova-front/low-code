@@ -1,29 +1,29 @@
-import { Metadata } from "next";
-import Link from "next/link";
+import { Metadata } from 'next';
+import Link from 'next/link';
 
-import styles from "./page.module.css";
+import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: "Form Designer",
-  description: "一套成熟的表单解决方案。",
-  keywords: ["Form", "Form Designer", "成熟的表单解决方案"],
+  title: 'Form Designer',
+  description: '一套成熟的表单解决方案。',
+  keywords: ['Form', 'Form Designer', '成熟的表单解决方案'],
 };
 
 const linkConfig = [
   {
-    title: "基础组件",
-    href: "/docs",
-    bgColor: "#afb42b",
+    title: '基础组件',
+    href: '/docs',
+    bgColor: '#afb42b',
   },
   {
-    title: "表单设计",
-    href: "/builder",
-    bgColor: "#8bc34a",
+    title: '表单设计',
+    href: '/builder',
+    bgColor: '#8bc34a',
   },
   {
-    title: "问卷调查",
-    href: "/questionnaire",
-    bgColor: "#4caf50",
+    title: '问卷调查',
+    href: '/questionnaire',
+    bgColor: '#4caf50',
   },
 ];
 
@@ -37,7 +37,7 @@ const Home = () => {
             <Link
               className={styles.itemBox}
               style={{
-                backgroundColor: item.bgColor ? item.bgColor : "#e3f2fd",
+                backgroundColor: item.bgColor ? item.bgColor : '#e3f2fd',
               }}
               href={item.href}
             >

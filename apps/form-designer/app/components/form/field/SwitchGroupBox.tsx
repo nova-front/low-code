@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormHelperText from "@mui/material/FormHelperText";
-import { FormItemProps } from "@/components/form/type";
-import { Switch } from "@/components";
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import { FormItemProps } from '@/components/form/type';
+import { Switch } from '@/components';
 
 interface OptionsItem {
   label: string;
@@ -46,12 +46,12 @@ const SwitchGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   }, [defaultValue]);
 
   const row = useMemo(() => {
-    return direction !== "column";
+    return direction !== 'column';
   }, [direction]);
 
   return (
     <FormControl
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       required={required}
       error={error}
       disabled={disabled}
@@ -59,7 +59,7 @@ const SwitchGroupBox = ({ fieldData }: { fieldData: FormItemProps }) => {
       {label && <FormLabel component="legend">{label}</FormLabel>}
       <FormGroup row={row}>
         {options?.map((item: OptionsItem | string) => {
-          if (typeof item === "string") {
+          if (typeof item === 'string') {
             return (
               <FormControlLabel
                 key={item}

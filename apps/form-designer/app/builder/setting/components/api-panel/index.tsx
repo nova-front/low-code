@@ -1,6 +1,6 @@
-import { TextField, Grid2 as Grid, Tooltip, IconButton } from "@mui/material";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { ApiPanelProps } from "../../type";
+import { TextField, Grid2 as Grid, Tooltip, IconButton } from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { ApiPanelProps } from '../../type';
 
 const ApiPanel = (props: ApiPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
@@ -33,7 +33,7 @@ const ApiPanel = (props: ApiPanelProps) => {
               }
               variant="outlined"
               value={data.key}
-              onChange={(e: any) => onUpdate?.("key", e.target.value)}
+              onChange={(e: any) => onUpdate?.('key', e.target.value)}
             />
           </Grid>
         </Grid>

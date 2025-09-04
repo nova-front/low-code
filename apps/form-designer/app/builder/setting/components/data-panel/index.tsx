@@ -1,7 +1,7 @@
-import { Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
-import DataSourceValues from "./data-source-values";
-import DefaultValue from "./default-value";
-import { DataPanelProps } from "../../type";
+import { Box, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import DataSourceValues from './data-source-values';
+import DefaultValue from './default-value';
+import { DataPanelProps } from '../../type';
 
 const DataPanel = (props: DataPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
@@ -10,7 +10,7 @@ const DataPanel = (props: DataPanelProps) => {
   const lastDataSource =
     data.options
       ?.map((option: any) => {
-        if (typeof option === "string" || typeof option === "number") {
+        if (typeof option === 'string' || typeof option === 'number') {
           if (option) {
             return String(option);
           }
@@ -34,16 +34,16 @@ const DataPanel = (props: DataPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ pt: 2, height: "calc(100vh - 112px)", overflowY: "auto" }}>
+        <Box sx={{ pt: 2, height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
           <FormGroup>
-            {["select", "autocomplete"].includes(data.type) && (
+            {['select', 'autocomplete'].includes(data.type) && (
               <Box>
                 <FormControlLabel
                   control={
                     <Checkbox
                       checked={data.multiple}
                       onChange={(e: any) => {
-                        onUpdate?.("multiple", e.target.checked);
+                        onUpdate?.('multiple', e.target.checked);
                       }}
                     />
                   }

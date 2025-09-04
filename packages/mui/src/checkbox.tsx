@@ -1,4 +1,4 @@
-import CheckboxBasic from "@mui/material/Checkbox";
+import CheckboxBasic from '@mui/material/Checkbox';
 
 interface CheckboxProps {
   className?: string;
@@ -8,15 +8,15 @@ interface CheckboxProps {
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => void;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   color?:
-    | "primary"
-    | "secondary"
-    | "error"
-    | "info"
-    | "success"
-    | "warning"
-    | "default";
+    | 'primary'
+    | 'secondary'
+    | 'error'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'default';
   icon?: React.ReactNode;
   checkedIcon?: React.ReactNode;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;

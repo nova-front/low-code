@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 // import type { Metadata } from "next";
-import Questionnaire from "./Ques";
+import Questionnaire from './Ques';
 
 // export const metadata: Metadata = {
 //   title: "问卷调查",

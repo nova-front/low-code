@@ -1,11 +1,11 @@
-import { memo } from "react";
-import { useDrag } from "react-dnd";
-import { getInitData } from "@/utils/common";
-import { ItemTypes } from "../config";
+import { memo } from 'react';
+import { useDrag } from 'react-dnd';
+import { getInitData } from '@/utils/common';
+import { ItemTypes } from '../config';
 
-import type { FC } from "react";
-import type { DragSourceMonitor } from "react-dnd";
-import type { FormItemProps } from "@/components/form/type";
+import type { FC } from 'react';
+import type { DragSourceMonitor } from 'react-dnd';
+import type { FormItemProps } from '@/components/form/type';
 
 export interface BoxProps {
   children: React.ReactNode;
@@ -39,7 +39,7 @@ const Box: FC<BoxProps> = memo(({ data, children, onAdd }) => {
   );
 
   return (
-    <div ref={drag as any} style={{ opacity, marginBottom: "8px" }}>
+    <div ref={drag as any} style={{ opacity, marginBottom: '8px' }}>
       {children}
     </div>
   );

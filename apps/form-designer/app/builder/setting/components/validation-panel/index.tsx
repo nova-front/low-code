@@ -1,5 +1,5 @@
-import { Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
-import { ValidationPanelProps } from "../../type";
+import { Box, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { ValidationPanelProps } from '../../type';
 
 const ValidationPanel = (props: ValidationPanelProps) => {
   const { value, index, data, onUpdate, ...other } = props;
@@ -21,7 +21,7 @@ const ValidationPanel = (props: ValidationPanelProps) => {
                   <Checkbox
                     checked={data.required}
                     onChange={(e: any) => {
-                      onUpdate?.("required", e.target.checked);
+                      onUpdate?.('required', e.target.checked);
                     }}
                   />
                 }
@@ -34,7 +34,7 @@ const ValidationPanel = (props: ValidationPanelProps) => {
                   <Checkbox
                     checked={data.disabled}
                     onChange={(e: any) => {
-                      onUpdate?.("disabled", e.target.checked);
+                      onUpdate?.('disabled', e.target.checked);
                     }}
                   />
                 }

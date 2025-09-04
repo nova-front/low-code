@@ -1,7 +1,7 @@
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 import AutocompleteBase, {
   createFilterOptions,
-} from "@mui/material/Autocomplete";
+} from '@mui/material/Autocomplete';
 
 const filter = createFilterOptions<OptionType>();
 
@@ -27,7 +27,7 @@ interface AutocompleteProps {
 const Autocomplete = ({
   label,
   required,
-  value = "",
+  value = '',
   disabled,
   onChange,
   options,
@@ -39,7 +39,7 @@ const Autocomplete = ({
       disabled={disabled}
       value={value}
       onChange={(event, newValue) => {
-        if (typeof newValue === "string") {
+        if (typeof newValue === 'string') {
           onChange({
             label: newValue,
           });
@@ -61,7 +61,7 @@ const Autocomplete = ({
         const isExisting = options.some(
           (option) => inputValue === option.label
         );
-        if (inputValue !== "" && !isExisting) {
+        if (inputValue !== '' && !isExisting) {
           filtered.push({
             inputValue,
             value: inputValue,
@@ -77,7 +77,7 @@ const Autocomplete = ({
       options={options}
       getOptionLabel={(option) => {
         // Value selected with enter, right from the input
-        if (typeof option === "string") {
+        if (typeof option === 'string') {
           return option;
         }
         // Add "xxx" option created dynamically

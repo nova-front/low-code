@@ -13,7 +13,7 @@ const DemoSection: React.FC<DemoSectionProps> = ({
   description,
   children,
   code,
-  showCode = false
+  showCode = false,
 }) => {
   const [isCodeVisible, setIsCodeVisible] = useState(showCode);
 
@@ -21,14 +21,10 @@ const DemoSection: React.FC<DemoSectionProps> = ({
     <div className="demo-section">
       <div className="demo-header">
         <h3 className="demo-title">{title}</h3>
-        {description && (
-          <p className="demo-description">{description}</p>
-        )}
+        {description && <p className="demo-description">{description}</p>}
       </div>
-      
-      <div className="demo-content">
-        {children}
-      </div>
+
+      <div className="demo-content">{children}</div>
 
       {code && (
         <div className="demo-code-section">
@@ -39,7 +35,7 @@ const DemoSection: React.FC<DemoSectionProps> = ({
           >
             {isCodeVisible ? '隐藏代码' : '显示代码'} 📋
           </button>
-          
+
           {isCodeVisible && (
             <pre className="demo-code">
               <code>{code}</code>

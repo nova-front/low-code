@@ -1,4 +1,4 @@
-import RadioBasic from "@mui/material/Radio";
+import RadioBasic from '@mui/material/Radio';
 
 interface RadioProps {
   name?: string;
@@ -9,15 +9,15 @@ interface RadioProps {
     checked: boolean
   ) => void;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  size?: "small" | "medium";
+  size?: 'small' | 'medium';
   color?:
-    | "primary"
-    | "secondary"
-    | "error"
-    | "info"
-    | "success"
-    | "warning"
-    | "default";
+    | 'primary'
+    | 'secondary'
+    | 'error'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'default';
   defaultChecked?: boolean;
   defaultValue?: string | number | readonly string[];
   disabled?: boolean;

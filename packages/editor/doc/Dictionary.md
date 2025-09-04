@@ -35,14 +35,14 @@
 使用 Typo.js 库提供基础的英语拼写检查：
 
 ```ts
-import { useSpellChecker } from "@nova-fe/editor";
+import { useSpellChecker } from '@nova-fe/editor';
 
 function App() {
   const { check } = useSpellChecker();
 
   // 检查单词是否正确
-  const isValid = check("apple"); // true
-  const isInvalid = check("appl"); // false
+  const isValid = check('apple'); // true
+  const isInvalid = check('appl'); // false
 }
 ```
 
@@ -51,7 +51,7 @@ function App() {
 支持添加、删除和管理自定义单词：
 
 ```ts
-import { useSpellChecker } from "@nova-fe/editor";
+import { useSpellChecker } from '@nova-fe/editor';
 
 function App() {
   const {
@@ -61,17 +61,17 @@ function App() {
     removeWords,
     clearCustomWords,
     getAllCustomWords,
-    getCustomWordCount
+    getCustomWordCount,
   } = useSpellChecker();
 
   // 添加单个单词
-  addWord("customword");
+  addWord('customword');
 
   // 批量添加单词
-  addWords(["word1", "word2", "word3"]);
+  addWords(['word1', 'word2', 'word3']);
 
   // 删除单词
-  removeWord("customword");
+  removeWord('customword');
 
   // 获取所有自定义单词
   const customWords = getAllCustomWords();
@@ -89,14 +89,11 @@ function App() {
 支持词典的导入导出功能：
 
 ```ts
-import { useSpellChecker } from "@nova-fe/editor";
+import { useSpellChecker } from '@nova-fe/editor';
 
 function App() {
-  const {
-    exportCustomDictionary,
-    importCustomDictionary,
-    addWordsFromText
-  } = useSpellChecker();
+  const { exportCustomDictionary, importCustomDictionary, addWordsFromText } =
+    useSpellChecker();
 
   // 导出词典为 JSON
   const exportData = exportCustomDictionary();
@@ -105,7 +102,9 @@ function App() {
   importCustomDictionary(exportData);
 
   // 从文本中提取并添加单词
-  const result = addWordsFromText("这是一段包含 customword1 和 customword2 的文本");
+  const result = addWordsFromText(
+    '这是一段包含 customword1 和 customword2 的文本'
+  );
   console.log(`添加了 ${result.added} 个单词`);
 }
 ```
@@ -120,19 +119,19 @@ function App() {
 // Worker 中的处理流程
 self.onmessage = (event) => {
   switch (event.data.type) {
-    case "CHECK_TEXT":
+    case 'CHECK_TEXT':
       // 异步检查整个文本
       const results = await processText(event.data.payload.fullText);
-      self.postMessage({ type: "CHECK_RESULT", payload: results });
+      self.postMessage({ type: 'CHECK_RESULT', payload: results });
       break;
 
-    case "CHECK_INCREMENTAL":
+    case 'CHECK_INCREMENTAL':
       // 增量检查（仅检查变化的部分）
       const incrementalResults = await processIncrementalText(
         event.data.payload.fullText,
         event.data.payload.regions
       );
-      self.postMessage({ type: "CHECK_RESULT", payload: incrementalResults });
+      self.postMessage({ type: 'CHECK_RESULT', payload: incrementalResults });
       break;
   }
 };
@@ -147,10 +146,10 @@ class LRUCache<K, V> {
   private capacity: number = 5000; // 缓存容量
 
   // 单词检查缓存
-  const checkedCache = new LRUCache<string, boolean>(5000);
+  checkedCache = new LRUCache<string, boolean>(5000);
 
   // 区域检查缓存
-  const regionCache = new LRUCache<string, CheckResult[]>(1000);
+  regionCache = new LRUCache<string, CheckResult[]>(1000);
 }
 ```
 
@@ -168,8 +167,8 @@ const regions = calculateIncrementalCheckRegions(
 
 // 只检查变化的区域
 worker.postMessage({
-  type: "CHECK_INCREMENTAL",
-  payload: { fullText: currentText, regions }
+  type: 'CHECK_INCREMENTAL',
+  payload: { fullText: currentText, regions },
 });
 ```
 
@@ -178,12 +177,12 @@ worker.postMessage({
 ### 自定义词典配置
 
 ```ts
-import { createCustomDictionary } from "@nova-fe/editor";
+import { createCustomDictionary } from '@nova-fe/editor';
 
 const customDict = createCustomDictionary({
   storageKey: 'my-app-dictionary', // 本地存储键名
-  maxWords: 10000,                 // 最大单词数
-  autoSave: true                   // 自动保存到本地存储
+  maxWords: 10000, // 最大单词数
+  autoSave: true, // 自动保存到本地存储
 });
 ```
 
@@ -230,36 +229,36 @@ const debouncedText = useDebounce(text, 300);
 ```ts
 // ✅ 推荐：批量操作
 const { addWords } = useSpellChecker();
-addWords(["word1", "word2", "word3"]); // 一次添加多个
+addWords(['word1', 'word2', 'word3']); // 一次添加多个
 
 // ❌ 不推荐：逐个添加
 const { addWord } = useSpellChecker();
-addWord("word1");
-addWord("word2");
-addWord("word3");
+addWord('word1');
+addWord('word2');
+addWord('word3');
 ```
 
 ### 3. 错误处理
 
 ```ts
-import { useSpellChecker } from "@nova-fe/editor";
+import { useSpellChecker } from '@nova-fe/editor';
 
 function App() {
   const { addWord, isReady } = useSpellChecker();
 
   const handleAddWord = async (word: string) => {
     if (!isReady) {
-      console.warn("拼写检查器尚未准备就绪");
+      console.warn('拼写检查器尚未准备就绪');
       return;
     }
 
     try {
       const success = addWord(word);
       if (!success) {
-        console.error("添加单词失败");
+        console.error('添加单词失败');
       }
     } catch (error) {
-      console.error("添加单词时发生错误:", error);
+      console.error('添加单词时发生错误:', error);
     }
   };
 }

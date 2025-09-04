@@ -1,16 +1,16 @@
-import update from "immutability-helper";
-import { useCallback } from "react";
-import { useDrop } from "react-dnd";
-import { ItemTypes } from "../config";
-import { Card } from "./Card";
-import { Button } from "@/components";
+import update from 'immutability-helper';
+import { useCallback } from 'react';
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from '../config';
+import { Card } from './Card';
+import { Button } from '@/components';
 
-import type { FormItemProps } from "../../components/form/type";
-import type { FC } from "react";
-import styles from "./styles.module.css";
+import type { FormItemProps } from '../../components/form/type';
+import type { FC } from 'react';
+import styles from './styles.module.css';
 
 const style = {
-  width: "100%",
+  width: '100%',
 };
 
 export interface ContainerProps {
@@ -61,7 +61,7 @@ const Container: FC<ContainerProps> = ({
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
       accept: ItemTypes.BOX,
-      drop: () => ({ name: "MainContainer" }),
+      drop: () => ({ name: 'MainContainer' }),
       collect: (monitor) => ({
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
@@ -69,11 +69,11 @@ const Container: FC<ContainerProps> = ({
     }));
 
     const isActive = canDrop && isOver;
-    let backgroundColor = "#fff";
+    let backgroundColor = '#fff';
     if (isActive) {
-      backgroundColor = "darkgreen";
+      backgroundColor = 'darkgreen';
     } else if (canDrop) {
-      backgroundColor = "darkkhaki";
+      backgroundColor = 'darkkhaki';
     }
 
     return (

@@ -1,7 +1,7 @@
-import TextField from "@mui/material/TextField";
-import AutocompleteBase from "@mui/material/Autocomplete";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+import TextField from '@mui/material/TextField';
+import AutocompleteBase from '@mui/material/Autocomplete';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 interface OptionType {
   inputValue?: string;
@@ -33,7 +33,7 @@ const AutocompleteMultiple = ({
   return (
     <FormControl
       fullWidth
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       required={required}
       error={error}
       disabled={disabled}

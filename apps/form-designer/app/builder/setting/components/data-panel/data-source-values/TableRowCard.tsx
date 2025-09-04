@@ -1,23 +1,23 @@
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
-import { TableCell, TableRow, IconButton, TextField } from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
-import MenuIcon from "@mui/icons-material/Menu";
-import { ItemTypes } from "../../../../config";
+import { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
+import { TableCell, TableRow, IconButton, TextField } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import MenuIcon from '@mui/icons-material/Menu';
+import { ItemTypes } from '../../../../config';
 
-import type { Identifier, XYCoord } from "dnd-core";
-import type { FC } from "react";
+import type { Identifier, XYCoord } from 'dnd-core';
+import type { FC } from 'react';
 
 const style = {
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
-  cursor: "move",
+  padding: '0.5rem 1rem',
+  marginBottom: '.5rem',
+  backgroundColor: 'white',
+  cursor: 'move',
 };
 
 export interface CardProps {
   id: any;
-  itemType: "string" | "object";
+  itemType: 'string' | 'object';
   row: any;
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
@@ -122,18 +122,18 @@ export const TableRowCard: FC<CardProps> = ({
       style={{ ...style, opacity }}
       data-handler-id={handlerId}
       key={row.name}
-      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
       <TableCell>
         <MenuIcon />
       </TableCell>
-      {itemType === "object" && (
+      {itemType === 'object' && (
         <TableCell component="th" scope="row">
           <TextField
             fullWidth
             size="small"
             value={row.label}
-            onChange={(e: any) => onChange(index, "label", e.target.value)}
+            onChange={(e: any) => onChange(index, 'label', e.target.value)}
           />
         </TableCell>
       )}
@@ -142,7 +142,7 @@ export const TableRowCard: FC<CardProps> = ({
           fullWidth
           size="small"
           value={row.value}
-          onChange={(e: any) => onChange(index, "value", e.target.value)}
+          onChange={(e: any) => onChange(index, 'value', e.target.value)}
         />
       </TableCell>
       <TableCell align="right">

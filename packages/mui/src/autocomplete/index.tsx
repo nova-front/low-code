@@ -1,5 +1,5 @@
-import SingleBox from "./single";
-import MultipleBox from "./multiple";
+import SingleBox from './single';
+import MultipleBox from './multiple';
 
 interface OptionType {
   inputValue?: string;

@@ -1,14 +1,14 @@
-import * as React from "react";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import DisplayPanel from "./display-panel";
-import ValidationPanel from "./validation-panel";
-import CustomPanel from "./CustomPanel";
-import DataPanel from "./data-panel";
-import ApiPanel from "./api-panel";
-import { tabProps } from "../util";
+import * as React from 'react';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import DisplayPanel from './display-panel';
+import ValidationPanel from './validation-panel';
+import CustomPanel from './CustomPanel';
+import DataPanel from './data-panel';
+import ApiPanel from './api-panel';
+import { tabProps } from '../util';
 
 const LeftPanel = ({ fieldData, updatefieldData }: any) => {
   const [value, setValue] = useState(0);
@@ -19,7 +19,7 @@ const LeftPanel = ({ fieldData, updatefieldData }: any) => {
 
   return (
     <React.Fragment>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
           onChange={onChangeFn}

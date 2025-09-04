@@ -1,33 +1,33 @@
-import { type FormItemProps } from "@/components/form/type";
+import { type FormItemProps } from '@/components/form/type';
 
 export const basicComponents: FormItemProps[] = [
   {
-    name: "Text Field",
-    type: "textfield",
+    name: 'Text Field',
+    type: 'textfield',
   },
   {
-    name: "Text Area",
-    type: "textarea",
+    name: 'Text Area',
+    type: 'textarea',
   },
   {
-    name: "Checkbox",
-    type: "checkbox",
+    name: 'Checkbox',
+    type: 'checkbox',
   },
   {
-    name: "Radio",
-    type: "radio",
+    name: 'Radio',
+    type: 'radio',
   },
   {
-    name: "Switch",
-    type: "switch",
+    name: 'Switch',
+    type: 'switch',
   },
   {
-    name: "Select",
-    type: "select",
+    name: 'Select',
+    type: 'select',
   },
   {
-    name: "Autocomplete",
-    type: "autocomplete",
+    name: 'Autocomplete',
+    type: 'autocomplete',
   },
   // {
   //   name: "Button",
@@ -37,7 +37,7 @@ export const basicComponents: FormItemProps[] = [
 
 export const advancedComponents: FormItemProps[] = [
   {
-    name: "Todo",
-    type: "unknown",
+    name: 'Todo',
+    type: 'unknown',
   },
 ];

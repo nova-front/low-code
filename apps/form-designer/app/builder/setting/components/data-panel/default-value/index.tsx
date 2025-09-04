@@ -1,8 +1,8 @@
-import { useCallback, useMemo } from "react";
-import { Box, FormControl, MenuItem, Select, TextField } from "@mui/material";
-import { Autocomplete } from "@/components";
+import { useCallback, useMemo } from 'react';
+import { Box, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete } from '@/components';
 
-import { FormItemProps } from "@/components/form/type";
+import { FormItemProps } from '@/components/form/type';
 
 interface DefaultValueProps {
   data: FormItemProps;
@@ -21,10 +21,10 @@ const DefaultValue = ({
   const onChangeFn = useCallback(
     (e: any) => {
       let v = e.target.value;
-      if (typeof v === "number") {
+      if (typeof v === 'number') {
         v = String(v);
       }
-      onUpdate("defaultValue", v);
+      onUpdate('defaultValue', v);
     },
     [onUpdate]
   );
@@ -47,10 +47,10 @@ const DefaultValue = ({
   const autoOnChangeFn = useCallback(
     (value: any) => {
       if (!multiple) {
-        onUpdate("defaultValue", value?.value);
+        onUpdate('defaultValue', value?.value);
       } else {
         const vs = value?.map((item: any) => item.value);
-        onUpdate("defaultValue", vs);
+        onUpdate('defaultValue', vs);
       }
     },
     [multiple, onUpdate]
@@ -59,14 +59,14 @@ const DefaultValue = ({
   return (
     <FormControl fullWidth sx={{ mt: 1 }}>
       <Box sx={{ mb: 1 }}>Default Value</Box>
-      {["checkbox", "radio", "select", "switch"].includes(data.type) && (
+      {['checkbox', 'radio', 'select', 'switch'].includes(data.type) && (
         <Select
-          multiple={["checkbox", "switch"].includes(data.type) || multiple}
+          multiple={['checkbox', 'switch'].includes(data.type) || multiple}
           value={defaultValue}
           onChange={onChangeFn}
         >
           {dataSource?.map((option: any, i: number) => {
-            if (typeof option === "string") {
+            if (typeof option === 'string') {
               return (
                 <MenuItem key={i} value={String(option)}>
                   {option}
@@ -86,7 +86,7 @@ const DefaultValue = ({
           })}
         </Select>
       )}
-      {["autocomplete"].includes(data.type) && (
+      {['autocomplete'].includes(data.type) && (
         <Autocomplete
           multiple={multiple}
           options={dataSource}
@@ -94,7 +94,7 @@ const DefaultValue = ({
           onChange={autoOnChangeFn}
         />
       )}
-      {["textfield", "textarea"].includes(data.type) && (
+      {['textfield', 'textarea'].includes(data.type) && (
         <TextField value={defaultValue} onChange={onChangeFn} />
       )}
     </FormControl>

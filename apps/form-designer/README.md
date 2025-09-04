@@ -30,15 +30,15 @@
 
 ```ts
 export type FieldType =
-  | "textfield"
-  | "textarea"
-  | "checkbox"
-  | "radio"
-  | "switch"
-  | "select"
-  | "autocomplete"
-  | "button"
-  | "unknown";
+  | 'textfield'
+  | 'textarea'
+  | 'checkbox'
+  | 'radio'
+  | 'switch'
+  | 'select'
+  | 'autocomplete'
+  | 'button'
+  | 'unknown';
 ```
 
 | 属性         | 类型                                         | 默认值 | 描述         | 适用组件                                      |

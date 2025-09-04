@@ -1,9 +1,9 @@
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 import AutocompleteBase, {
   createFilterOptions,
-} from "@mui/material/Autocomplete";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+} from '@mui/material/Autocomplete';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 interface OptionType {
   inputValue?: string;
@@ -37,7 +37,7 @@ const Autocomplete = ({
   return (
     <FormControl
       fullWidth
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       required={required}
       error={error}
       disabled={disabled}
@@ -46,7 +46,7 @@ const Autocomplete = ({
         disabled={disabled}
         value={value}
         onChange={(event, newValue) => {
-          if (typeof newValue === "string") {
+          if (typeof newValue === 'string') {
             onChange({
               label: newValue,
             });
@@ -68,7 +68,7 @@ const Autocomplete = ({
           const isExisting = options.some(
             (option) => inputValue === option.label
           );
-          if (inputValue !== "" && !isExisting) {
+          if (inputValue !== '' && !isExisting) {
             filtered.push({
               inputValue,
               value: inputValue,
@@ -84,7 +84,7 @@ const Autocomplete = ({
         options={options}
         getOptionLabel={(option) => {
           // Value selected with enter, right from the input
-          if (typeof option === "string") {
+          if (typeof option === 'string') {
             return option;
           }
           // Add "xxx" option created dynamically

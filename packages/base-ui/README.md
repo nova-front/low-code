@@ -44,10 +44,10 @@ Button 是一个完全无样式的按钮组件，支持多种渲染方式和完�
 #### 基本用法
 
 ```tsx
-import { Button } from "@nova-fe/base-ui";
+import { Button } from '@nova-fe/base-ui';
 
 // 基本按钮
-<Button onClick={() => alert("点击了按钮")}>基本按钮</Button>;
+<Button onClick={() => alert('点击了按钮')}>基本按钮</Button>;
 ```
 
 #### 禁用状态
@@ -82,7 +82,7 @@ import { Button } from "@nova-fe/base-ui";
 // 使用自定义类名
 <Button
   className="custom-btn bg-blue-500 text-white px-4 py-2 rounded"
-  onClick={() => console.log("自定义样式按钮")}
+  onClick={() => console.log('自定义样式按钮')}
 >
   自定义样式按钮
 </Button>

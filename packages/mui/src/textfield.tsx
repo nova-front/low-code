@@ -1,16 +1,16 @@
-import TextFieldBasic from "@mui/material/TextField";
+import TextFieldBasic from '@mui/material/TextField';
 
 export interface TextFieldProps {
   className?: string;
   label?: React.ReactNode;
-  variant?: "outlined" | "standard" | "filled";
+  variant?: 'outlined' | 'standard' | 'filled';
   required?: boolean;
   defaultValue?: unknown;
   disabled?: boolean;
   type?: React.HTMLInputTypeAttribute;
-  size?: "small" | "medium";
+  size?: 'small' | 'medium';
   fullWidth?: boolean;
-  color?: "error" | "primary" | "secondary" | "info" | "success" | "warning";
+  color?: 'error' | 'primary' | 'secondary' | 'info' | 'success' | 'warning';
   focused?: boolean;
   error?: boolean;
   helperText?: React.ReactNode;
@@ -46,7 +46,7 @@ const TextField = ({
 }: TextFieldProps): JSX.Element => {
   return (
     <TextFieldBasic
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       className={className}
       label={label}
       variant={variant}

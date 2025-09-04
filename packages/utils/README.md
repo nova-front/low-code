@@ -5,11 +5,11 @@
 ## 例子
 
 ```ts
-import { sleep } from "@nova-fe/utils";
+import { sleep } from '@nova-fe/utils';
 
 const clickFn = async () => {
   await sleep(3000);
-  console.log("3秒后执行");
+  console.log('3秒后执行');
 };
 ```
 

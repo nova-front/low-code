@@ -1,15 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState } from 'react';
 import {
   ContentEditable,
   ContentEditableCore,
   UndoableEditor,
   UndoableEditorHandle,
-} from "@nova-fe/editor";
-import DemoSection from "../../components/DemoSection";
+} from '@nova-fe/editor';
+import DemoSection from '../../components/DemoSection';
 
 const BasicEditor: React.FC = () => {
   const undoableEditorRef = useRef<UndoableEditorHandle>(null);
-  const [controlledValue, setControlledValue] = useState<string>("");
+  const [controlledValue, setControlledValue] = useState<string>('');
 
   return (
     <div>
@@ -53,14 +53,14 @@ const BasicEditor: React.FC = () => {
         />
         <div
           style={{
-            marginTop: "1rem",
-            padding: "1rem",
-            backgroundColor: "#f0f5ff",
-            borderRadius: "6px",
-            border: "1px solid #adc6ff"
+            marginTop: '1rem',
+            padding: '1rem',
+            backgroundColor: '#f0f5ff',
+            borderRadius: '6px',
+            border: '1px solid #adc6ff',
           }}
         >
-          <strong>当前内容：</strong> {controlledValue || "（空）"}
+          <strong>当前内容：</strong> {controlledValue || '（空）'}
           <br />
           <strong>字符数：</strong> {controlledValue.length}
         </div>
@@ -117,15 +117,19 @@ const BasicEditor: React.FC = () => {
           borderRadius="6px"
           backgroundColor="#f6ffed"
         />
-        <div style={{
-          marginTop: "1rem",
-          padding: "1rem",
-          backgroundColor: "#f0f9ff",
-          borderRadius: "6px",
-          border: "1px solid #bae7ff"
-        }}>
-          <h4 style={{ margin: "0 0 0.5rem 0", color: "#1677ff" }}>💡 使用建议</h4>
-          <ul style={{ margin: 0, paddingLeft: "1.2rem", color: "#666" }}>
+        <div
+          style={{
+            marginTop: '1rem',
+            padding: '1rem',
+            backgroundColor: '#f0f9ff',
+            borderRadius: '6px',
+            border: '1px solid #bae7ff',
+          }}
+        >
+          <h4 style={{ margin: '0 0 0.5rem 0', color: '#1677ff' }}>
+            💡 使用建议
+          </h4>
+          <ul style={{ margin: 0, paddingLeft: '1.2rem', color: '#666' }}>
             <li>需要纯文本编辑时使用 ContentEditableCore</li>
             <li>需要拼写检查时使用 ContentEditable</li>
             <li>需要撤销重做时使用 UndoableEditor</li>
@@ -150,17 +154,17 @@ const undoableEditorRef = useRef<UndoableEditorHandle>(null);
 undoableEditorRef.current?.undo();
 undoableEditorRef.current?.redo();`}
       >
-        <div style={{ marginBottom: "1rem" }}>
+        <div style={{ marginBottom: '1rem' }}>
           <button
             onClick={() => undoableEditorRef.current?.undo()}
             style={{
-              marginRight: "0.5rem",
-              padding: "8px 16px",
-              backgroundColor: "#1677ff",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer"
+              marginRight: '0.5rem',
+              padding: '8px 16px',
+              backgroundColor: '#1677ff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
             }}
           >
             ↶ 撤销 (Ctrl+Z)
@@ -168,12 +172,12 @@ undoableEditorRef.current?.redo();`}
           <button
             onClick={() => undoableEditorRef.current?.redo()}
             style={{
-              padding: "8px 16px",
-              backgroundColor: "#52c41a",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer"
+              padding: '8px 16px',
+              backgroundColor: '#52c41a',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
             }}
           >
             ↷ 重做 (Ctrl+Y)
@@ -184,13 +188,13 @@ undoableEditorRef.current?.redo();`}
               alert(JSON.stringify(state, null, 2));
             }}
             style={{
-              marginLeft: "0.5rem",
-              padding: "8px 16px",
-              backgroundColor: "#722ed1",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer"
+              marginLeft: '0.5rem',
+              padding: '8px 16px',
+              backgroundColor: '#722ed1',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
             }}
           >
             📄 获取状态
@@ -205,17 +209,27 @@ undoableEditorRef.current?.redo();`}
           borderRadius="6px"
           padding="12px"
         />
-        <div style={{
-          marginTop: "1rem",
-          padding: "1rem",
-          backgroundColor: "#f9f0ff",
-          borderRadius: "6px",
-          border: "1px solid #d3adf7"
-        }}>
-          <h4 style={{ margin: "0 0 0.5rem 0", color: "#722ed1" }}>⌨️ 快捷键</h4>
-          <ul style={{ margin: 0, paddingLeft: "1.2rem", color: "#666" }}>
-            <li><strong>Ctrl+Z</strong> (Windows) / <strong>Cmd+Z</strong> (Mac): 撤销</li>
-            <li><strong>Ctrl+Y</strong> (Windows) / <strong>Cmd+Shift+Z</strong> (Mac): 重做</li>
+        <div
+          style={{
+            marginTop: '1rem',
+            padding: '1rem',
+            backgroundColor: '#f9f0ff',
+            borderRadius: '6px',
+            border: '1px solid #d3adf7',
+          }}
+        >
+          <h4 style={{ margin: '0 0 0.5rem 0', color: '#722ed1' }}>
+            ⌨️ 快捷键
+          </h4>
+          <ul style={{ margin: 0, paddingLeft: '1.2rem', color: '#666' }}>
+            <li>
+              <strong>Ctrl+Z</strong> (Windows) / <strong>Cmd+Z</strong> (Mac):
+              撤销
+            </li>
+            <li>
+              <strong>Ctrl+Y</strong> (Windows) / <strong>Cmd+Shift+Z</strong>{' '}
+              (Mac): 重做
+            </li>
           </ul>
         </div>
       </DemoSection>

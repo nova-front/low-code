@@ -1,5 +1,5 @@
-import MenuItem from "@mui/material/MenuItem";
-import SelectBasic, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from '@mui/material/MenuItem';
+import SelectBasic, { SelectChangeEvent } from '@mui/material/Select';
 
 interface OptionProps {
   label: string;
@@ -38,7 +38,7 @@ const Select = ({
       {...{ defaultValue, value, onChange }}
     >
       {options.map((option: string | OptionProps, i: number) => {
-        if (typeof option === "string") {
+        if (typeof option === 'string') {
           return (
             <MenuItem key={i} value={String(option)}>
               {option}

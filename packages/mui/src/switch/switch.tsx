@@ -1,17 +1,17 @@
-import SwitchBasic from "@mui/material/Switch";
+import SwitchBasic from '@mui/material/Switch';
 
 interface SwitchProps {
-  size?: "small" | "medium";
+  size?: 'small' | 'medium';
   defaultChecked?: boolean;
   disabled?: boolean;
   color?:
-    | "primary"
-    | "secondary"
-    | "error"
-    | "info"
-    | "success"
-    | "warning"
-    | "default";
+    | 'primary'
+    | 'secondary'
+    | 'error'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'default';
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   name?: string;
   checked?: boolean;

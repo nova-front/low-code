@@ -40,40 +40,40 @@ export function sleep(time: number): Promise<any> {
 
 ```ts
 // index.ts
-export * from "./time";
+export * from './time';
 ```
 
 ## rollup.config.mjs
 
 ```mjs
-import commonjs from "@rollup/plugin-commonjs";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import json from "@rollup/plugin-json";
-import terser from "@rollup/plugin-terser";
-import typescript from "@rollup/plugin-typescript";
-import del from "rollup-plugin-delete";
-import dts from "rollup-plugin-dts";
+import commonjs from '@rollup/plugin-commonjs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
+import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript';
+import del from 'rollup-plugin-delete';
+import dts from 'rollup-plugin-dts';
 
 const baseBuild = {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: [
     {
-      file: "dist/cjs/index.js",
-      format: "cjs",
+      file: 'dist/cjs/index.js',
+      format: 'cjs',
     },
     {
-      file: "dist/es/index.js",
-      format: "es",
+      file: 'dist/es/index.js',
+      format: 'es',
     },
     {
-      file: "dist/iife.min.js",
-      format: "iife",
-      name: "utils",
+      file: 'dist/iife.min.js',
+      format: 'iife',
+      name: 'utils',
       plugins: [terser()],
     },
   ],
   plugins: [
-    del({ targets: "dist" }),
+    del({ targets: 'dist' }),
     commonjs(),
     nodeResolve(),
     typescript({
@@ -85,15 +85,15 @@ const baseBuild = {
 };
 
 const dtsBuild = {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: {
-    file: "dist/es/index.d.ts",
-    format: "es",
+    file: 'dist/es/index.d.ts',
+    format: 'es',
   },
   plugins: [
     dts({
       compilerOptions: {
-        baseUrl: "./",
+        baseUrl: './',
         paths: {}, // 若有路径映射需填写
       },
     }),
@@ -128,22 +128,22 @@ npm install --save-dev jest @types/jest ts-jest @jest/globals
 ```js
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: "ts-jest", // 使用 ts-jest 处理 TypeScript
-  testEnvironment: "jsdom", // 浏览器环境（服务器环境用 'node'）
+  preset: 'ts-jest', // 使用 ts-jest 处理 TypeScript
+  testEnvironment: 'jsdom', // 浏览器环境（服务器环境用 'node'）
   transform: {
-    "^.+\\.tsx?$": [
-      "ts-jest",
+    '^.+\\.tsx?$': [
+      'ts-jest',
       {
-        tsconfig: "tsconfig.json",
+        tsconfig: 'tsconfig.json',
       },
     ],
   },
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1", // 路径别名（与 tsconfig.json 一致）
+    '^@/(.*)$': '<rootDir>/src/$1', // 路径别名（与 tsconfig.json 一致）
   },
-  testMatch: ["**/*.test.ts"], // 匹配测试文件
+  testMatch: ['**/*.test.ts'], // 匹配测试文件
   collectCoverage: true, // 收集测试覆盖率
-  coverageDirectory: "coverage", // 覆盖率报告目录
+  coverageDirectory: 'coverage', // 覆盖率报告目录
 };
 ```
 

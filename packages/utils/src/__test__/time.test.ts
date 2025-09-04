@@ -1,6 +1,6 @@
-import { sleep } from "../time";
+import { sleep } from '../time';
 
-it("测试 sleep 函数延迟是否成功", async () => {
+it('测试 sleep 函数延迟是否成功', async () => {
   const mockCallback = jest.fn();
 
   setTimeout(mockCallback, 1000); // <= pass mockCallback as first argument

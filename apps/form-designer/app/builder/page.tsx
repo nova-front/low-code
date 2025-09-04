@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState, useMemo, useCallback } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import update from "immutability-helper";
-import useCopy from "@/hooks/useCopy";
-import { Button } from "@/components";
+import { useState, useMemo, useCallback } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
+import useCopy from '@/hooks/useCopy';
+import { Button } from '@/components';
 
-import FieldContainer from "./field/Container";
-import MainContainer from "./main/Container";
+import FieldContainer from './field/Container';
+import MainContainer from './main/Container';
 
-import { FormItemProps } from "@/components/form/type";
+import { FormItemProps } from '@/components/form/type';
 
-import styles from "./styles.module.css";
+import styles from './styles.module.css';
 
 const FixedDndProvider = DndProvider as React.FC<{
   backend: any;

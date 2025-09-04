@@ -1,29 +1,29 @@
-import React from "react";
-import { Link } from "react-router";
-import { sleep } from "@nova-fe/utils";
+import React from 'react';
+import { Link } from 'react-router';
+import { sleep } from '@nova-fe/utils';
 
 const Home: React.FC = () => {
   const clickFn = async () => {
     await sleep(1000);
-    console.log("Utils sleep function works!");
+    console.log('Utils sleep function works!');
   };
 
   const features = [
     {
-      title: "Base UI 组件库",
+      title: 'Base UI 组件库',
       description:
-        "Headless UI 设计理念，完全无样式的组件库，提供最大的自定义灵活性",
-      icon: "🎨",
-      path: "/base-ui",
-      status: "stable",
+        'Headless UI 设计理念，完全无样式的组件库，提供最大的自定义灵活性',
+      icon: '🎨',
+      path: '/base-ui',
+      status: 'stable',
     },
     {
-      title: "编辑器组件",
+      title: '编辑器组件',
       description:
-        "功能丰富的文本编辑器组件，支持多种编辑模式和扩展，包含EPV数据展示功能",
-      icon: "📝",
-      path: "/editor",
-      status: "beta",
+        '功能丰富的文本编辑器组件，支持多种编辑模式和扩展，包含EPV数据展示功能',
+      icon: '📝',
+      path: '/editor',
+      status: 'beta',
     },
   ];
 
@@ -44,30 +44,30 @@ const Home: React.FC = () => {
             <div className="card-header">
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}
               >
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
                   }}
                 >
-                  <span style={{ fontSize: "1.5rem" }}>{feature.icon}</span>
+                  <span style={{ fontSize: '1.5rem' }}>{feature.icon}</span>
                   <h3 className="card-title">{feature.title}</h3>
                 </div>
                 <span
-                  className={`status-tag status-${feature.status === "stable" ? "success" : feature.status === "beta" ? "warning" : "error"}`}
+                  className={`status-tag status-${feature.status === 'stable' ? 'success' : feature.status === 'beta' ? 'warning' : 'error'}`}
                 >
                   {feature.status}
                 </span>
               </div>
             </div>
             <div className="card-body">
-              <p style={{ marginBottom: "1rem" }}>{feature.description}</p>
+              <p style={{ marginBottom: '1rem' }}>{feature.description}</p>
               <Link to={feature.path} className="btn btn-primary">
                 查看演示 →
               </Link>
@@ -85,7 +85,7 @@ const Home: React.FC = () => {
           <button className="btn btn-secondary" onClick={clickFn}>
             测试 Sleep 函数 (1秒延迟)
           </button>
-          <p style={{ marginTop: "0.5rem", fontSize: "0.9rem", color: "#666" }}>
+          <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#666' }}>
             点击按钮后查看控制台输出
           </p>
         </div>

@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router";
+import React from 'react';
+import { Link, useLocation } from 'react-router';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,9 +9,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "首页", icon: "🏠" },
-    { path: "/base-ui", label: "Base UI", icon: "🎨" },
-    { path: "/editor", label: "编辑器", icon: "📝" },
+    { path: '/', label: '首页', icon: '🏠' },
+    { path: '/base-ui', label: 'Base UI', icon: '🎨' },
+    { path: '/editor', label: '编辑器', icon: '📝' },
   ];
 
   return (
@@ -27,9 +27,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className={location.pathname === item.path ? "active" : ""}
+                    className={location.pathname === item.path ? 'active' : ''}
                   >
-                    <span style={{ marginRight: "0.5rem" }}>{item.icon}</span>
+                    <span style={{ marginRight: '0.5rem' }}>{item.icon}</span>
                     {item.label}
                   </Link>
                 </li>

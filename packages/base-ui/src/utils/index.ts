@@ -11,7 +11,7 @@
 export const cn = (
   ...classes: (string | undefined | null | false)[]
 ): string => {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 };
 
 /**
@@ -48,9 +48,9 @@ export const isValidElementType = (
   element: any
 ): element is React.ElementType => {
   return (
-    typeof element === "string" ||
-    typeof element === "function" ||
-    (typeof element === "object" && element !== null)
+    typeof element === 'string' ||
+    typeof element === 'function' ||
+    (typeof element === 'object' && element !== null)
   );
 };
 
@@ -89,7 +89,7 @@ export const deepMerge = <T extends Record<string, any>>(
  * @returns 是否为对象
  */
 const isObject = (item: any): item is Record<string, any> => {
-  return item && typeof item === "object" && !Array.isArray(item);
+  return item && typeof item === 'object' && !Array.isArray(item);
 };
 
 /**
@@ -144,7 +144,7 @@ export const getA11yProps = (
   const props: Record<string, any> = {};
 
   if (disabled) {
-    props["aria-disabled"] = true;
+    props['aria-disabled'] = true;
     props.tabIndex = -1;
   }
 
@@ -161,7 +161,7 @@ export const getA11yProps = (
  * @returns 是否为函数
  */
 export const isFunction = (value: any): value is Function => {
-  return typeof value === "function";
+  return typeof value === 'function';
 };
 
 /**
@@ -170,7 +170,7 @@ export const isFunction = (value: any): value is Function => {
  * @returns 是否为字符串
  */
 export const isString = (value: any): value is string => {
-  return typeof value === "string";
+  return typeof value === 'string';
 };
 
 /**
@@ -179,7 +179,7 @@ export const isString = (value: any): value is string => {
  * @returns 是否为数字
  */
 export const isNumber = (value: any): value is number => {
-  return typeof value === "number" && !isNaN(value);
+  return typeof value === 'number' && !isNaN(value);
 };
 
 /**

@@ -32,6 +32,7 @@ export interface ContentEditableProps {
   onFocus?: () => void;
   onBlur?: () => void;
   spellcheck?: boolean;
+  customDictionary?: string[]; // 自定义词典单词列表
   // 编辑器样式配置 - 替代直接的 style 属性
   fontSize?: string | number;
   lineHeight?: string | number;
@@ -71,6 +72,7 @@ export const ContentEditable = forwardRef<
       onFocus,
       onBlur,
       spellcheck = false,
+      customDictionary = [],
       // 样式 props
       fontSize = '14px',
       lineHeight = '1.5',
@@ -95,8 +97,9 @@ export const ContentEditable = forwardRef<
     const [ranges, setRanges] = useState<TextPosition[]>([]);
 
     // 拼写检查
-    const { worker } = useSpellChecker();
+    const { worker, addWords, removeWords } = useSpellChecker();
     const workerRef = useRef<Worker | null>(null);
+    const prevCustomDictionary = useRef<string[]>([]);
 
     // 更新波浪线位置信息
     const updateWaveUnderlineDimensions = useCallback(() => {
@@ -132,6 +135,36 @@ export const ContentEditable = forwardRef<
         };
       }
     }, [worker]);
+
+    // 同步自定义词典
+    React.useEffect(() => {
+      if (!worker || !customDictionary) return;
+
+      const currentWords = new Set(customDictionary);
+      const prevWords = new Set(prevCustomDictionary.current);
+
+      // 找出需要添加的单词
+      const wordsToAdd = customDictionary.filter(
+        (word) => !prevWords.has(word),
+      );
+      // 找出需要删除的单词
+      const wordsToRemove = prevCustomDictionary.current.filter(
+        (word) => !currentWords.has(word),
+      );
+
+      // 批量添加新单词
+      if (wordsToAdd.length > 0) {
+        addWords(wordsToAdd);
+      }
+
+      // 批量删除单词
+      if (wordsToRemove.length > 0) {
+        removeWords(wordsToRemove);
+      }
+
+      // 更新引用
+      prevCustomDictionary.current = [...customDictionary];
+    }, [customDictionary, worker, addWords, removeWords]);
 
     // 执行拼写检查
     const performSpellCheck = React.useCallback(() => {

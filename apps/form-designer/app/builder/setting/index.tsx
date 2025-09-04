@@ -1,19 +1,19 @@
-import { useState, useCallback, forwardRef, Fragment } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { TransitionProps } from "@mui/material/transitions";
-import Slide from "@mui/material/Slide";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import Grid from "@mui/material/Grid2";
-import LeftPanel from "./components/LeftPanel";
-import RightPanel from "./components/RightPanel";
+import { useState, useCallback, forwardRef, Fragment } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { TransitionProps } from '@mui/material/transitions';
+import Slide from '@mui/material/Slide';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import Grid from '@mui/material/Grid2';
+import LeftPanel from './components/LeftPanel';
+import RightPanel from './components/RightPanel';
 
-import { SettingDialogProps } from "./type";
+import { SettingDialogProps } from './type';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -37,30 +37,30 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
 
   const updatefieldData = (key: string, value: any) => {
     const { defaultValue: oldDefaultValue } = fieldData;
-    let newDefaultValue: any = "";
+    let newDefaultValue: any = '';
 
-    if (key === "multiple") {
+    if (key === 'multiple') {
       if (value) {
-        if (typeof oldDefaultValue === "string") {
+        if (typeof oldDefaultValue === 'string') {
           newDefaultValue = [];
         } else {
           newDefaultValue = oldDefaultValue || [];
         }
       } else {
-        if (typeof oldDefaultValue === "string") {
+        if (typeof oldDefaultValue === 'string') {
           newDefaultValue = oldDefaultValue;
         } else {
-          newDefaultValue = "";
+          newDefaultValue = '';
         }
       }
       fieldData.defaultValue = newDefaultValue;
     }
 
-    if (key === "options") {
-      if (typeof oldDefaultValue !== "string") {
+    if (key === 'options') {
+      if (typeof oldDefaultValue !== 'string') {
         newDefaultValue = [];
         oldDefaultValue?.forEach((item: any) => {
-          if (typeof item === "string") {
+          if (typeof item === 'string') {
             if (value?.includes(item)) {
               newDefaultValue.push(item);
             }
@@ -109,7 +109,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
         aria-describedby="setting-dialog-description"
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: "relative" }}>
+        <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             <Typography sx={{ flex: 1 }} variant="h6" component="div">
               {fieldData.name} Component
@@ -124,13 +124,13 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogContent sx={{ padding: "0px" }}>
-          <Grid container spacing={0} sx={{ minHeight: "100%" }}>
+        <DialogContent sx={{ padding: '0px' }}>
+          <Grid container spacing={0} sx={{ minHeight: '100%' }}>
             <Grid
               size={8}
               sx={{
-                padding: "0 12px",
-                borderRight: "1px dashed #e5e5e5",
+                padding: '0 12px',
+                borderRight: '1px dashed #e5e5e5',
               }}
             >
               <LeftPanel
@@ -138,7 +138,7 @@ const SettingDialog = ({ initData, onUpdate }: SettingDialogProps) => {
                 updatefieldData={updatefieldData}
               />
             </Grid>
-            <Grid size={4} sx={{ padding: "0 12px" }}>
+            <Grid size={4} sx={{ padding: '0 12px' }}>
               <RightPanel
                 fieldData={fieldData}
                 onSave={onSave}

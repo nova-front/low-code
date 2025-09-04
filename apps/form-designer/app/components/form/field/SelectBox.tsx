@@ -1,7 +1,7 @@
-import { FormItemProps } from "@/components/form/type";
-import { Select } from "@/components";
-import { useEffect, useState } from "react";
-import { FormControl, FormHelperText, InputLabel } from "@mui/material";
+import { FormItemProps } from '@/components/form/type';
+import { Select } from '@/components';
+import { useEffect, useState } from 'react';
+import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 
 const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const {
@@ -21,7 +21,7 @@ const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {
 
   const lastOptions = options
     ?.map((option: any) => {
-      if (typeof option === "string") {
+      if (typeof option === 'string') {
         if (option) {
           return option;
         }
@@ -41,7 +41,7 @@ const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   }, [defaultValue]);
 
   // TODO: 防止value 更新不及时，render 错误，需要优化 start
-  if (multiple && typeof value === "string") {
+  if (multiple && typeof value === 'string') {
     return <></>;
   }
   if (!multiple && Array.isArray(value)) {
@@ -51,7 +51,7 @@ const SelectBox = ({ fieldData }: { fieldData: FormItemProps }) => {
 
   return (
     <FormControl
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       size={size}
       fullWidth
       error={error}

@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { Box, Grid2 as Grid } from "@mui/material";
-import Demo from "@/components/demo";
-import { TextField, TextArea } from "@/components";
+import { Box, Grid2 as Grid } from '@mui/material';
+import Demo from '@/components/demo';
+import { TextField, TextArea } from '@/components';
 
 const Docs = () => {
   return (
     <Box
       sx={{
-        padding: "20px",
+        padding: '20px',
       }}
     >
-      <h1 style={{ marginBottom: "16px" }}>基础组件</h1>
+      <h1 style={{ marginBottom: '16px' }}>基础组件</h1>
       <Grid container spacing={2}>
         <Grid size={4}>
           <Demo title="单行文本">

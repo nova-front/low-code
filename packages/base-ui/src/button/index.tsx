@@ -4,8 +4,8 @@ import React, {
   AnchorHTMLAttributes,
   useMemo,
   useCallback,
-} from "react";
-import { createPrefixedClassName, getA11yProps } from "../utils";
+} from 'react';
+import { createPrefixedClassName, getA11yProps } from '../utils';
 
 // 基础按钮属性定义
 interface BaseButtonProps {
@@ -28,19 +28,19 @@ const getElementProps = (
 ): Record<string, any> => {
   const elementProps: Record<string, any> = {};
 
-  if (element === "button") {
-    elementProps.type = restProps.type || "button";
+  if (element === 'button') {
+    elementProps.type = restProps.type || 'button';
     elementProps.disabled = disabled;
   } else {
     // 对于非按钮元素，使用工具函数获取可访问性属性
-    const a11yProps = getA11yProps(disabled, "button");
+    const a11yProps = getA11yProps(disabled, 'button');
     // 使用展开运算符代替 Object.assign
     Object.keys(a11yProps).forEach((key) => {
       elementProps[key] = a11yProps[key];
     });
 
     // 特殊处理：如果是链接元素，需要移除 role
-    if (element === "a") {
+    if (element === 'a') {
       delete elementProps.role;
     }
   }
@@ -55,7 +55,7 @@ const filterProps = (
 ): Record<string, any> => {
   const filteredProps = { ...props };
 
-  if (element !== "button") {
+  if (element !== 'button') {
     delete filteredProps.type;
   }
 
@@ -65,16 +65,16 @@ const filterProps = (
 export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
   const {
     children,
-    className = "",
+    className = '',
     disabled = false,
-    as: Element = "button",
+    as: Element = 'button',
     onClick,
     ...restProps
   } = props;
 
   // 使用 useMemo 优化类名计算
   const buttonClasses = useMemo(
-    () => createPrefixedClassName("unstyled-button", className, { disabled }),
+    () => createPrefixedClassName('unstyled-button', className, { disabled }),
     [className, disabled]
   );
 
@@ -115,8 +115,8 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
 
       // 对于非按钮元素，支持 Enter 和 Space 键触发点击
       if (
-        Element !== "button" &&
-        (event.key === "Enter" || event.key === " ")
+        Element !== 'button' &&
+        (event.key === 'Enter' || event.key === ' ')
       ) {
         event.preventDefault();
         handleClick(event as any);
@@ -144,4 +144,4 @@ export const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
   );
 });
 
-Button.displayName = "UnstyledButton";
+Button.displayName = 'UnstyledButton';

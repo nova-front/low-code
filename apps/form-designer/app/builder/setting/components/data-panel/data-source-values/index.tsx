@@ -1,5 +1,5 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import update from "immutability-helper";
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import update from 'immutability-helper';
 import {
   Box,
   FormControl,
@@ -13,12 +13,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@mui/material";
-import { Button } from "@/components";
+} from '@mui/material';
+import { Button } from '@/components';
 
-import { TableRowCard } from "./TableRowCard";
+import { TableRowCard } from './TableRowCard';
 
-import { FormItemProps, OptionsProps } from "@/components/form/type";
+import { FormItemProps, OptionsProps } from '@/components/form/type';
 
 interface DataSourceValuesProps {
   data: FormItemProps;
@@ -32,20 +32,20 @@ const DataSourceValues = ({
   onUpdate,
 }: DataSourceValuesProps) => {
   const [rows, setRows] = useState<any[]>([]);
-  const [itemType, setItemType] = useState<"string" | "object">(
-    typeof dataSource[0] === "object" ? "object" : "string"
+  const [itemType, setItemType] = useState<'string' | 'object'>(
+    typeof dataSource[0] === 'object' ? 'object' : 'string'
   );
 
   const onUpdateFn = useCallback(
-    (itemType: "string" | "object", cards: any[]) => {
-      if (itemType === "string") {
+    (itemType: 'string' | 'object', cards: any[]) => {
+      if (itemType === 'string') {
         onUpdate(
-          "options",
+          'options',
           cards.map((item) => item.value)
         );
       } else {
         onUpdate(
-          "options",
+          'options',
           cards.map((item: any) => {
             return {
               label: item.label,
@@ -76,15 +76,15 @@ const DataSourceValues = ({
 
   const onAdd = useCallback(() => {
     const newCards = update(rows, {
-      $push: [{ id: crypto.randomUUID(), label: "", value: "" }],
+      $push: [{ id: crypto.randomUUID(), label: '', value: '' }],
     });
     setRows(newCards);
     onUpdateFn(itemType, newCards);
   }, [itemType, onUpdateFn, rows]);
 
   const onChange = useCallback(
-    (index: number, key: "label" | "value", value: string) => {
-      if (itemType === "string") {
+    (index: number, key: 'label' | 'value', value: string) => {
+      if (itemType === 'string') {
         const newCards = update(rows, {
           [index]: {
             [`label`]: { $set: value },
@@ -121,7 +121,7 @@ const DataSourceValues = ({
     (
       card: { id: number; text: string },
       index: number,
-      itemType: "string" | "object"
+      itemType: 'string' | 'object'
     ) => {
       return (
         <TableRowCard
@@ -142,9 +142,9 @@ const DataSourceValues = ({
   const itemTypeOnChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>, value: any) => {
       setItemType(value);
-      if (value === "string") {
+      if (value === 'string') {
         const newCards = rows.map((row: any) => {
-          if (data.type === "autocomplete") {
+          if (data.type === 'autocomplete') {
             return {
               label: String(row.label),
               value: String(row.label),
@@ -167,7 +167,7 @@ const DataSourceValues = ({
 
   useEffect(() => {
     const _rows = dataSource?.map((item: any) => {
-      if (typeof item === "string") {
+      if (typeof item === 'string') {
         return {
           id: crypto.randomUUID(),
           label: item,
@@ -181,7 +181,7 @@ const DataSourceValues = ({
   }, [dataSource]);
 
   if (
-    !["checkbox", "radio", "select", "autocomplete", "switch"].includes(
+    !['checkbox', 'radio', 'select', 'autocomplete', 'switch'].includes(
       data.type
     )
   ) {
@@ -192,13 +192,13 @@ const DataSourceValues = ({
     <FormControl fullWidth sx={{ mt: 2 }}>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
         <Box>Data Source Values【options】</Box>
-        {["checkbox", "radio", "select", "switch"].includes(data.type) && (
+        {['checkbox', 'radio', 'select', 'switch'].includes(data.type) && (
           <RadioGroup
             row
             aria-labelledby="item type label"
@@ -223,13 +223,13 @@ const DataSourceValues = ({
         <Table aria-label="data source values table">
           <TableHead
             sx={{
-              bgcolor: "#2196f3",
-              "& .MuiTableCell-root": { color: "#fff" },
+              bgcolor: '#2196f3',
+              '& .MuiTableCell-root': { color: '#fff' },
             }}
           >
             <TableRow>
               <TableCell width={50}>&nbsp;</TableCell>
-              {itemType === "object" && <TableCell>Label</TableCell>}
+              {itemType === 'object' && <TableCell>Label</TableCell>}
               <TableCell>Value</TableCell>
               <TableCell width={50} align="right">
                 Action

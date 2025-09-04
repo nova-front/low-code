@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { TextField } from "@/components";
-import { FormItemProps } from "@/components/form/type";
+import { useEffect, useState } from 'react';
+import { TextField } from '@/components';
+import { FormItemProps } from '@/components/form/type';
 
 const TextFieldBox = ({ fieldData }: { fieldData: FormItemProps }) => {
-  const { defaultValue = "", ...otherProps } = fieldData;
+  const { defaultValue = '', ...otherProps } = fieldData;
 
-  const [value, setValue] = useState<any>("");
+  const [value, setValue] = useState<any>('');
 
   useEffect(() => {
     setValue(defaultValue);

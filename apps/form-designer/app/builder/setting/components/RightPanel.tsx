@@ -1,11 +1,11 @@
-import { useState, useMemo, Fragment } from "react";
-import { Stack, Box, Tabs, Tab } from "@mui/material";
-import CustomTabPanel from "./CustomPanel";
-import { Button } from "@/components";
-import { tabProps } from "../util";
-import FormItem from "@/components/form/item";
+import { useState, useMemo, Fragment } from 'react';
+import { Stack, Box, Tabs, Tab } from '@mui/material';
+import CustomTabPanel from './CustomPanel';
+import { Button } from '@/components';
+import { tabProps } from '../util';
+import FormItem from '@/components/form/item';
 
-import { FormItemProps } from "@/components/form/type";
+import { FormItemProps } from '@/components/form/type';
 
 interface RightPanelProps {
   fieldData: FormItemProps;
@@ -33,7 +33,7 @@ const RightPanel = ({
 
   return (
     <Fragment>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
           onChange={onChangeFn}
@@ -46,20 +46,20 @@ const RightPanel = ({
         value={value}
         index={0}
         style={{
-          height: "calc(100vh - 114px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          paddingBottom: "12px",
+          height: 'calc(100vh - 114px)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          paddingBottom: '12px',
         }}
       >
         <Box
           sx={{
             mt: 4,
             flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            height: "calc(100vh - 360px)",
+            display: 'flex',
+            flexDirection: 'column',
+            height: 'calc(100vh - 360px)',
           }}
         >
           <FormItem fieldData={fieldData} />
@@ -67,10 +67,10 @@ const RightPanel = ({
             sx={{
               flex: 1,
               mt: 2,
-              overflowY: "auto",
-              backgroundColor: "#eee",
-              padding: "12px",
-              borderRadius: "4px",
+              overflowY: 'auto',
+              backgroundColor: '#eee',
+              padding: '12px',
+              borderRadius: '4px',
             }}
           >
             <pre>{fieldDataStr}</pre>
@@ -80,7 +80,7 @@ const RightPanel = ({
         <Stack
           spacing={2}
           direction="row"
-          style={{ justifyContent: "end", marginTop: "12px" }}
+          style={{ justifyContent: 'end', marginTop: '12px' }}
         >
           <Button variant="contained" color="primary" onClick={onSave}>
             Save

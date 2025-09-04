@@ -1,1 +1,1 @@
-export * from "@/config/mui";
+export * from '@/config/mui';

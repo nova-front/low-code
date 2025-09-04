@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Autocomplete } from "@/components";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import { FormItemProps } from "@/components/form/type";
+import { useEffect, useState } from 'react';
+import { Autocomplete } from '@/components';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import { FormItemProps } from '@/components/form/type';
 
 const AutocompleteBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   const {
@@ -37,8 +37,8 @@ const AutocompleteBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   // TODO: 防止value 更新不及时，render 错误，需要优化 start
   if (
     multiple &&
-    (Object.prototype.toString.call(value) === "[object Object]" ||
-      typeof value === "string")
+    (Object.prototype.toString.call(value) === '[object Object]' ||
+      typeof value === 'string')
   ) {
     return <></>;
   }
@@ -50,7 +50,7 @@ const AutocompleteBox = ({ fieldData }: { fieldData: FormItemProps }) => {
   return (
     <FormControl
       fullWidth
-      sx={{ "& .MuiFormHelperText-root": { margin: "3px 0 0 0" } }}
+      sx={{ '& .MuiFormHelperText-root': { margin: '3px 0 0 0' } }}
       required={required}
       error={error}
       disabled={disabled}

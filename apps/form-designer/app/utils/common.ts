@@ -1,12 +1,12 @@
-import { top100Films } from "@/mock";
-import { FieldType } from "@/components/form/type";
+import { top100Films } from '@/mock';
+import { FieldType } from '@/components/form/type';
 
 export const generateString = () => {
-  const characters = "abcdefghijklmnopqrstuvwxyz";
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
   return Array.from(
     { length: 6 },
     () => characters[Math.floor(Math.random() * characters.length)]
-  ).join("");
+  ).join('');
 };
 
 // TODO: 待完善
@@ -14,40 +14,40 @@ export const getInitData = (data: any) => {
   const initData = {
     ...data,
     label: data.name,
-    helperText: "",
+    helperText: '',
     required: false,
     disabled: false,
-    defaultValue: "",
+    defaultValue: '',
     key: generateString(),
   };
   switch (data.type as FieldType) {
-    case "textfield":
-      initData.placeholder = "Please enter a value";
+    case 'textfield':
+      initData.placeholder = 'Please enter a value';
       break;
-    case "textarea":
-      initData.placeholder = "Please enter a value";
+    case 'textarea':
+      initData.placeholder = 'Please enter a value';
       break;
-    case "checkbox":
-      initData.options = ["item a"];
+    case 'checkbox':
+      initData.options = ['item a'];
       initData.defaultValue = [];
-      initData.direction = "row";
+      initData.direction = 'row';
       break;
-    case "radio":
-      initData.options = ["item a"];
-      initData.direction = "row";
+    case 'radio':
+      initData.options = ['item a'];
+      initData.direction = 'row';
       break;
-    case "switch":
-      initData.options = ["open"];
+    case 'switch':
+      initData.options = ['open'];
       initData.defaultValue = [];
-      initData.direction = "row";
+      initData.direction = 'row';
       break;
-    case "select":
-      initData.options = ["item a"];
+    case 'select':
+      initData.options = ['item a'];
       break;
-    case "autocomplete":
+    case 'autocomplete':
       initData.options = top100Films;
       break;
-    case "button":
+    case 'button':
       break;
     default:
       break;
