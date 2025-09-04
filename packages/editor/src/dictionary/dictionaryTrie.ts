@@ -1,4 +1,4 @@
-import * as dictionaryData from "./data.json";
+import * as dictionaryData from './data.json';
 
 class TrieNode {
   children: Record<string, TrieNode>;

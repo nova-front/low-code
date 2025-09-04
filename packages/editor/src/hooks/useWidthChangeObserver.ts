@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from "react";
+import { type RefObject, useEffect } from 'react';
 
 /**
  * 监听元素的宽度变化，仅在宽度值改变时执行回调
@@ -7,7 +7,7 @@ import { useEffect, RefObject } from "react";
  */
 export function useWidthChangeObserver<T extends HTMLElement>(
   elementRef: RefObject<T>,
-  fn: (width: number) => void
+  fn: (width: number) => void,
 ) {
   useEffect(() => {
     const element = elementRef.current;

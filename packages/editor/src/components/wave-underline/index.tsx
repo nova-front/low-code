@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, memo } from "react";
+import type React from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 
 // 绘制点
 interface RangeProps {
@@ -19,7 +20,7 @@ interface WaveUnderlineProps {
 export const WaveUnderline: React.FC<WaveUnderlineProps> = memo(
   ({
     ranges = [],
-    color = "#ff0000",
+    color = '#ff0000',
     width = 100,
     height = 100,
     top = 0,
@@ -28,34 +29,37 @@ export const WaveUnderline: React.FC<WaveUnderlineProps> = memo(
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     // 绘制波浪线的方法
-    const drawWavyLine = (
-      ctx: CanvasRenderingContext2D,
-      startX: number,
-      endX: number,
-      y: number
-    ) => {
-      ctx.beginPath();
-      ctx.moveTo(startX, y);
+    const drawWavyLine = useCallback(
+      (
+        ctx: CanvasRenderingContext2D,
+        startX: number,
+        endX: number,
+        y: number,
+      ) => {
+        ctx.beginPath();
+        ctx.moveTo(startX, y);
 
-      const wavelength = 8; // 波长
-      const amplitude = 2; // 振幅
+        const wavelength = 8; // 波长
+        const amplitude = 2; // 振幅
 
-      for (let x = startX; x <= endX; x += 2) {
-        const radians = ((x - startX) * Math.PI) / wavelength;
-        ctx.lineTo(x, y + Math.sin(radians) * amplitude);
-      }
+        for (let x = startX; x <= endX; x += 2) {
+          const radians = ((x - startX) * Math.PI) / wavelength;
+          ctx.lineTo(x, y + Math.sin(radians) * amplitude);
+        }
 
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    };
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      },
+      [color],
+    );
 
     // 绘制主逻辑
     useEffect(() => {
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       // 高清屏适配
@@ -66,24 +70,24 @@ export const WaveUnderline: React.FC<WaveUnderlineProps> = memo(
 
       // 清空并重新绘制
       ctx.clearRect(0, 0, width, height);
-      ranges.forEach((range) => {
+      for (const range of ranges) {
         drawWavyLine(ctx, range.startOffset, range.endOffset, range.height - 3);
-      });
-    }, [width, height, ranges, color]);
+      }
+    }, [width, height, ranges, drawWavyLine]);
 
     return (
       <canvas
         ref={canvasRef}
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: `${top}px`,
           left: `${left}px`,
           width: `${width}px`,
           height: `${height}px`,
-          pointerEvents: "none",
-          transform: "translateZ(0)", // GPU 加速
+          pointerEvents: 'none',
+          transform: 'translateZ(0)', // GPU 加速
         }}
       />
     );
-  }
+  },
 );

@@ -1,24 +1,25 @@
-import { pluginReact } from "@rsbuild/plugin-react";
-import { defineConfig } from "@rslib/core";
+import { pluginReact } from '@rsbuild/plugin-react';
+import { defineConfig } from '@rslib/core';
 
 export default defineConfig({
   source: {
     entry: {
-      index: ["./src/**"],
+      index: ['./src/**'],
     },
+    exclude: ['**/*.test.*', '**/*.spec.*', '**/__tests__/**'],
   },
   lib: [
     {
       bundle: false,
-      dts: true,
-      format: "esm",
+      dts: false, // 暂时禁用类型生成
+      format: 'esm',
     },
   ],
   output: {
-    target: "web",
+    target: 'web',
     copy: [
       // `./assets/image.png` -> `./dist/assets/image.png`
-      { from: "./assets", to: "assets" },
+      { from: './assets', to: 'assets' },
     ],
   },
   plugins: [pluginReact()],

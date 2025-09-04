@@ -1,18 +1,17 @@
-import React, {
+import { debounce } from 'lodash-es';
+import {
   forwardRef,
-  useState,
-  useRef,
-  useEffect,
   useCallback,
+  useEffect,
   useImperativeHandle,
-} from "react";
-import useUndo from "use-undo";
-import { debounce } from "lodash-es";
+  useRef,
+} from 'react';
+import useUndo from 'use-undo';
 import {
   ContentEditable,
-  ContentEditableHandle,
-  ContentEditableProps,
-} from "../content-editable";
+  type ContentEditableHandle,
+  type ContentEditableProps,
+} from '../content-editable';
 
 interface EditorState {
   content: string;
@@ -22,7 +21,7 @@ interface EditorState {
 interface UndoableEditorProps
   extends Omit<
     ContentEditableProps,
-    "value" | "selection" | "onChange" | "onFocus" | "onBlur" | "ref"
+    'value' | 'selection' | 'onChange' | 'onFocus' | 'onBlur' | 'ref'
   > {}
 
 // 类型定义
@@ -37,17 +36,14 @@ export const UndoableEditor = forwardRef<
   UndoableEditorHandle,
   UndoableEditorProps
 >((props, ref) => {
-  const [state, { undo, redo, set: setState, canUndo, canRedo }] =
-    useUndo<EditorState>({
-      content: "",
-      selection: { start: 0, end: 0 },
-    });
+  const [state, { undo, redo, set: setState }] = useUndo<EditorState>({
+    content: '',
+    selection: { start: 0, end: 0 },
+  });
 
   const editorRef = useRef<ContentEditableHandle>(null);
   const isInternalUpdate = useRef(false);
   const lastKeyPressed = useRef<string | null>(null);
-  // 新增本地焦点状态管理
-  const [isFocused, setIsFocused] = useState(false);
 
   // 防抖配置（300ms普通输入，立即提交的特殊按键）
   const debouncedSetState = useRef(
@@ -58,14 +54,14 @@ export const UndoableEditor = forwardRef<
         }
       },
       300,
-      { leading: false, trailing: true }
-    )
+      { leading: false, trailing: true },
+    ),
   );
 
   // 立即提交的特殊按键（Enter、Backspace等）
-  const shouldFlushImmediately = (key: string) => {
-    return ["Enter", "Backspace", "Delete"].includes(key);
-  };
+  const shouldFlushImmediately = useCallback((key: string) => {
+    return ['Enter', 'Backspace', 'Delete'].includes(key);
+  }, []);
 
   // 暴露API
   useImperativeHandle(
@@ -74,16 +70,20 @@ export const UndoableEditor = forwardRef<
       undo: () => {
         isInternalUpdate.current = true;
         undo();
-        setTimeout(() => (isInternalUpdate.current = false));
+        setTimeout(() => {
+          isInternalUpdate.current = false;
+        });
       },
       redo: () => {
         isInternalUpdate.current = true;
         redo();
-        setTimeout(() => (isInternalUpdate.current = false));
+        setTimeout(() => {
+          isInternalUpdate.current = false;
+        });
       },
       getState: () => state.present,
     }),
-    [state, undo, redo]
+    [state, undo, redo],
   );
 
   const handleChange = useCallback(
@@ -103,7 +103,7 @@ export const UndoableEditor = forwardRef<
 
       lastKeyPressed.current = null;
     },
-    [setState]
+    [setState, shouldFlushImmediately],
   );
 
   // 键盘事件监听
@@ -114,22 +114,30 @@ export const UndoableEditor = forwardRef<
       const isEditorActive = document.activeElement === editorElement;
       if (!isEditorActive) return;
 
-      // 快捷键处理（保留原有逻辑）
-      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key === "z") {
+      // 快捷键处理
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key === 'z') {
         e.preventDefault();
+        isInternalUpdate.current = true;
         undo();
+        setTimeout(() => {
+          isInternalUpdate.current = false;
+        }, 0);
       } else if (
-        ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "z") ||
-        ((e.ctrlKey || e.metaKey) && e.key === "y")
+        ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z') ||
+        ((e.ctrlKey || e.metaKey) && e.key === 'y')
       ) {
         e.preventDefault();
+        isInternalUpdate.current = true;
         redo();
+        setTimeout(() => {
+          isInternalUpdate.current = false;
+        }, 0);
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo, isFocused]);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo]);
 
   return (
     <ContentEditable
@@ -137,9 +145,8 @@ export const UndoableEditor = forwardRef<
       ref={editorRef}
       value={state.present.content}
       selection={state.present.selection}
+      onChange={() => {}} // 添加空的 onChange 以启用受控模式
       undoOnChange={handleChange}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
     />
   );
 });

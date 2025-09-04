@@ -40,7 +40,7 @@ export const generateTestData = (options: GenerateOptions) => {
 
       const waveLength = Math.min(
         Math.random() * (maxWaveLength - minWaveLength) + minWaveLength,
-        remainingWidth
+        remainingWidth,
       );
 
       waves.push({

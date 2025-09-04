@@ -1,10 +1,184 @@
-import { convert } from "html-to-text";
+import { convert } from 'html-to-text';
+
+// 文本差异检测相关类型和工具
+export interface TextChange {
+  type: 'insert' | 'delete' | 'replace';
+  start: number;
+  end: number;
+  text: string;
+  oldText?: string;
+}
+
+export interface IncrementalCheckRegion {
+  start: number;
+  end: number;
+  text: string;
+}
+
+/**
+ * 计算两个文本之间的差异，返回需要重新检查的区域
+ * @param oldText 旧文本
+ * @param newText 新文本
+ * @param contextWords 上下文单词数量，用于扩展检查范围
+ * @returns 需要重新检查的文本区域
+ */
+export function calculateIncrementalCheckRegions(
+  oldText: string,
+  newText: string,
+  contextWords = 2,
+): IncrementalCheckRegion[] {
+  if (!oldText || !newText) {
+    return [{ start: 0, end: newText.length, text: newText }];
+  }
+
+  const changes = calculateTextChanges(oldText, newText);
+  if (changes.length === 0) {
+    return []; // 没有变化
+  }
+
+  const regions: IncrementalCheckRegion[] = [];
+
+  for (const change of changes) {
+    // 扩展检查范围，包含上下文单词
+    const expandedRegion = expandRegionWithContext(
+      newText,
+      change.start,
+      change.end,
+      contextWords,
+    );
+    regions.push(expandedRegion);
+  }
+
+  // 合并重叠的区域
+  return mergeOverlappingRegions(regions);
+}
+
+/**
+ * 简单的文本差异算法，基于最长公共子序列
+ */
+function calculateTextChanges(oldText: string, newText: string): TextChange[] {
+  const changes: TextChange[] = [];
+
+  // 简化版本：找到第一个和最后一个不同的位置
+  let start = 0;
+  let oldEnd = oldText.length;
+  let newEnd = newText.length;
+
+  // 找到开始不同的位置
+  while (
+    start < oldEnd &&
+    start < newEnd &&
+    oldText[start] === newText[start]
+  ) {
+    start++;
+  }
+
+  // 找到结束不同的位置
+  while (
+    oldEnd > start &&
+    newEnd > start &&
+    oldText[oldEnd - 1] === newText[newEnd - 1]
+  ) {
+    oldEnd--;
+    newEnd--;
+  }
+
+  if (start < oldEnd || start < newEnd) {
+    changes.push({
+      type: 'replace',
+      start,
+      end: newEnd,
+      text: newText.slice(start, newEnd),
+      oldText: oldText.slice(start, oldEnd),
+    });
+  }
+
+  return changes;
+}
+
+/**
+ * 扩展区域以包含上下文单词
+ */
+function expandRegionWithContext(
+  text: string,
+  start: number,
+  end: number,
+  contextWords: number,
+): IncrementalCheckRegion {
+  const wordRegex = /\b([a-zA-Z']{2,})\b/g;
+  const words: { start: number; end: number; word: string }[] = [];
+
+  let match: RegExpExecArray | null;
+  match = wordRegex.exec(text);
+  while (match !== null) {
+    words.push({
+      start: match.index,
+      end: match.index + match[0].length,
+      word: match[0],
+    });
+
+    match = wordRegex.exec(text);
+  }
+
+  // 找到变化区域涉及的单词索引
+  let startWordIndex = words.findIndex((w) => w.end > start);
+  let endWordIndex = words.findIndex((w) => w.start >= end);
+
+  if (startWordIndex === -1) startWordIndex = words.length;
+  if (endWordIndex === -1) endWordIndex = words.length;
+
+  // 扩展上下文
+  const expandedStartIndex = Math.max(0, startWordIndex - contextWords);
+  const expandedEndIndex = Math.min(words.length, endWordIndex + contextWords);
+
+  const expandedStart =
+    expandedStartIndex < words.length ? words[expandedStartIndex].start : start;
+  const expandedEnd =
+    expandedEndIndex > 0 ? words[expandedEndIndex - 1].end : end;
+
+  return {
+    start: expandedStart,
+    end: expandedEnd,
+    text: text.slice(expandedStart, expandedEnd),
+  };
+}
+
+/**
+ * 合并重叠的区域
+ */
+function mergeOverlappingRegions(
+  regions: IncrementalCheckRegion[],
+): IncrementalCheckRegion[] {
+  if (regions.length <= 1) return regions;
+
+  // 按开始位置排序
+  regions.sort((a, b) => a.start - b.start);
+
+  const merged: IncrementalCheckRegion[] = [regions[0]];
+
+  for (let i = 1; i < regions.length; i++) {
+    const current = regions[i];
+    const last = merged[merged.length - 1];
+
+    if (current.start <= last.end) {
+      // 重叠，合并
+      last.end = Math.max(last.end, current.end);
+      last.text =
+        last.text.slice(0, last.start) +
+        current.text.slice(0, current.end - last.start);
+    } else {
+      merged.push(current);
+    }
+  }
+
+  return merged;
+}
 
 // 光标位置管理工具函数
 export const getCharacterOffset = (
   container: HTMLElement,
   node: Node,
-  offset: number
+  offset: number,
 ): number => {
   const walker = document.createTreeWalker(
     container,
@@ -14,13 +188,13 @@ export const getCharacterOffset = (
         // 跳过不可见元素
         if (node.nodeType === Node.ELEMENT_NODE) {
           const style = window.getComputedStyle(node as Element);
-          if (style.display === "none" || style.visibility === "hidden") {
+          if (style.display === 'none' || style.visibility === 'hidden') {
             return NodeFilter.FILTER_REJECT;
           }
         }
         return NodeFilter.FILTER_ACCEPT;
       },
-    }
+    },
   );
 
   let charCount = 0;
@@ -36,7 +210,7 @@ export const getCharacterOffset = (
         break;
       }
       charCount += textLength;
-    } else if (currentNode.nodeName === "BR") {
+    } else if (currentNode.nodeName === 'BR') {
       // 处理换行符
       charCount += 1;
     }
@@ -47,7 +221,7 @@ export const getCharacterOffset = (
 
 export const findNodeAndOffset = (
   container: HTMLElement,
-  targetOffset: number
+  targetOffset: number,
 ) => {
   const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
   let charCount = 0;
@@ -75,7 +249,7 @@ export interface TextPosition {
 
 export function getTextPositionsWithDictionary(
   editableElement: HTMLElement,
-  dictionary: { check: (word: string) => boolean } // 字典方法
+  dictionary: { check: (word: string) => boolean }, // 字典方法
 ): TextPosition[] {
   const results: TextPosition[] = [];
   if (!editableElement) return results;
@@ -85,24 +259,25 @@ export function getTextPositionsWithDictionary(
   const elementRect = editableElement.getBoundingClientRect();
 
   // 构建全文和位置映射
-  let fullText = "";
+  let fullText = '';
   const nodeMap: { node: Text; start: number; end: number }[] = [];
 
-  allTextNodes.forEach((node) => {
-    const text = node.textContent || "";
+  for (const node of allTextNodes) {
+    const text = node.textContent || '';
     nodeMap.push({
       node,
       start: fullText.length,
       end: fullText.length + text.length,
     });
-    fullText += text + " ";
-  });
+    fullText += `${text} `;
+  }
 
   // 匹配所有英文单词（至少2个字母）
   const wordRegex = /\b([a-zA-Z']{2,})\b/g;
   let match: RegExpExecArray | null;
 
-  while ((match = wordRegex.exec(fullText)) !== null) {
+  match = wordRegex.exec(fullText);
+  while (match !== null) {
     const matchedWord = match[1];
     const matchStart = match.index;
     const matchEnd = matchStart + matchedWord.length;
@@ -115,7 +290,7 @@ export function getTextPositionsWithDictionary(
       const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
         nodeMap,
         matchStart,
-        matchEnd
+        matchEnd,
       );
 
       if (!startNode || !endNode) continue;
@@ -125,7 +300,7 @@ export function getTextPositionsWithDictionary(
       range.setStart(startNode, startOffset);
       range.setEnd(endNode, endOffset);
 
-      Array.from(range.getClientRects()).forEach((rect) => {
+      for (const rect of Array.from(range.getClientRects())) {
         if (rect.width > 0 && rect.height > 0 && !isValid) {
           results.push({
             word: matchedWord,
@@ -135,8 +310,10 @@ export function getTextPositionsWithDictionary(
             isValid,
           });
         }
-      });
+      }
     }
+
+    match = wordRegex.exec(fullText);
   }
 
   return results;
@@ -144,7 +321,7 @@ export function getTextPositionsWithDictionary(
 
 export function getTextPositionsWithErrorDictionary(
   editableElement: HTMLElement,
-  dictionaryMap: Map<string, boolean> // 错误单词
+  dictionaryMap: Map<string, boolean>, // 错误单词
 ): TextPosition[] {
   const results: TextPosition[] = [];
   if (!editableElement) return results;
@@ -154,24 +331,25 @@ export function getTextPositionsWithErrorDictionary(
   const elementRect = editableElement.getBoundingClientRect();
 
   // 构建全文和位置映射
-  let fullText = "";
+  let fullText = '';
   const nodeMap: { node: Text; start: number; end: number }[] = [];
 
-  allTextNodes.forEach((node) => {
-    const text = node.textContent || "";
+  for (const node of allTextNodes) {
+    const text = node.textContent || '';
     nodeMap.push({
       node,
       start: fullText.length,
       end: fullText.length + text.length,
     });
-    fullText += text + " ";
-  });
+    fullText += `${text} `;
+  }
 
   // 匹配所有英文单词（至少2个字母）
   const wordRegex = /\b([a-zA-Z']{2,})\b/g;
   let match: RegExpExecArray | null;
 
-  while ((match = wordRegex.exec(fullText)) !== null) {
+  match = wordRegex.exec(fullText);
+  while (match !== null) {
     const matchedWord = match[1];
     const matchStart = match.index;
     const matchEnd = matchStart + matchedWord.length;
@@ -184,7 +362,7 @@ export function getTextPositionsWithErrorDictionary(
       const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
         nodeMap,
         matchStart,
-        matchEnd
+        matchEnd,
       );
 
       if (!startNode || !endNode) continue;
@@ -194,7 +372,7 @@ export function getTextPositionsWithErrorDictionary(
       range.setStart(startNode, startOffset);
       range.setEnd(endNode, endOffset);
 
-      Array.from(range.getClientRects()).forEach((rect) => {
+      for (const rect of Array.from(range.getClientRects())) {
         if (rect.width > 0 && rect.height > 0 && !isValid) {
           results.push({
             word: matchedWord,
@@ -204,8 +382,10 @@ export function getTextPositionsWithErrorDictionary(
             isValid,
           });
         }
-      });
+      }
     }
+
+    match = wordRegex.exec(fullText);
   }
 
   return results;
@@ -217,7 +397,7 @@ function getAllTextNodes(element: HTMLElement): Text[] {
   const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
     acceptNode: (node) => {
       // 过滤掉纯空白文本节点（保留包含换行符的）
-      return node.textContent?.trim() || node.textContent?.includes("\n")
+      return node.textContent?.trim() || node.textContent?.includes('\n')
         ? NodeFilter.FILTER_ACCEPT
         : NodeFilter.FILTER_REJECT;
     },
@@ -233,11 +413,12 @@ function getAllTextNodes(element: HTMLElement): Text[] {
 function findNodesFromIndex(
   nodeMap: { node: Text; start: number; end: number }[],
   matchStart: number,
-  matchEnd: number
+  matchEnd: number,
 ) {
-  let startNode!: Text, endNode!: Text;
-  let startOffset = 0,
-    endOffset = 0;
+  let startNode!: Text;
+  let endNode!: Text;
+  let startOffset = 0;
+  let endOffset = 0;
 
   for (const segment of nodeMap) {
     if (matchStart >= segment.start && matchStart < segment.end) {
@@ -262,28 +443,28 @@ export const htmlConvertText = (html: string) => {
     selectors: [
       // 处理段落和换行
       {
-        selector: "p",
+        selector: 'p',
         options: { leadingLineBreaks: 1, trailingLineBreaks: 1 },
       },
-      { selector: "br", format: "lineBreak" },
+      { selector: 'br', format: 'lineBreak' },
       // 处理div
       {
-        selector: "div",
+        selector: 'div',
         options: { leadingLineBreaks: 1, trailingLineBreaks: 1 },
       },
       // 处理标题
       {
-        selector: "h1",
+        selector: 'h1',
         options: { leadingLineBreaks: 2, trailingLineBreaks: 2 },
       },
       {
-        selector: "h2",
+        selector: 'h2',
         options: { leadingLineBreaks: 2, trailingLineBreaks: 2 },
       },
       // 忽略图片
-      { selector: "img", format: "skip" },
+      { selector: 'img', format: 'skip' },
       // 处理链接但不保留href
-      { selector: "a", options: { ignoreHref: true } },
+      { selector: 'a', options: { ignoreHref: true } },
     ],
   };
 

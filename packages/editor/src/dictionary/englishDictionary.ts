@@ -1,4 +1,4 @@
-import * as dictionaryData from "./data.json";
+import * as dictionaryData from './data.json';
 
 /**
  * 英文词典类，用于高效单词校验
