@@ -123,14 +123,27 @@ export const ContentEditable = forwardRef<
         worker.onmessage = (event) => {
           if (event.data.type === 'CHECK_RESULT') {
             const { currentCheckCache } = event.data.payload;
-            const element = coreRef.current?.getElement();
-            if (element) {
-              const newRanges = getTextPositionsWithErrorDictionary(
-                element,
-                currentCheckCache,
-              );
-              setRanges(newRanges);
-            }
+
+            // 使用requestIdleCallback延迟处理，避免阻塞主线程
+            requestIdleCallback(() => {
+              const element = coreRef.current?.getElement();
+              if (element) {
+                try {
+                  const newRanges = getTextPositionsWithErrorDictionary(
+                    element,
+                    currentCheckCache,
+                  );
+
+                  console.log(`拼写检查完成: 发现 ${newRanges.length} 个错误，全部显示`);
+
+                  // 显示所有检测到的错误
+                  setRanges(newRanges);
+                } catch (error) {
+                  console.warn('拼写检查位置计算失败:', error);
+                  setRanges([]); // 出错时清空波浪线
+                }
+              }
+            }, { timeout: 100 });
           }
         };
       }
@@ -190,13 +203,20 @@ export const ContentEditable = forwardRef<
       },
     );
 
-    // 处理内容变化
+    // 处理内容变化 - 立即响应，延迟更新UI
     const handleChange = useCallback(
       (text: string) => {
+        // 立即触发onChange，保证数据同步
         onChange?.(text);
-        updateWaveUnderlineDimensions();
+
+        // 延迟更新波浪线位置，避免阻塞
+        if (spellcheck) {
+          requestIdleCallback(() => {
+            updateWaveUnderlineDimensions();
+          }, { timeout: 50 });
+        }
       },
-      [onChange, updateWaveUnderlineDimensions],
+      [onChange, spellcheck, updateWaveUnderlineDimensions],
     );
 
     // 单独处理撤销状态记录
@@ -232,14 +252,50 @@ export const ContentEditable = forwardRef<
       [undoOnChange],
     );
 
-    // 处理输入事件（用于拼写检查）
+    // 防抖定时器
+    const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const spellCheckTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    // 完全隔离的输入处理 - 不触发任何拼写检查相关操作
     const handleInput = useCallback(() => {
-      updateWaveUnderlineDimensions();
+      // 输入时不做任何拼写检查相关操作，保证最佳响应性
       if (spellcheck) {
-        // 延迟执行拼写检查
-        setTimeout(performSpellCheck, 500);
+        // 清除之前的定时器
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
+
+        // 根据文本长度使用激进的防抖延迟
+        const element = coreRef.current?.getElement();
+        const textLength = element?.innerText?.length || 0;
+        let delay: number;
+
+        if (textLength > 20000) {
+          delay = 3000; // 大文本：3秒后才检查
+        } else if (textLength > 10000) {
+          delay = 2000; // 中等文本：2秒
+        } else if (textLength > 5000) {
+          delay = 1000; // 较大文本：1秒
+        } else {
+          delay = 500;  // 小文本：0.5秒
+        }
+
+        // 使用独立的定时器进行拼写检查
+        debounceTimerRef.current = setTimeout(() => {
+          // 在独立的宏任务中执行，完全不阻塞输入
+          if (spellCheckTimerRef.current) {
+            clearTimeout(spellCheckTimerRef.current);
+          }
+
+          spellCheckTimerRef.current = setTimeout(() => {
+            requestIdleCallback(() => {
+              updateWaveUnderlineDimensions();
+              performSpellCheck();
+            }, { timeout: 100 });
+          }, 0);
+        }, delay);
       }
-    }, [updateWaveUnderlineDimensions, spellcheck, performSpellCheck]);
+    }, [spellcheck, updateWaveUnderlineDimensions, performSpellCheck]);
 
     // 监听 value 变化，触发拼写检查（用于撤销/重做等程序化更新）
     React.useEffect(() => {
@@ -251,6 +307,18 @@ export const ContentEditable = forwardRef<
         }, 100);
       }
     }, [value, spellcheck, updateWaveUnderlineDimensions, performSpellCheck]);
+
+    // 清理定时器
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
+        if (spellCheckTimerRef.current) {
+          clearTimeout(spellCheckTimerRef.current);
+        }
+      };
+    }, []);
 
     // 暴露方法给父组件
     useImperativeHandle(
@@ -301,14 +369,29 @@ export const ContentEditable = forwardRef<
         />
 
         {spellcheck && (
-          <WaveUnderline
-            ranges={ranges}
-            color="#ff3366"
-            width={waveUnderlineDimensions.width}
-            height={waveUnderlineDimensions.height}
-            top={waveUnderlineDimensions.top}
-            left={waveUnderlineDimensions.left}
-          />
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none',
+              zIndex: 1,
+              // 使用CSS层叠上下文隔离，避免影响主编辑器
+              willChange: 'transform',
+              transform: 'translateZ(0)', // 强制GPU加速
+            }}
+          >
+            <WaveUnderline
+              ranges={ranges}
+              color="#ff3366"
+              width={waveUnderlineDimensions.width}
+              height={waveUnderlineDimensions.height}
+              top={waveUnderlineDimensions.top}
+              left={waveUnderlineDimensions.left}
+            />
+          </div>
         )}
 
         {children}
