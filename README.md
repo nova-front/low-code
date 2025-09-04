@@ -125,7 +125,7 @@ npm run format
 
 1. 在 `apps/` 目录下创建新应用
 2. 配置相应的构建脚本
-3. 更新 `turbo.json` 配置
+3. 更新 `turbo.json` 配置.
 
 ## 🤝 贡献
 
