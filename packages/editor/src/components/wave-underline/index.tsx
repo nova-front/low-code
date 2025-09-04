@@ -71,7 +71,7 @@ export const WaveUnderline: React.FC<WaveUnderlineProps> = memo(
       // 清空并重新绘制
       ctx.clearRect(0, 0, width, height);
       for (const range of ranges) {
-        drawWavyLine(ctx, range.startOffset, range.endOffset, range.height - 3);
+        drawWavyLine(ctx, range.startOffset, range.endOffset, range.height - 1);
       }
     }, [width, height, ranges, drawWavyLine]);
 
