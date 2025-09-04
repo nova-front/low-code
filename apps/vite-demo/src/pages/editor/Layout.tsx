@@ -6,7 +6,7 @@ const EditorLayout: React.FC = () => {
 
   const editorNavItems = [
     { path: "/editor", label: "基础编辑器", icon: "📝" },
-    { path: "/editor/epv", label: "EPV 拼写检查", icon: "🔍" },
+    { path: "/editor/epv", label: "拼写检查", icon: "🔍" },
   ];
 
   return (
@@ -79,6 +79,19 @@ const EditorLayout: React.FC = () => {
                 <li>英语单词校验 (EPV)</li>
                 <li>学术论文适用</li>
                 <li>实时错误提示</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-header">
+              <h4 className="card-title">⚡ 性能优化</h4>
+            </div>
+            <div className="card-body">
+              <ul style={{ paddingLeft: "1.2rem", color: "#666" }}>
+                <li>增量检查算法</li>
+                <li>LRU 缓存机制</li>
+                <li>Web Worker 后台处理</li>
               </ul>
             </div>
           </div>
