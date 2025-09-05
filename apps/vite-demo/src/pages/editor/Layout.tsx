@@ -5,18 +5,16 @@ const EditorLayout: React.FC = () => {
   const location = useLocation();
 
   const editorNavItems = [
-    { path: '/editor', label: '基础编辑器', icon: '📝' },
+    { path: '/editor', label: 'TextArea', icon: '📝' },
     { path: '/editor/epv', label: '拼写检查', icon: '🔍' },
   ];
 
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">编辑器组件</h1>
+        <h1 className="page-title">@nova-fe/editor</h1>
         <p className="page-description">
-          基于 ContentEditable
-          的富文本编辑器组件，支持撤销/重做功能，提供原生编辑体验。
-          包含英语单词校验 (EPV) 功能，适用于学术论文和英文文章的拼写检查。
+          一个基于 React 的高性能 TextArea，支持拼写检查、撤销重做等功能。
         </p>
       </div>
 
@@ -52,11 +50,11 @@ const EditorLayout: React.FC = () => {
 
       {/* 编辑器特性总结 */}
       <div className="demo-section">
-        <h3 className="demo-title">编辑器特性总结</h3>
+        <h3 className="demo-title">TextArea 特性总结</h3>
         <div className="demo-grid">
           <div className="card">
             <div className="card-header">
-              <h4 className="card-title">📝 ContentEditable</h4>
+              <h4 className="card-title">📝 TextArea</h4>
             </div>
             <div className="card-body">
               <ul style={{ paddingLeft: '1.2rem', color: '#666' }}>
@@ -86,7 +84,7 @@ const EditorLayout: React.FC = () => {
             </div>
             <div className="card-body">
               <ul style={{ paddingLeft: '1.2rem', color: '#666' }}>
-                <li>英语单词校验 (EPV)</li>
+                <li>英语单词校验</li>
                 <li>学术论文适用</li>
                 <li>实时错误提示</li>
               </ul>

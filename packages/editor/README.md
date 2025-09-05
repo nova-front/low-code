@@ -1,10 +1,10 @@
 # @nova-fe/editor
 
-一个基于 React 的高性能富文本编辑器，支持拼写检查、撤销重做等功能。
+一个基于 React 的高性能 TextArea，支持拼写检查、撤销重做等功能。
 
 ## ✨ 特性
 
-- 🚀 **高性能**：支持 5w+ 字符实时编辑（60FPS）
+- 🚀 **高性能**：支持 2w+ 字符实时编辑（60FPS）
 - 🔍 **智能拼写检查**：内置英语拼写检查，延时 < 500ms
 - 📝 **自定义词典**：支持添加/删除自定义单词
 - ↩️ **撤销重做**：完整的撤销重做功能，保持原生编辑体验
@@ -24,27 +24,27 @@ pnpm add @nova-fe/editor
 
 ## 🚀 快速开始
 
-### 基础编辑器（非受控）
+### 基础 TextArea（非受控）
 
 ```tsx
-import { ContentEditable } from '@nova-fe/editor';
+import { TextArea } from '@nova-fe/editor';
 
 function App() {
-  return <ContentEditable placeholder="请输入内容..." />;
+  return <TextArea placeholder="请输入内容..." />;
 }
 ```
 
-### 受控编辑器
+### 受控 TextArea
 
 ```tsx
-import { ContentEditable } from '@nova-fe/editor';
+import { TextArea } from '@nova-fe/editor';
 import { useState } from 'react';
 
 function App() {
   const [value, setValue] = useState('');
 
   return (
-    <ContentEditable
+    <TextArea
       placeholder="请输入内容..."
       value={value}
       onChange={setValue}
@@ -53,29 +53,29 @@ function App() {
 }
 ```
 
-### 带拼写检查的编辑器
+### 带拼写检查的 TextArea
 
 ```tsx
-import { ContentEditable } from '@nova-fe/editor';
+import { TextArea } from '@nova-fe/editor';
 
 function App() {
-  return <ContentEditable placeholder="请输入内容..." spellcheck={true} />;
+  return <TextArea placeholder="请输入内容..." spellcheck={true} />;
 }
 ```
 
-### 撤销重做编辑器
+### 撤销重做 TextArea
 
 ```tsx
-import { UndoableEditor } from '@nova-fe/editor';
+import { TextAreaUndo } from '@nova-fe/editor';
 
 function App() {
-  return <UndoableEditor placeholder="请输入内容..." spellcheck={true} />;
+  return <TextAreaUndo placeholder="请输入内容..." spellcheck={true} />;
 }
 ```
 
 ## 📖 API 文档
 
-### ContentEditable Props
+### TextArea Props
 
 | 属性               | 类型                     | 默认值      | 描述               |
 | ------------------ | ------------------------ | ----------- | ------------------ |
@@ -104,9 +104,9 @@ function App() {
 | `color`           | `string`           | `undefined`           | 文字颜色 |
 | `border`          | `string`           | `"1px solid #d9d9d9"` | 边框     |
 
-### UndoableEditor Props
+### TextAreaUndo Props
 
-继承 `ContentEditable` 的所有属性，额外支持：
+继承 `TextArea` 的所有属性，额外支持：
 
 - 自动撤销重做功能
 - `Ctrl+Z` / `Cmd+Z` 撤销
@@ -142,7 +142,7 @@ function App() {
 ### 自定义外观
 
 ```tsx
-<ContentEditable
+<TextArea
   placeholder="请输入内容..."
   fontSize="16px"
   lineHeight="1.6"
@@ -160,7 +160,7 @@ function App() {
 ### 深色主题
 
 ```tsx
-<ContentEditable
+<TextArea
   placeholder="请输入内容..."
   backgroundColor="#1a1a1a"
   color="#ffffff"
@@ -209,14 +209,14 @@ module.exports = {
 
 ## 🔧 高级用法
 
-### 获取编辑器实例
+### 获取 TextArea 实例
 
 ```tsx
-import { ContentEditable, ContentEditableHandle } from '@nova-fe/editor';
+import { TextArea, TextAreaHandle } from '@nova-fe/editor';
 import { useRef } from 'react';
 
 function App() {
-  const editorRef = useRef<ContentEditableHandle>(null);
+  const editorRef = useRef<TextAreaHandle>(null);
 
   const handleGetContent = () => {
     const element = editorRef.current?.getElement();
@@ -225,7 +225,7 @@ function App() {
 
   return (
     <div>
-      <ContentEditable ref={editorRef} />
+      <TextArea ref={editorRef} />
       <button onClick={handleGetContent}>获取内容</button>
     </div>
   );
@@ -235,7 +235,7 @@ function App() {
 ### 自定义拼写检查
 
 ```tsx
-import { ContentEditable, useSpellChecker } from '@nova-fe/editor';
+import { TextArea, useSpellChecker } from '@nova-fe/editor';
 
 function App() {
   const { addWords, exportCustomDictionary } = useSpellChecker();
@@ -246,7 +246,7 @@ function App() {
 
   return (
     <div>
-      <ContentEditable spellcheck={true} />
+      <TextArea spellcheck={true} />
       <button onClick={handleImportWords}>导入单词</button>
     </div>
   );
@@ -261,7 +261,7 @@ A: 确保设置了 `spellcheck={true}` 属性，并且浏览器支持 Web Worker
 
 ### Q: 撤销重做不生效？
 
-A: 使用 `UndoableEditor` 组件而不是 `ContentEditable`。
+A: 使用 `TextAreaUndo` 组件而不是 `TextArea`。
 
 ### Q: 样式不生效？
 

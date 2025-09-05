@@ -1,7 +1,7 @@
 {
   "name": "@nova-fe/editor",
-  "version": "1.0.2",
-  "description": "一个基于 React 的高性能富文本编辑器，支持拼写检查、撤销重做等功能。支持 5w+ 字符实时编辑。",
+  "version": "1.1.0",
+  "description": "一个基于 React 的高性能 TextArea，支持拼写检查、撤销重做等功能。支持 2w+ 字符实时编辑。",
   "type": "module",
   "exports": {
     ".": {
@@ -60,7 +60,7 @@
     "web-worker",
     "performance",
     "typo-js",
-    "富文本编辑器",
+    "TextArea",
     "拼写检查"
   ],
   "author": "Leslie",

@@ -18,7 +18,7 @@
 
 ```typescript
 // ✅ 推荐：异步拼写检查
-<ContentEditable
+<TextArea
   spellcheck={true}  // 自动使用 Web Worker
   placeholder="输入大量文本..."
 />
@@ -36,7 +36,7 @@ const checkText = (text: string) => {
 
 ```typescript
 // 自动启用增量检查（文本长度 > 1000 字符）
-<ContentEditable
+<TextArea
   value={longText}
   spellcheck={true}
   onChange={setText}
@@ -242,7 +242,7 @@ function usePerformanceAnalysis() {
 
 ```typescript
 // 高性能配置
-<ContentEditable
+<TextArea
   spellcheck={true}
   spellcheckOptions={{
     debounceMs: 300,        // 防抖延迟

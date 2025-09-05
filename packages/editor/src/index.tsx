@@ -1,10 +1,10 @@
 // 导出重构后的组件
-export { ContentEditable } from './components/content-editable';
-export { ContentEditableCore } from './components/content-editable-core';
+export { ContentEditable as TextArea } from './components/content-editable';
+export { ContentEditableCore as TextAreaCore } from './components/content-editable-core';
 
 // 导出撤销重做编辑器
-export { UndoableEditor } from './components/undoable-editor';
-export type { UndoableEditorHandle } from './components/undoable-editor';
+export { UndoableEditor as TextAreaUndo } from './components/undoable-editor';
+export type { UndoableEditorHandle as TextAreaUndoHandle } from './components/undoable-editor';
 
 // 导出自定义词典
 export {
@@ -31,11 +31,11 @@ export type {
 } from './utils';
 
 export type {
-  ContentEditableProps,
-  ContentEditableHandle,
+  ContentEditableProps as TextAreaProps,
+  ContentEditableHandle as TextAreaHandle,
 } from './components/content-editable';
 
 export type {
-  ContentEditableCoreProps,
-  ContentEditableCoreHandle,
+  ContentEditableCoreProps as TextAreaCoreProps,
+  ContentEditableCoreHandle as TextAreaCoreHandle,
 } from './components/content-editable-core';

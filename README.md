@@ -27,7 +27,7 @@ Nova Front 是一个基于 Turborepo 的现代化前端 Monorepo 项目，专注
 
 | 包                        | 描述                                                  | 版本                                                 |
 | ------------------------- | ----------------------------------------------------- | ---------------------------------------------------- |
-| `@nova-fe/editor`         | 支持英语拼写检查的富文本编辑器，支持 5w+ 字符实时编辑 | ![npm](https://img.shields.io/npm/v/@nova-fe/editor) |
+| `@nova-fe/editor`         | 支持英语拼写检查的富文本编辑器，支持 2w+ 字符实时编辑 | ![npm](https://img.shields.io/npm/v/@nova-fe/editor) |
 | `@repo/base-ui`           | 基础 UI 组件库                                        | -                                                    |
 | `@repo/mui`               | Material-UI 二次封装组件库                            | -                                                    |
 | `@repo/ui`                | 通用 UI 组件                                          | -                                                    |

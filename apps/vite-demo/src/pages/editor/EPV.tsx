@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ContentEditable,
-  ContentEditableCore,
+  TextArea,
+  TextAreaCore,
   useSpellChecker,
 } from '@nova-fe/editor';
 import DemoSection from '../../components/DemoSection';
@@ -176,7 +176,7 @@ const EPV: React.FC = () => {
     return words.join(' ') + '.';
   };
 
-  // 插入测试文本到编辑器
+  // 插入测试文本到 TextArea
   const insertTestText = (wordCount: number) => {
     const startTime = performance.now();
     const testText = generateTestText(wordCount);
@@ -229,11 +229,11 @@ const EPV: React.FC = () => {
   return (
     <div>
       <DemoSection
-        title="🔍 英语拼写检查编辑器 (EPV)"
+        title="🔍 英语拼写检查 TextArea"
         description="基于Web Worker的高性能英语拼写检查器，支持自定义词典和拼写建议"
-        code={`import { ContentEditable, useSpellChecker } from "@nova-fe/editor";
+        code={`import { TextArea, useSpellChecker } from "@nova-fe/editor";
 
-<ContentEditable
+<TextArea
   spellcheck={true}
   fontSize="16px"
   lineHeight={1.6}
@@ -243,7 +243,7 @@ const EPV: React.FC = () => {
   placeholder="请输入英文文本进行拼写检查..."
 />`}
       >
-        <ContentEditable
+        <TextArea
           fontSize="16px"
           lineHeight={1.6}
           padding="16px"
@@ -491,12 +491,12 @@ const customWords = getAllCustomWords();`}
 
       <DemoSection
         title="🏗️ 组件对比"
-        description="ContentEditableCore vs ContentEditable"
+        description="TextAreaCore vs TextArea"
         code={`// 核心组件（轻量级）
-<ContentEditableCore placeholder="专注文本编辑" />
+<TextAreaCore placeholder="专注文本编辑" />
 
 // 完整组件（含拼写检查）
-<ContentEditable spellcheck placeholder="包含拼写检查" />`}
+<TextArea spellcheck placeholder="包含拼写检查" />`}
       >
         <div
           style={{
@@ -509,7 +509,7 @@ const customWords = getAllCustomWords();`}
             <h4 style={{ margin: '0 0 0.5rem 0', color: '#1677ff' }}>
               📝 Core（轻量级）
             </h4>
-            <ContentEditableCore
+            <TextAreaCore
               placeholder="专注文本编辑，性能最优"
               minHeight="100px"
               border="1px solid #d9d9d9"
@@ -521,7 +521,7 @@ const customWords = getAllCustomWords();`}
             <h4 style={{ margin: '0 0 0.5rem 0', color: '#52c41a' }}>
               🔍 Full（含拼写检查）
             </h4>
-            <ContentEditable
+            <TextArea
               spellcheck
               placeholder="试试输入 'helo wrold testt'"
               minHeight="100px"

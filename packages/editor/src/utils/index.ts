@@ -354,7 +354,10 @@ export function getTextPositionsWithErrorDictionary(
         // 如果下一个兄弟节点是 <br> 标签，或者当前节点和下一个节点在不同的块级元素中
         if (nextSibling && nextSibling.nodeName === 'BR') {
           fullText += '\n';
-        } else if (parentElement && parentElement !== allTextNodes[i + 1].parentElement) {
+        } else if (
+          parentElement &&
+          parentElement !== allTextNodes[i + 1].parentElement
+        ) {
           // 不同的父元素，可能需要换行
           const parentTagName = parentElement.tagName.toLowerCase();
           if (['div', 'p', 'br'].includes(parentTagName)) {
@@ -381,11 +384,8 @@ export function getTextPositionsWithErrorDictionary(
 
       if (isValid === false) {
         // 定位节点
-        const { startNode, startOffset, endNode, endOffset } = findNodesFromIndex(
-          nodeMap,
-          matchStart,
-          matchEnd,
-        );
+        const { startNode, startOffset, endNode, endOffset } =
+          findNodesFromIndex(nodeMap, matchStart, matchEnd);
 
         if (!startNode || !endNode) {
           continue;
@@ -417,7 +417,9 @@ export function getTextPositionsWithErrorDictionary(
       processedCount++;
     }
 
-    console.log(`拼写检查完成: 处理了 ${processedCount} 个单词，发现 ${results.length} 个错误`);
+    console.log(
+      `拼写检查完成: 处理了 ${processedCount} 个单词，发现 ${results.length} 个错误`,
+    );
     return results;
   } catch (error) {
     console.error('拼写检查位置计算失败:', error);

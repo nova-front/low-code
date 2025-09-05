@@ -125,25 +125,30 @@ export const ContentEditable = forwardRef<
             const { currentCheckCache } = event.data.payload;
 
             // 使用requestIdleCallback延迟处理，避免阻塞主线程
-            requestIdleCallback(() => {
-              const element = coreRef.current?.getElement();
-              if (element) {
-                try {
-                  const newRanges = getTextPositionsWithErrorDictionary(
-                    element,
-                    currentCheckCache,
-                  );
+            requestIdleCallback(
+              () => {
+                const element = coreRef.current?.getElement();
+                if (element) {
+                  try {
+                    const newRanges = getTextPositionsWithErrorDictionary(
+                      element,
+                      currentCheckCache,
+                    );
 
-                  console.log(`拼写检查完成: 发现 ${newRanges.length} 个错误，全部显示`);
+                    console.log(
+                      `拼写检查完成: 发现 ${newRanges.length} 个错误，全部显示`,
+                    );
 
-                  // 显示所有检测到的错误
-                  setRanges(newRanges);
-                } catch (error) {
-                  console.warn('拼写检查位置计算失败:', error);
-                  setRanges([]); // 出错时清空波浪线
+                    // 显示所有检测到的错误
+                    setRanges(newRanges);
+                  } catch (error) {
+                    console.warn('拼写检查位置计算失败:', error);
+                    setRanges([]); // 出错时清空波浪线
+                  }
                 }
-              }
-            }, { timeout: 100 });
+              },
+              { timeout: 100 },
+            );
           }
         };
       }
@@ -211,9 +216,12 @@ export const ContentEditable = forwardRef<
 
         // 延迟更新波浪线位置，避免阻塞
         if (spellcheck) {
-          requestIdleCallback(() => {
-            updateWaveUnderlineDimensions();
-          }, { timeout: 50 });
+          requestIdleCallback(
+            () => {
+              updateWaveUnderlineDimensions();
+            },
+            { timeout: 50 },
+          );
         }
       },
       [onChange, spellcheck, updateWaveUnderlineDimensions],
@@ -277,7 +285,7 @@ export const ContentEditable = forwardRef<
         } else if (textLength > 5000) {
           delay = 1000; // 较大文本：1秒
         } else {
-          delay = 500;  // 小文本：0.5秒
+          delay = 500; // 小文本：0.5秒
         }
 
         // 使用独立的定时器进行拼写检查
@@ -288,10 +296,13 @@ export const ContentEditable = forwardRef<
           }
 
           spellCheckTimerRef.current = setTimeout(() => {
-            requestIdleCallback(() => {
-              updateWaveUnderlineDimensions();
-              performSpellCheck();
-            }, { timeout: 100 });
+            requestIdleCallback(
+              () => {
+                updateWaveUnderlineDimensions();
+                performSpellCheck();
+              },
+              { timeout: 100 },
+            );
           }, 0);
         }, delay);
       }

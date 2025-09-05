@@ -2,14 +2,14 @@
 
 ## 组件 API
 
-### ContentEditable
+### TextArea
 
-基础的可编辑文本组件。
+基础的可编辑文本 TextArea 组件。
 
 #### Props
 
 ```typescript
-interface ContentEditableProps {
+interface TextAreaProps {
   // 基础属性
   value?: string; // 受控模式下的值
   onChange?: (text: string) => void; // 内容变化回调
@@ -54,9 +54,19 @@ interface ContentEditableHandle {
 }
 ```
 
-### UndoableEditor
+### TextAreaCore Props
 
-带撤销重做功能的编辑器，继承 `ContentEditable` 的所有属性。
+轻量级的核心 TextArea 组件，专注于文本编辑功能，不包含拼写检查。
+
+继承 `TextArea` 的所有样式属性，但不包含拼写检查相关功能：
+
+- 更轻量级，性能更优
+- 专注于纯文本编辑
+- 适合不需要拼写检查的场景
+
+### TextAreaUndo
+
+带撤销重做功能的 TextArea，继承 `TextArea` 的所有属性。
 
 #### 额外功能
 
@@ -67,7 +77,7 @@ interface ContentEditableHandle {
 #### Ref Methods
 
 ```typescript
-interface UndoableEditorHandle {
+interface TextAreaUndoHandle {
   undo: () => void; // 撤销
   redo: () => void; // 重做
   getState: () => {
