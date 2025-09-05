@@ -506,3 +506,106 @@ export const htmlConvertText = (html: string) => {
 
   return convert(html, options);
 };
+
+// 防抖函数
+export function debounce<T extends (...args: unknown[]) => unknown>(
+  func: T,
+  delay: number,
+  options: { leading?: boolean; trailing?: boolean } = {}
+): T & { cancel: () => void } {
+  const { leading = false, trailing = true } = options;
+  let timeoutId: NodeJS.Timeout | null = null;
+  let lastCallTime = 0;
+  let lastInvokeTime = 0;
+  let lastArgs: Parameters<T> | undefined;
+  let lastThis: unknown;
+  let result: ReturnType<T>;
+
+  function invokeFunc(time: number) {
+    const args = lastArgs;
+    const thisArg = lastThis;
+    lastArgs = undefined;
+    lastThis = undefined;
+    lastInvokeTime = time;
+    if (args) {
+      result = func.apply(thisArg, args) as ReturnType<T>;
+    }
+    return result;
+  }
+
+  function leadingEdge(time: number) {
+    lastInvokeTime = time;
+    timeoutId = setTimeout(timerExpired, delay);
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time: number) {
+    const timeSinceLastCall = time - lastCallTime;
+    const timeWaiting = delay - timeSinceLastCall;
+    return timeWaiting;
+  }
+
+  function shouldInvoke(time: number) {
+    const timeSinceLastCall = time - lastCallTime;
+    const timeSinceLastInvoke = time - lastInvokeTime;
+    return (
+      lastCallTime === 0 ||
+      timeSinceLastCall >= delay ||
+      timeSinceLastCall < 0 ||
+      timeSinceLastInvoke >= delay
+    );
+  }
+
+  function timerExpired() {
+    const time = Date.now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    timeoutId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time: number) {
+    timeoutId = null;
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = undefined;
+    lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = undefined;
+    lastCallTime = 0;
+    lastThis = undefined;
+    timeoutId = null;
+  }
+
+  function debounced(this: unknown, ...args: Parameters<T>) {
+    const time = Date.now();
+    const isInvoking = shouldInvoke(time);
+
+    lastArgs = args;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timeoutId === null) {
+        return leadingEdge(lastCallTime);
+      }
+      timeoutId = setTimeout(timerExpired, delay);
+      return invokeFunc(lastCallTime);
+    }
+    if (timeoutId === null) {
+      timeoutId = setTimeout(timerExpired, delay);
+    }
+    return result;
+  }
+
+  debounced.cancel = cancel;
+  return debounced as T & { cancel: () => void };
+}

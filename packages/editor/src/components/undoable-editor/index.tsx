@@ -1,4 +1,3 @@
-import { debounce } from 'lodash-es';
 import {
   forwardRef,
   useCallback,
@@ -7,6 +6,7 @@ import {
   useRef,
 } from 'react';
 import useUndo from 'use-undo';
+import { debounce } from '../../utils';
 import {
   ContentEditable,
   type ContentEditableHandle,

@@ -21,6 +21,7 @@ export {
   htmlConvertText,
   getCharacterOffset,
   findNodeAndOffset,
+  debounce,
 } from './utils';
 
 // 导出类型
