@@ -331,18 +331,37 @@ export function getTextPositionsWithErrorDictionary(
     const allTextNodes = getAllTextNodes(editableElement);
     const elementRect = editableElement.getBoundingClientRect();
 
-    // 构建全文和位置映射
+    // 构建全文和位置映射，正确处理换行符
     let fullText = '';
     const nodeMap: { node: Text; start: number; end: number }[] = [];
 
-    for (const node of allTextNodes) {
+    for (let i = 0; i < allTextNodes.length; i++) {
+      const node = allTextNodes[i];
       const text = node.textContent || '';
+
       nodeMap.push({
         node,
         start: fullText.length,
         end: fullText.length + text.length,
       });
-      fullText += text; // 移除额外的空格，保持原始文本结构
+      fullText += text;
+
+      // 检查节点后是否有 <br> 标签或者是否需要添加换行符
+      if (i < allTextNodes.length - 1) {
+        const nextSibling = node.nextSibling;
+        const parentElement = node.parentElement;
+
+        // 如果下一个兄弟节点是 <br> 标签，或者当前节点和下一个节点在不同的块级元素中
+        if (nextSibling && nextSibling.nodeName === 'BR') {
+          fullText += '\n';
+        } else if (parentElement && parentElement !== allTextNodes[i + 1].parentElement) {
+          // 不同的父元素，可能需要换行
+          const parentTagName = parentElement.tagName.toLowerCase();
+          if (['div', 'p', 'br'].includes(parentTagName)) {
+            fullText += '\n';
+          }
+        }
+      }
     }
 
     // 匹配所有英文单词（至少2个字母）
@@ -353,7 +372,6 @@ export function getTextPositionsWithErrorDictionary(
 
     // 处理所有匹配的单词，不设置数量限制
     for (const match of matches) {
-
       const matchedWord = match[1];
       const matchStart = match.index || 0;
       const matchEnd = matchStart + matchedWord.length;
