@@ -20,7 +20,7 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@turbo/gen": "^1.12.4",
+    "@turbo/gen": "^1.10.9",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
@@ -32,6 +32,10 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.6",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "@vercel/style-guide": "^3.0.0",
+    "eslint-config-next": "0.2.4",
     "react": "^18.2.0"
   }
 }
