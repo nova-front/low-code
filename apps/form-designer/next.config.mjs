@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  basePath: '/low-code',
+  assetPrefix: '/low-code',
   images: {
     unoptimized: true,
   },
