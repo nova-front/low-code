@@ -59,6 +59,27 @@ cd apps/form-designer
 npm run dev
 ```
 
+### 部署到 GitHub Pages
+
+项目已配置自动部署到 GitHub Pages：
+
+```bash
+# 构建静态文件
+cd apps/form-designer
+npm run export
+
+# 生成的文件在 out/ 目录
+ls -la out/
+```
+
+部署会在以下情况自动触发：
+
+- 推送代码到 main/master 分支
+- 修改 apps/form-designer/ 目录下的文件
+- 手动触发 GitHub Actions 工作流
+
+详细部署说明请查看 [DEPLOYMENT.md](./DEPLOYMENT.md)
+
 ### 构建
 
 构建所有应用和包：
