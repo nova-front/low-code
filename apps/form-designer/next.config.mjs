@@ -2,8 +2,12 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: '/low-code',
-  assetPrefix: '/low-code',
+  // Only use basePath and assetPrefix in production
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
+  ...(process.env.NODE_ENV === 'production' && {
+    basePath: '/low-code',
+    assetPrefix: '/low-code',
+  }),
   images: {
     unoptimized: true,
   },

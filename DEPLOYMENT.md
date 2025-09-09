@@ -49,8 +49,15 @@ ls -la out/
 部署成功后，应用将在以下地址可用：
 
 ```
-https://<username>.github.io/<repository-name>/
+https://nova-front.github.io/low-code/
 ```
+
+各个页面的访问地址：
+
+- 首页: https://nova-front.github.io/low-code/
+- 表单设计器: https://nova-front.github.io/low-code/builder/
+- 组件文档: https://nova-front.github.io/low-code/docs/
+- 问卷调查: https://nova-front.github.io/low-code/questionnaire/
 
 ### 配置说明
 
@@ -58,16 +65,18 @@ https://<username>.github.io/<repository-name>/
 
 ```javascript
 const nextConfig = {
-  output: 'export',           // 启用静态导出
-  trailingSlash: true,        // 添加尾部斜杠
+  output: 'export', // 启用静态导出
+  trailingSlash: true, // 添加尾部斜杠
+  basePath: '/low-code', // GitHub Pages 子路径
+  assetPrefix: '/low-code', // 静态资源前缀
   images: {
-    unoptimized: true,        // 禁用图片优化（GitHub Pages 不支持）
+    unoptimized: true, // 禁用图片优化（GitHub Pages 不支持）
   },
   eslint: {
     ignoreDuringBuilds: true, // 构建时忽略 ESLint 错误
   },
   typescript: {
-    ignoreBuildErrors: true,  // 构建时忽略 TypeScript 错误
+    ignoreBuildErrors: true, // 构建时忽略 TypeScript 错误
   },
 };
 ```
